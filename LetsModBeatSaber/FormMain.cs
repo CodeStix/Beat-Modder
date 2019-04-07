@@ -211,7 +211,14 @@ namespace LetsModBeatSaber
                 return false;
 
             return config.installedMods.Any((e) => e.Is(m));
-            //return config.installedMods.Any((e) => e == new InstalledMod(m));
+        }
+
+        private InstalledMod GetInstalledMod(Mod m)
+        {
+            if (config.installedMods == null)
+                return default(InstalledMod);
+
+            return config.installedMods.FirstOrDefault((e) => e.Is(m));
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -429,18 +436,37 @@ namespace LetsModBeatSaber
             SetStatus($"Installing mod { m.ToString() }...", false);
 
             if (await InstallMod(m))
+            {
                 SetStatus($"Installation of { m.ToString() } succeeded.", true);
+
+                ShowMods();
+
+                await RunIPA();
+            }
             else
+            {
                 SetStatus($"Installation of { m.ToString() } failed!", true);
-
-            ShowMods();
-
-            await RunIPA();
+            }
         }
 
-        private void uninstallToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void uninstallToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           
+            InstalledMod m = GetInstalledMod((Mod)selected.Tag);
+
+            SetStatus($"Removing mod { m.ToString() }...", false);
+
+            if (await UninstallMod(m))
+            {
+                SetStatus($"Removal of { m.ToString() } succeeded.", true);
+
+                ShowMods();
+
+                await RunIPA();
+            }
+            else
+            {
+                SetStatus($"Removal of { m.ToString() } failed!", true);
+            }
         }
 
         private void viewInformationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -464,6 +490,35 @@ namespace LetsModBeatSaber
             ShowMods();
 
             await RunIPA();
+        }
+
+        private async Task<bool> UninstallMod(InstalledMod mod)
+        {
+            return await Task.Run<bool>(() =>
+            {
+                try
+                {
+                    foreach (string file in mod.affectedFiles)
+                    {
+                        if (File.Exists(file))
+                            File.Delete(file);
+
+                        string dir = Path.GetDirectoryName(file);
+
+                        if (Directory.Exists(dir) && Directory.GetFiles(dir).Length == 0)
+                            Directory.Delete(dir);
+                    }
+
+                    config.installedMods.Remove(mod);
+                    SaveConfig();
+
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }               
+            });
         }
 
         private async Task<bool> InstallMod(Mod mod)
@@ -509,7 +564,6 @@ namespace LetsModBeatSaber
                     }
                 }
             });
-           
         }
 
         private string ComputeFileHash(string file)
