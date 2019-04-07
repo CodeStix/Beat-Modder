@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,6 +78,15 @@ namespace LetsModBeatSaber
             }
         }
 
+        [JsonIgnore]
+        public bool IsCoreComponent
+        {
+            get
+            {
+                return Category == ModCategory.Core || Category == ModCategory.Libraries;
+            }
+        }
+
         public ModDownload GetBestDownloadFor(ModDownloadType type)
         {
             if (!downloads.Any((m) => type == m.Type) && (type != ModDownloadType.Universal))
@@ -91,6 +101,8 @@ namespace LetsModBeatSaber
             lvi.Group = listView.GetOrCreateGroup(Category.ToString());
             lvi.Tag = this;
             lvi.SetEnabled(enable);
+            if (IsCoreComponent)
+                lvi.BackColor = Color.WhiteSmoke;
             listView.Items.Add(lvi);
         }
 

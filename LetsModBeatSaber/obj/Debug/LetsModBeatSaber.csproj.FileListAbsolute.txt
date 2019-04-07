@@ -22,3 +22,5 @@ H:\Documents\GitHub\LetsModBeatSaber\LetsModBeatSaber\bin\Debug\HtmlAgilityPack.
 H:\Documents\GitHub\LetsModBeatSaber\LetsModBeatSaber\bin\Debug\HtmlAgilityPack.pdb
 H:\Documents\GitHub\LetsModBeatSaber\LetsModBeatSaber\bin\Debug\HtmlAgilityPack.xml
 H:\Documents\GitHub\LetsModBeatSaber\LetsModBeatSaber\obj\Debug\LetsModBeatSaber.FormModInfo.resources
+H:\Documents\GitHub\LetsModBeatSaber\LetsModBeatSaber\bin\Debug\MetroFramework.dll
+H:\Documents\GitHub\LetsModBeatSaber\LetsModBeatSaber\bin\Debug\MetroFramework.Fonts.dll

@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HtmlAgilityPack;
+using MetroFramework.Forms;
 using Newtonsoft.Json;
 using Ookii.Dialogs;
 using Ookii.Dialogs.WinForms;
@@ -23,12 +24,13 @@ namespace LetsModBeatSaber
     public partial class FormMain : Form
     {
         public const string ConfigFile = @"mods.json";
+        public const string OriginalBackupFile = @"og-backup.zip";
+        public const string BackupFile = @"backup.zip";
         public const string ModListUrl = @"https://beatmods.com/api/v1/mod?search=&status=approved&sort=category_lower&sortDirection=1";
 
         private ListViewItem selected = null;
         private Config config;
         private List<Mod> mods;
-        //private string[] supportedBeatSaberVersions = new string[] { "0.13.0", "0.13.1", "0.13.2" };
 
         private string BeatSaberFile
         {
@@ -104,8 +106,7 @@ namespace LetsModBeatSaber
             {
                 MessageBox.Show("Yikes, could not load required files.\nMaybe run as administrator?", "Could not load config...", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                Environment.Exit(0);
-                return;
+                SelfDestruct();
             }
         }
 
@@ -121,13 +122,6 @@ namespace LetsModBeatSaber
 
         private async Task DownloadModInformations()
         {
-            /*var web = new HtmlWeb();
-            var doc = web.Load(@"https://beatmods.com");
-
-            await Task.Delay(2000);
-
-            MessageBox.Show(doc.Text);*/
-
             SetStatus("Updating mod information...", false);
 
             mods = new List<Mod>();
@@ -245,6 +239,19 @@ namespace LetsModBeatSaber
 
                 if (!IPAFound)
                 {
+                    if (MessageBox.Show("Do you want to mod Beat Saber right now?\n" +
+                        "The core components will get installed.\n" +
+                        "You can undo all the mods at any time in the settings tab.", "Let's mod?", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) != DialogResult.OK)
+                    {
+                        SelfDestruct();
+                    }
+
+                    SetStatus("Creating backup...", false);
+
+                    await CreateBackup(OriginalBackupFile);
+
+                    SetStatus("Backup was created!", true);
+
                     SetStatus("Installing IPA...", false);
 
                     if (await InstallIPA())
@@ -259,8 +266,7 @@ namespace LetsModBeatSaber
 
                         MessageBox.Show("Yikes, could not install Illusion Plugin Architecture.\nMaybe run as administrator?", "Could not install...", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                        Environment.Exit(0);
-                        return;
+                        SelfDestruct();
                     }
 
                     SetStatus("Installing core components...", false);
@@ -308,13 +314,13 @@ namespace LetsModBeatSaber
             SaveConfig();
         }
 
-        private async Task RunIPA()
+        private async Task RunIPA(bool revert = false)
         {
             await Task.Run(() =>
             {
                 ProcessStartInfo psi = new ProcessStartInfo()
                 {
-                    Arguments = $"\"{ BeatSaberFile }\" --nowait",
+                    Arguments = $"\"{ BeatSaberFile }\" --nowait" + (revert ? " --revert" : ""),
                     FileName = IPAFile,
                     WorkingDirectory = config.beatSaberLocation,
                     WindowStyle = ProcessWindowStyle.Minimized
@@ -362,8 +368,7 @@ namespace LetsModBeatSaber
 
                 if (ofd.ShowDialog() != DialogResult.OK)
                 {
-                    Environment.Exit(0);
-                    return null;
+                    SelfDestruct();
                 }
 
                 actualPath = ofd.SelectedPath;
@@ -383,8 +388,7 @@ namespace LetsModBeatSaber
 
                 if (fls.ShowDialog() != DialogResult.OK)
                 {
-                    Environment.Exit(0);
-                    return null;
+                    SelfDestruct();
                 }
 
                 actualPath = (string)fls.Result;
@@ -404,9 +408,7 @@ namespace LetsModBeatSaber
 
         private async Task InstallCoreComponents()
         {
-            var coreMods = mods.Where((e) => e.Category == ModCategory.Core || e.Category == ModCategory.Libraries);
-
-            foreach (Mod m in coreMods)
+            foreach (Mod m in mods.Where((e) => e.IsCoreComponent))
             {
                 await InstallMod(m);
             }
@@ -433,7 +435,16 @@ namespace LetsModBeatSaber
 
         private async void uninstallToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InstalledMod m = GetInstalledMod((Mod)selected.Tag);
+            Mod mod = (Mod)selected.Tag;
+
+            InstalledMod m = GetInstalledMod(mod);
+
+            if (mod.IsCoreComponent)
+            {
+                if (MessageBox.Show($"You are willing to remove a core component, please note that removing these can cause the game to break.\n" +
+                    $"Are you sure you want to remove { mod.ToString() }?", "Sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
+                    return;
+            }
 
             SetStatus($"Removing mod { m.ToString() }...", false);
 
@@ -476,6 +487,16 @@ namespace LetsModBeatSaber
             await RunIPA();
         }
 
+        private async Task UninstallAllMods()
+        {
+            await RunIPA(true);
+
+            var toRemove = new List<InstalledMod>(config.installedMods);
+
+            foreach(InstalledMod mod in toRemove)
+                await UninstallMod(mod);
+        }
+
         private async Task<bool> UninstallMod(InstalledMod mod)
         {
             return await Task.Run<bool>(() =>
@@ -487,10 +508,7 @@ namespace LetsModBeatSaber
                         if (File.Exists(file))
                             File.Delete(file);
 
-                        string dir = Path.GetDirectoryName(file);
-
-                        if (Directory.Exists(dir) && Directory.GetFiles(dir).Length == 0)
-                            Directory.Delete(dir);
+                        DeleteParentDirectories(Path.GetDirectoryName(file));
                     }
 
                     config.installedMods.Remove(mod);
@@ -503,6 +521,16 @@ namespace LetsModBeatSaber
                     return false;
                 }               
             });
+        }
+
+        private void DeleteParentDirectories(string dir)
+        {
+            if (!Directory.Exists(dir) || Directory.GetFileSystemEntries(dir).Length != 0)
+                return;
+
+            Directory.Delete(dir);
+
+            DeleteParentDirectories(Directory.GetParent(dir).FullName);
         }
 
         private async Task<bool> InstallMod(Mod mod)
@@ -568,7 +596,9 @@ namespace LetsModBeatSaber
 
         private void buttonMoreInfo_Click(object sender, EventArgs e)
         {
-            Process.Start(((Mod)selected.Tag).link);
+            FormModInfo fmi = new FormModInfo((Mod)selected.Tag);
+
+            fmi.Show(this);
         }
 
         private void buttonChangeBeatSaberLocation_Click(object sender, EventArgs e)
@@ -625,6 +655,66 @@ namespace LetsModBeatSaber
 
                 labelBeatSaberType.Text = "Beat Saber type: " + config.beatSaberType;
             }
+        }
+
+        private async void buttonRemoveMods_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you very sure you want to remove all Beat Saber mods?\n" +
+                "Data like custom songs, custom saber,... will be kept.", "Living on the edge.", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+            {
+                SetStatus("Uninstalling all mods...", false);
+
+                await UninstallAllMods();
+
+                SetStatus("All mods were removed!", true);
+
+                await Task.Delay(1000);
+
+                SelfDestruct();
+            }
+        }
+        
+        private async Task<bool> CreateBackup(string file)
+        {
+            return await Task.Run<bool>(async () =>
+            {
+                ProgressDialog pd = new ProgressDialog()
+                {
+                    ShowCancelButton = false,
+                    Description = "Creating a backup please wait...",
+                    MinimizeBox = false,
+                    ProgressBarStyle = Ookii.Dialogs.WinForms.ProgressBarStyle.MarqueeProgressBar,
+                    ShowTimeRemaining = false,
+                    Text = "Archiving...",
+                    WindowTitle = "Create backup..."
+                };
+
+                pd.DoWork += (sender, e) =>
+                {
+                    try
+                    {
+                        if (File.Exists(file))
+                            File.Delete(file);
+
+                        ZipFile.CreateFromDirectory(config.beatSaberLocation, file, CompressionLevel.Fastest, false);
+                    }
+                    catch
+                    { }
+                };
+
+                pd.ShowDialog();
+
+                while (pd.IsBusy)
+                    await Task.Delay(500);
+
+                return true;
+            });
+        }
+
+        private void SelfDestruct()
+        {
+            Environment.Exit(0);
+            while (true) ;
         }
     }
 

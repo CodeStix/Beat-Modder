@@ -53,19 +53,27 @@
             this.buttonChangeBeatSaberType = new System.Windows.Forms.Button();
             this.labelBeatSaberType = new System.Windows.Forms.Label();
             this.tabPageAbout = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.itemNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.viewInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.installToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uninstallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonRemoveMods = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.buttonRemoveModsAndData = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPageMods.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.tabPageSettings.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tabPageAbout.SuspendLayout();
             this.contextMenu.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -258,6 +266,7 @@
             // tabPageSettings
             // 
             this.tabPageSettings.BackColor = System.Drawing.SystemColors.Window;
+            this.tabPageSettings.Controls.Add(this.groupBox2);
             this.tabPageSettings.Controls.Add(this.groupBox1);
             this.tabPageSettings.Location = new System.Drawing.Point(4, 22);
             this.tabPageSettings.Name = "tabPageSettings";
@@ -273,7 +282,7 @@
             this.groupBox1.Controls.Add(this.textBoxBeatSaberLocation);
             this.groupBox1.Controls.Add(this.buttonChangeBeatSaberType);
             this.groupBox1.Controls.Add(this.labelBeatSaberType);
-            this.groupBox1.Location = new System.Drawing.Point(8, 6);
+            this.groupBox1.Location = new System.Drawing.Point(17, 17);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(608, 79);
             this.groupBox1.TabIndex = 0;
@@ -331,11 +340,22 @@
             // tabPageAbout
             // 
             this.tabPageAbout.BackColor = System.Drawing.SystemColors.Window;
+            this.tabPageAbout.Controls.Add(this.label4);
             this.tabPageAbout.Location = new System.Drawing.Point(4, 22);
             this.tabPageAbout.Name = "tabPageAbout";
-            this.tabPageAbout.Size = new System.Drawing.Size(792, 402);
+            this.tabPageAbout.Size = new System.Drawing.Size(752, 322);
             this.tabPageAbout.TabIndex = 2;
             this.tabPageAbout.Text = "About";
+            // 
+            // label4
+            // 
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Location = new System.Drawing.Point(0, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(752, 322);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Beat-Modder \r\nby CodeStix\r\n\r\npowered by beatmods.com \r\nby vanZeben";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // contextMenu
             // 
@@ -381,6 +401,61 @@
             this.uninstallToolStripMenuItem.Text = "Uninstall";
             this.uninstallToolStripMenuItem.Click += new System.EventHandler(this.uninstallToolStripMenuItem_Click);
             // 
+            // buttonRemoveMods
+            // 
+            this.buttonRemoveMods.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonRemoveMods.Location = new System.Drawing.Point(6, 19);
+            this.buttonRemoveMods.Name = "buttonRemoveMods";
+            this.buttonRemoveMods.Size = new System.Drawing.Size(185, 24);
+            this.buttonRemoveMods.TabIndex = 1;
+            this.buttonRemoveMods.Text = "Remove all mods\r\n\r\n\r\n";
+            this.buttonRemoveMods.UseVisualStyleBackColor = true;
+            this.buttonRemoveMods.Click += new System.EventHandler(this.buttonRemoveMods_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.buttonRemoveModsAndData);
+            this.groupBox2.Controls.Add(this.buttonRemoveMods);
+            this.groupBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.groupBox2.Location = new System.Drawing.Point(17, 116);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(199, 128);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Danger Zone";
+            // 
+            // buttonRemoveModsAndData
+            // 
+            this.buttonRemoveModsAndData.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.buttonRemoveModsAndData.Location = new System.Drawing.Point(6, 76);
+            this.buttonRemoveModsAndData.Name = "buttonRemoveModsAndData";
+            this.buttonRemoveModsAndData.Size = new System.Drawing.Size(185, 24);
+            this.buttonRemoveModsAndData.TabIndex = 2;
+            this.buttonRemoveModsAndData.Text = "Remove all mods and mod data\r\n\r\n";
+            this.buttonRemoveModsAndData.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label5.Location = new System.Drawing.Point(6, 46);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(138, 13);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "(but keep custom songs, ...)";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label6.Location = new System.Drawing.Point(6, 103);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(140, 13);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "(but don\'t keep ANYTHING)";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -389,7 +464,7 @@
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.statusStrip);
             this.Name = "FormMain";
-            this.Text = "LetsModBeatSaber - A simple beat saber mod installer";
+            this.Text = "Beat Modder - A Beat Saber mod installer and remover";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.statusStrip.ResumeLayout(false);
@@ -401,7 +476,10 @@
             this.tabPageSettings.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabPageAbout.ResumeLayout(false);
             this.contextMenu.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -439,6 +517,12 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxBeatSaberLocation;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button buttonRemoveModsAndData;
+        private System.Windows.Forms.Button buttonRemoveMods;
     }
 }
 
