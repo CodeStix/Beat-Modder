@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LetsModBeatSaber.Properties {
+namespace Stx.BeatModder.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

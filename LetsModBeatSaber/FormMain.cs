@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -8,30 +7,34 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using HtmlAgilityPack;
-using MetroFramework.Forms;
+using Flurl;
 using Newtonsoft.Json;
-using Ookii.Dialogs;
 using Ookii.Dialogs.WinForms;
 
-namespace LetsModBeatSaber
+namespace Stx.BeatModder
 {
     public partial class FormMain : Form
     {
         public const string ConfigFile = @"mods.json";
-        public const string OriginalBackupFile = @"og-backup.zip";
-        public const string BackupFile = @"backup.zip";
-        public const string ModListUrl = @"https://beatmods.com/api/v1/mod?search=&status=approved&sort=category_lower&sortDirection=1";
 
         private ListViewItem selected = null;
         private Config config;
         private List<Mod> mods;
 
+        private string ModListUrl
+        {
+            get
+            {
+                return "https://beatmods.com"
+                    .AppendPathSegments("api", "v1", "mod")
+                    .SetQueryParam("search", null, Flurl.NullValueHandling.Ignore)
+                    .SetQueryParam("status", null/*"approved"*/)
+                    .SetQueryParam("sortDirection", 1);
+            }
+        }
         private string BeatSaberFile
         {
             get
@@ -78,14 +81,14 @@ namespace LetsModBeatSaber
             }
         }
 
-        public string GetBeatSaberFile(string name)
-        {
-            return Path.Combine(config.beatSaberLocation, name);
-        }
-
         public FormMain()
         {
             InitializeComponent();
+        }
+
+        public string GetBeatSaberFile(string name)
+        {
+            return Path.Combine(config.beatSaberLocation, name);
         }
 
         private void LoadConfig()
@@ -120,91 +123,14 @@ namespace LetsModBeatSaber
             { }
         }
 
-        private async Task DownloadModInformations()
+        private bool IsAnyVersionInstalled(Mod m)
         {
-            SetStatus("Updating mod information...", false);
-
-            mods = new List<Mod>();
-
-            var request = WebRequest.Create(ModListUrl);
-
-            await Task.Factory.FromAsync<WebResponse>(request.BeginGetResponse, request.EndGetResponse, null).ContinueWith((Action<Task<WebResponse>>)((Task<WebResponse> task) =>
-            {
-                HttpWebResponse response = (HttpWebResponse)task.Result;
-
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    StreamReader reader = new StreamReader(response.GetResponseStream());
-                    string raw = reader.ReadToEnd();
-
-                    mods = JsonConvert.DeserializeObject<List<Mod>>(raw);
-                    SaveConfig();
-
-                    SetStatus("Mod information updated!", true);
-                }
-                else
-                {
-                    SetStatus("Could not update mod information.", true);
-                }
-            }));
-        }
-
-        public void SetStatus(string status, bool done)
-        {
-            BeginInvoke(new Action(() =>
-            {
-                statusLabel.Text = "Status: " + status;
-
-                progressBar.Style = done ? System.Windows.Forms.ProgressBarStyle.Continuous : System.Windows.Forms.ProgressBarStyle.Marquee;
-                progressBar.Visible = !done;
-            }));
-        }
-
-        private void ShowMods()
-        {
-            listView.Items.Clear();
-
-            foreach(Mod m in mods)
-            {
-                ShowMod(m);
-            }
-        }
-
-        public void ShowMod(Mod m)
-        {
-            m.AddToList(listView, !IsInstalled(m));
-        }
-
-        private void listView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-            Mod? s = e.Item.Tag as Mod?;
-
-            selected = e.Item;
-
-            if (selected != null)
-            {
-                textBoxDescription.Text = $"{ s.Value.name }\r\n\tby { s.Value.author.username }\r\n\r\n{ s.Value.description }\r\n\r\nCategory: { s.Value.Category.ToString() }";
-            }
-
-            buttonMoreInfo.Enabled = selected != null;
-        }
-
-        private void listView_ItemChecked(object sender, ItemCheckedEventArgs e)
-        {
-            Mod? s = e.Item.Tag as Mod?;
-
-            if (s != null && IsInstalled(s.Value))
-            {
-                e.Item.Checked = false;
-            }
+            return config.installedMods.Any((e) => e.Is(m));
         }
 
         private bool IsInstalled(Mod m)
         {
-            if (config.installedMods == null)
-                return false;
-
-            return config.installedMods.Any((e) => e.Is(m));
+            return config.installedMods.Any((e) => e.IsExact(m));
         }
 
         private InstalledMod GetInstalledMod(Mod m)
@@ -215,127 +141,27 @@ namespace LetsModBeatSaber
             return config.installedMods.FirstOrDefault((e) => e.Is(m));
         }
 
-        private void FormMain_Load(object sender, EventArgs e)
+        private IEnumerable<Mod> CheckForModUpdates()
         {
-            Task.Run(new Action(async () =>
+            foreach (Mod m in mods)
             {
-                LoadConfig();
+                if (!IsAnyVersionInstalled(m))
+                    continue;
 
-                if (!BeatSaberFound)
+                InstalledMod im = GetInstalledMod(m);
+
+                if (StringUtil.StringVersionToNumber(im.version) < StringUtil.StringVersionToNumber(m.version))
                 {
-                    config.beatSaberLocation = FindBeatSaberLocation(out config.beatSaberType);
-                    SaveConfig();  
-                }
-
-                await DownloadModInformations();
-
-                BeginInvoke(new Action(() =>
-                {
-                    ShowMods();
-
-                    labelBeatSaberType.Text = "Beat Saber type: " + config.beatSaberType;
-                    textBoxBeatSaberLocation.Text = config.beatSaberLocation;
-                }));
-
-                if (!IPAFound)
-                {
-                    if (MessageBox.Show("Do you want to mod Beat Saber right now?\n" +
-                        "The core components will get installed.\n" +
-                        "You can undo all the mods at any time in the settings tab.", "Let's mod?", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) != DialogResult.OK)
-                    {
-                        SelfDestruct();
-                    }
-
-                    SetStatus("Creating backup...", false);
-
-                    await CreateBackup(OriginalBackupFile);
-
-                    SetStatus("Backup was created!", true);
-
-                    SetStatus("Installing IPA...", false);
-
-                    if (await InstallIPA())
-                    {
-                        SetStatus("Installation of IPA succeeded!", true);
-
-                        await Task.Delay(1000);
-                    }
-                    else
-                    {
-                        SetStatus("Installation of IPA failed!", true);
-
-                        MessageBox.Show("Yikes, could not install Illusion Plugin Architecture.\nMaybe run as administrator?", "Could not install...", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                        SelfDestruct();
-                    }
-
-                    SetStatus("Installing core components...", false);
-
-                    await InstallCoreComponents();
-
-                    SetStatus("Installation of core components succeeded!", true);
-
-                    BeginInvoke(new Action(() => ShowMods()));
-                }
-
-                string beatSaberHash = ComputeFileHash(BeatSaberFile);
-                if (config.lastBeatSaberHash != beatSaberHash)
-                {
-                    MessageBox.Show("There is a beat saber update.");
-
-                    SetStatus("Patching Beat Saber...", false);
-
-                    await RunIPA();
-
-                    SetStatus("Patched Beat Saber!", true);
-
-                    config.lastBeatSaberHash = beatSaberHash;
-                    SaveConfig();
+                    yield return m;
                 }
             }
-            ));
         }
 
-        private void listView_MouseClick(object sender, MouseEventArgs e)
+        private async void RunBeatSaberAndExit()
         {
-            if (e.Button == MouseButtons.Right && selected != null)
-            {
-                contextMenu.Show(listView, e.Location);
-                contextMenu.Items[0].Text = selected.SubItems[0].Text;
+            await RunIPA(launch: true);
 
-                bool installed = IsInstalled((Mod)selected.Tag);
-                contextMenu.Items[3].Enabled = !installed;
-                contextMenu.Items[4].Enabled = installed;
-            }
-        }
-
-        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            SaveConfig();
-        }
-
-        private async Task RunIPA(bool revert = false)
-        {
-            await Task.Run(() =>
-            {
-                ProcessStartInfo psi = new ProcessStartInfo()
-                {
-                    Arguments = $"\"{ BeatSaberFile }\" --nowait" + (revert ? " --revert" : ""),
-                    FileName = IPAFile,
-                    WorkingDirectory = config.beatSaberLocation,
-                    WindowStyle = ProcessWindowStyle.Minimized
-
-                };
-
-                Process p = Process.Start(psi);
-
-                p.WaitForExit();
-            });
-        }
-
-        private void RunBeatSaber()
-        {
-            //TODO
+            SelfDestruct();
         }
 
         private string FindBeatSaberLocation(out ModDownloadType beatSaberType)
@@ -399,138 +225,53 @@ namespace LetsModBeatSaber
             return actualPath; //@"C:\Users\Stijn Rogiest\Desktop\test";
         }
 
-        private async Task<bool> InstallIPA()
+
+        private async Task DownloadModInformations()
         {
-            Mod ipaMod = mods.First((e) => string.Compare(e.name, "BSIPA", StringComparison.OrdinalIgnoreCase) == 0);
+            SetStatus("Updating mod information...", false);
 
-            return await InstallMod(ipaMod); 
-        }
+            mods = new List<Mod>();
 
-        private async Task InstallCoreComponents()
-        {
-            foreach (Mod m in mods.Where((e) => e.IsCoreComponent))
+            var request = WebRequest.Create(ModListUrl);
+
+            await Task.Factory.FromAsync<WebResponse>(request.BeginGetResponse, request.EndGetResponse, null).ContinueWith((Action<Task<WebResponse>>)((Task<WebResponse> task) =>
             {
-                await InstallMod(m);
-            }
-        }
+                HttpWebResponse response = (HttpWebResponse)task.Result;
 
-        private async void installToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Mod m = (Mod)selected.Tag;
-            SetStatus($"Installing mod { m.ToString() }...", false);
-
-            if (await InstallMod(m))
-            {
-                SetStatus($"Installation of { m.ToString() } succeeded.", true);
-
-                ShowMods();
-
-                await RunIPA();
-            }
-            else
-            {
-                SetStatus($"Installation of { m.ToString() } failed!", true);
-            }
-        }
-
-        private async void uninstallToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Mod mod = (Mod)selected.Tag;
-
-            InstalledMod m = GetInstalledMod(mod);
-
-            if (mod.IsCoreComponent)
-            {
-                if (MessageBox.Show($"You are willing to remove a core component, please note that removing these can cause the game to break.\n" +
-                    $"Are you sure you want to remove { mod.ToString() }?", "Sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
-                    return;
-            }
-
-            SetStatus($"Removing mod { m.ToString() }...", false);
-
-            if (await UninstallMod(m))
-            {
-                SetStatus($"Removal of { m.ToString() } succeeded.", true);
-
-                ShowMods();
-
-                await RunIPA();
-            }
-            else
-            {
-                SetStatus($"Removal of { m.ToString() } failed!", true);
-            }
-        }
-
-        private void viewInformationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FormModInfo fmi = new FormModInfo((Mod)selected.Tag);
-
-            fmi.Show(this);
-        }
-
-        private async void buttonInstall_Click(object sender, EventArgs e)
-        {
-            foreach(ListViewItem item in listView.CheckedItems)
-            {
-                Mod m = (Mod)item.Tag;
-                SetStatus($"Installing mod { m.ToString() }...", false);
-
-                if (await InstallMod(m))
-                    SetStatus($"Installation of { m.ToString() } succeeded.", true);
-                else
-                    SetStatus($"Installation of { m.ToString() } failed!", true);
-            }
-
-            ShowMods();
-
-            await RunIPA();
-        }
-
-        private async Task UninstallAllMods()
-        {
-            await RunIPA(true);
-
-            var toRemove = new List<InstalledMod>(config.installedMods);
-
-            foreach(InstalledMod mod in toRemove)
-                await UninstallMod(mod);
-        }
-
-        private async Task<bool> UninstallMod(InstalledMod mod)
-        {
-            return await Task.Run<bool>(() =>
-            {
-                try
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    foreach (string file in mod.affectedFiles)
-                    {
-                        if (File.Exists(file))
-                            File.Delete(file);
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                    string raw = reader.ReadToEnd();
 
-                        DeleteParentDirectories(Path.GetDirectoryName(file));
-                    }
-
-                    config.installedMods.Remove(mod);
+                    mods = JsonConvert.DeserializeObject<List<Mod>>(raw);
                     SaveConfig();
 
-                    return true;
+                    SetStatus("Mod information updated!", true);
                 }
-                catch
+                else
                 {
-                    return false;
-                }               
-            });
+                    SetStatus("Could not update mod information.", true);
+                }
+            }));
         }
 
-        private void DeleteParentDirectories(string dir)
+        private async Task RunIPA(bool revert = false, bool launch = false)
         {
-            if (!Directory.Exists(dir) || Directory.GetFileSystemEntries(dir).Length != 0)
-                return;
+            await Task.Run(() =>
+            {
+                ProcessStartInfo psi = new ProcessStartInfo()
+                {
+                    Arguments = $"\"{ BeatSaberFile }\" --nowait" + (revert ? " --revert" : "") + (launch ? " --launch" : ""),
+                    FileName = IPAFile,
+                    WorkingDirectory = config.beatSaberLocation,
+                    WindowStyle = ProcessWindowStyle.Minimized
 
-            Directory.Delete(dir);
+                };
 
-            DeleteParentDirectories(Directory.GetParent(dir).FullName);
+                Process p = Process.Start(psi);
+
+                p.WaitForExit();
+            });
         }
 
         private async Task<bool> InstallMod(Mod mod)
@@ -564,7 +305,7 @@ namespace LetsModBeatSaber
                         SaveConfig();
 
                         foreach (Mod dep in mod.dependencies)
-                            if (!IsInstalled(dep))
+                            if (!IsAnyVersionInstalled(dep))
                                 await InstallMod(dep);
 
                         return true;
@@ -582,16 +323,322 @@ namespace LetsModBeatSaber
             });
         }
 
-        private string ComputeFileHash(string file)
+        private async Task<bool> InstallIPA()
         {
-            using (var md5 = MD5.Create())
+            Mod ipaMod = mods.First((e) => string.Compare(e.name, "BSIPA", StringComparison.OrdinalIgnoreCase) == 0);
+
+            return await InstallMod(ipaMod);
+        }
+
+        private async Task InstallCoreComponents()
+        {
+            foreach (Mod m in mods.Where((e) => e.IsCoreComponent))
             {
-                using (var stream = File.OpenRead(file))
+                Mod latest = mods.Where((e) => string.Compare(e.name, m.name, StringComparison.OrdinalIgnoreCase) == 0)
+                    .OrderByDescending((e) => StringUtil.StringVersionToNumber(e.version)).First();
+
+                await InstallMod(latest);
+            }
+        }
+
+        private async Task UninstallAllMods()
+        {
+            await RunIPA(true);
+
+            var toRemove = new List<InstalledMod>(config.installedMods);
+
+            foreach(InstalledMod mod in toRemove)
+                await UninstallMod(mod);
+        }
+
+        private async Task UninstallAllModsAndData()
+        {
+            await RunIPA(true);
+
+            File.Delete(ConfigFile);
+
+            foreach(string file in Directory.GetFiles(config.beatSaberLocation))
+            {
+                if (!config.ogFiles.Contains(file))
+                    File.Delete(file);
+            }
+
+            foreach (string directory in Directory.GetDirectories(config.beatSaberLocation))
+            {
+                if (!config.ogFiles.Contains(directory))
+                    Directory.Delete(directory, true);
+            }
+        }
+
+        private async Task<bool> UninstallMod(InstalledMod mod)
+        {
+            return await Task.Run<bool>(() =>
+            {
+                try
                 {
-                    var hash = md5.ComputeHash(stream);
-                    return BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
+                    foreach (string file in mod.affectedFiles)
+                    {
+                        if (File.Exists(file))
+                            File.Delete(file);
+
+                        FileUtil.DeleteEmptyParentDirectories(Path.GetDirectoryName(file));
+                    }
+
+                    config.installedMods.Remove(mod);
+                    SaveConfig();
+
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }               
+            });
+        }
+
+        [Obsolete]
+        private async Task<bool> CreateBackup(string file)
+        {
+            return await Task.Run<bool>(async () =>
+            {
+                ProgressDialog pd = new ProgressDialog()
+                {
+                    ShowCancelButton = false,
+                    Description = "We are creating a original backup of beat saber, as fail-safe.",
+                    MinimizeBox = false,
+                    ProgressBarStyle = Ookii.Dialogs.WinForms.ProgressBarStyle.MarqueeProgressBar,
+                    ShowTimeRemaining = false,
+                    Text = "Creating a backup...",
+                    WindowTitle = "Create backup..."
+                };
+
+                pd.DoWork += (sender, e) =>
+                {
+                    try
+                    {
+                        if (File.Exists(file))
+                            File.Delete(file);
+
+                        ZipFile.CreateFromDirectory(config.beatSaberLocation, file, CompressionLevel.Fastest, false);
+                    }
+                    catch
+                    { }
+                };
+
+                pd.ShowDialog();
+
+                while (pd.IsBusy)
+                    await Task.Delay(500);
+
+                return true;
+            });
+        }
+
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+            Task.Run(new Action(async () =>
+            {
+                LoadConfig();
+
+                if (!BeatSaberFound)
+                {
+                    config.beatSaberLocation = FindBeatSaberLocation(out config.beatSaberType);
+                    SaveConfig();
+                }
+
+                await DownloadModInformations();
+
+                BeginInvoke(new Action(() =>
+                {
+                    ShowMods();
+
+                    labelBeatSaberType.Text = "Beat Saber type: " + config.beatSaberType;
+                    textBoxBeatSaberLocation.Text = config.beatSaberLocation;
+                }));
+
+                if (!IPAFound)
+                {
+                    if (MessageBox.Show("Do you want to mod Beat Saber right now?\n" +
+                        "The core components will get installed.\n" +
+                        "You can undo all the mods at any time in the settings tab.", "Let's mod?", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) != DialogResult.OK)
+                    {
+                        SelfDestruct();
+                    }
+
+                    config.ogFiles.AddRange(Directory.GetFiles(config.beatSaberLocation));
+                    config.ogFiles.AddRange(Directory.GetDirectories(config.beatSaberLocation));
+                    SaveConfig();
+
+                    SetStatus("Installing IPA...", false);
+
+                    if (await InstallIPA())
+                    {
+                        SetStatus("Installation of IPA succeeded!", true);
+
+                        await Task.Delay(1000);
+                    }
+                    else
+                    {
+                        SetStatus("Installation of IPA failed!", true);
+
+                        MessageBox.Show("Yikes, could not install Illusion Plugin Architecture.\nMaybe run as administrator?",
+                            "Could not install...", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        SelfDestruct();
+                    }
+
+                    SetStatus("Installing core components...", false);
+
+                    await InstallCoreComponents();
+
+                    SetStatus("Installation of core components succeeded!", true);
+
+                    BeginInvoke(new Action(() => ShowMods()));
+                }
+
+                string beatSaberHash = FileUtil.ComputeFileHash(BeatSaberFile);
+                if (config.lastBeatSaberHash != beatSaberHash)
+                {
+                    MessageBox.Show("Good news! There was a Beat Saber update, this means that some of the mods have to get updated too.\n" +
+                        "If the update was released recently, be aware that some mods could be broken.\n" +
+                        "At any moment you can open this program to automatically check for and install mod updates!", "Oh snap!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    SetStatus("Patching Beat Saber...", false);
+
+                    await RunIPA();
+
+                    SetStatus("Patched Beat Saber!", true);
+
+                    config.lastBeatSaberHash = beatSaberHash;
+                    SaveConfig();
+                }
+
+                foreach (Mod m in CheckForModUpdates())
+                {
+                    SetStatus($"Updating { m.ToString() }...", false);
+
+                    if (!await UninstallMod(GetInstalledMod(m)))
+                    {
+                        SetStatus($"Could not remove old version, overwriting...", false);
+
+                        await Task.Delay(1000);
+                    }
+
+                    if (await InstallMod(m))
+                    {
+                        SetStatus($"Updated { m.ToString() }!", true);
+
+                        ShowNotification($"Updated Beat Saber plugin:\n{ m.ToString() }");
+                    }
+                    else
+                    {
+                        SetStatus($"Could not update { m.ToString() }!", true);
+
+                        await Task.Delay(1000);
+                    }
                 }
             }
+            ));
+        }
+
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e) => SaveConfig();
+
+        private void listView_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && selected != null)
+            {
+                contextMenu.Show(listView, e.Location);
+                contextMenu.Items[0].Text = selected.SubItems[0].Text;
+
+                bool installed = IsAnyVersionInstalled((Mod)selected.Tag);
+                contextMenu.Items[3].Enabled = !installed;
+                contextMenu.Items[4].Enabled = installed;
+            }
+        }
+
+        private async void installToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Mod m = (Mod)selected.Tag;
+            SetStatus($"Installing mod { m.ToString() }...", false);
+
+            if (await InstallMod(m))
+            {
+                SetStatus($"Installation of { m.ToString() } succeeded.", true);
+
+                ShowMods();
+                ShowNotification($"Mod { m.ToString() } was successfully installed into Beat Saber!");
+
+                await RunIPA();
+            }
+            else
+            {
+                SetStatus($"Installation of { m.ToString() } failed!", true);
+            }
+        }
+
+        private async void uninstallToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Mod mod = (Mod)selected.Tag;
+
+            InstalledMod m = GetInstalledMod(mod);
+
+            if (mod.IsCoreComponent)
+            {
+                if (MessageBox.Show($"You are willing to remove a core component, please note that removing these can cause the game to break.\n" +
+                    $"Are you sure you want to remove { mod.ToString() }?", "Sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
+                    return;
+            }
+
+            SetStatus($"Removing mod { m.ToString() }...", false);
+
+            if (await UninstallMod(m))
+            {
+                SetStatus($"Removal of { m.ToString() } succeeded.", true);
+
+                ShowMods();
+                ShowNotification($"The mod { m.ToString() } was successfully removed from Beat Saber.");
+
+                await RunIPA();
+            }
+            else
+            {
+                SetStatus($"Removal of { m.ToString() } failed!", true);
+            }
+        }
+
+        private void viewInformationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormModInfo fmi = new FormModInfo((Mod)selected.Tag);
+
+            fmi.Show(this);
+        }
+
+        private async void buttonInstall_Click(object sender, EventArgs e)
+        {
+            int installedCount = 0;
+
+            foreach (ListViewItem item in listView.CheckedItems)
+            {
+                Mod m = (Mod)item.Tag;
+                SetStatus($"Installing mod { m.ToString() }...", false);
+
+                if (await InstallMod(m))
+                {
+                    SetStatus($"Installation of { m.ToString() } succeeded.", true);
+
+                    installedCount++;
+                }
+                else
+                {
+                    SetStatus($"Installation of { m.ToString() } failed!", true);
+                }
+            }
+
+            ShowMods();
+            ShowNotification($"{ installedCount } mods were installed into Beat Saber successfully.");
+
+            await RunIPA();
         }
 
         private void buttonMoreInfo_Click(object sender, EventArgs e)
@@ -668,54 +715,102 @@ namespace LetsModBeatSaber
 
                 SetStatus("All mods were removed!", true);
 
+                ShowNotification($"All Beat Saber mods were removed successfully.");
+
                 await Task.Delay(1000);
 
                 SelfDestruct();
             }
         }
-        
-        private async Task<bool> CreateBackup(string file)
+
+        private async void buttonRemoveModsAndData_Click(object sender, EventArgs e)
         {
-            return await Task.Run<bool>(async () =>
+            if (MessageBox.Show("Are you very VERY sure you want to remove all Beat Saber mods and mod data?\n" +
+                "Data like custom songs, custom saber,... will also get removed.", "Living on the edge.", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation) == DialogResult.Yes)
             {
-                ProgressDialog pd = new ProgressDialog()
-                {
-                    ShowCancelButton = false,
-                    Description = "Creating a backup please wait...",
-                    MinimizeBox = false,
-                    ProgressBarStyle = Ookii.Dialogs.WinForms.ProgressBarStyle.MarqueeProgressBar,
-                    ShowTimeRemaining = false,
-                    Text = "Archiving...",
-                    WindowTitle = "Create backup..."
-                };
+                SetStatus("Uninstalling all mods with data...", false);
 
-                pd.DoWork += (sender, e) =>
-                {
-                    try
-                    {
-                        if (File.Exists(file))
-                            File.Delete(file);
+                await UninstallAllModsAndData();
 
-                        ZipFile.CreateFromDirectory(config.beatSaberLocation, file, CompressionLevel.Fastest, false);
-                    }
-                    catch
-                    { }
-                };
+                SetStatus("All mods with data were removed!", true);
 
-                pd.ShowDialog();
+                ShowNotification($"All Beat Saber mods and data were removed successfully.");
 
-                while (pd.IsBusy)
-                    await Task.Delay(500);
+                await Task.Delay(1000);
 
-                return true;
-            });
+                SelfDestruct();
+            }
         }
+
+        private void listView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            Mod? s = e.Item.Tag as Mod?;
+
+            selected = e.Item;
+
+            if (selected != null)
+            {
+                textBoxDescription.Text = $"{ s.Value.name }\r\n\tby { s.Value.author.username }\r\n\r\n{ s.Value.description }\r\n\r\nCategory: { s.Value.Category.ToString() }";
+            }
+
+            buttonMoreInfo.Enabled = selected != null;
+        }
+
+        private void listView_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            Mod? s = e.Item.Tag as Mod?;
+
+            if (s != null && IsAnyVersionInstalled(s.Value))
+            {
+                e.Item.Checked = false;
+            }
+        }
+
 
         private void SelfDestruct()
         {
             Environment.Exit(0);
             while (true) ;
         }
+
+        private void ShowNotification(string text)
+        {
+            BeginInvoke(new Action(() =>
+            {
+                notifyIcon.Visible = true;
+                notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
+                notifyIcon.Icon = SystemIcons.Information;
+                notifyIcon.BalloonTipText = text;
+                notifyIcon.ShowBalloonTip(5000);
+            }));
+        }
+
+        public void SetStatus(string status, bool done)
+        {
+            BeginInvoke(new Action(() =>
+            {
+                statusLabel.Text = "Status: " + status;
+
+                progressBar.Style = done ? System.Windows.Forms.ProgressBarStyle.Continuous : System.Windows.Forms.ProgressBarStyle.Marquee;
+                progressBar.Visible = !done;
+            }));
+        }
+
+        private void ShowMods()
+        {
+            listView.Items.Clear();
+
+            foreach (Mod m in mods)
+            {
+                ShowMod(m);
+            }
+        }
+
+        public void ShowMod(Mod m)
+        {
+            m.AddToList(listView, !IsInstalled(m));
+        }
+
     }
 
     [Serializable]
@@ -723,12 +818,13 @@ namespace LetsModBeatSaber
     {
         public string beatSaberLocation;
         public string lastBeatSaberHash;
+        public List<string> ogFiles;
         public ModDownloadType beatSaberType;
         public List<InstalledMod> installedMods;
 
         public Config()
         {
-            lastBeatSaberHash = null;
+            ogFiles = new List<string>();
             installedMods = new List<InstalledMod>();
         }
     }

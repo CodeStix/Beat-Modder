@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 
-namespace LetsModBeatSaber
+namespace Stx.BeatModder
 {
     public partial class FormModInfo : Form
     {
@@ -72,6 +72,8 @@ namespace LetsModBeatSaber
         private void buttonOk_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
+
+            Close();
         }
 
         private void linkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

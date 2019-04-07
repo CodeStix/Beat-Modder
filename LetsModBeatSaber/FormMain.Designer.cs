@@ -1,4 +1,4 @@
-﻿namespace LetsModBeatSaber
+﻿namespace Stx.BeatModder
 {
     partial class FormMain
     {
@@ -46,6 +46,11 @@
             this.buttonInstall = new System.Windows.Forms.Button();
             this.buttonMoreInfo = new System.Windows.Forms.Button();
             this.tabPageSettings = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.buttonRemoveModsAndData = new System.Windows.Forms.Button();
+            this.buttonRemoveMods = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonChangeBeatSaberLocation = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -60,20 +65,16 @@
             this.viewInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.installToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uninstallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.buttonRemoveMods = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.buttonRemoveModsAndData = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.statusStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPageMods.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.tabPageSettings.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPageAbout.SuspendLayout();
             this.contextMenu.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -275,6 +276,62 @@
             this.tabPageSettings.TabIndex = 1;
             this.tabPageSettings.Text = "Settings";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.buttonRemoveModsAndData);
+            this.groupBox2.Controls.Add(this.buttonRemoveMods);
+            this.groupBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.groupBox2.Location = new System.Drawing.Point(17, 116);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(199, 128);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Danger Zone";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label6.Location = new System.Drawing.Point(6, 103);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(140, 13);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "(but don\'t keep ANYTHING)";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label5.Location = new System.Drawing.Point(6, 46);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(138, 13);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "(but keep custom songs, ...)";
+            // 
+            // buttonRemoveModsAndData
+            // 
+            this.buttonRemoveModsAndData.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.buttonRemoveModsAndData.Location = new System.Drawing.Point(6, 76);
+            this.buttonRemoveModsAndData.Name = "buttonRemoveModsAndData";
+            this.buttonRemoveModsAndData.Size = new System.Drawing.Size(185, 24);
+            this.buttonRemoveModsAndData.TabIndex = 2;
+            this.buttonRemoveModsAndData.Text = "Remove all mods and mod data\r\n\r\n";
+            this.buttonRemoveModsAndData.UseVisualStyleBackColor = true;
+            this.buttonRemoveModsAndData.Click += new System.EventHandler(this.buttonRemoveModsAndData_Click);
+            // 
+            // buttonRemoveMods
+            // 
+            this.buttonRemoveMods.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.buttonRemoveMods.Location = new System.Drawing.Point(6, 19);
+            this.buttonRemoveMods.Name = "buttonRemoveMods";
+            this.buttonRemoveMods.Size = new System.Drawing.Size(185, 24);
+            this.buttonRemoveMods.TabIndex = 1;
+            this.buttonRemoveMods.Text = "Remove all mods\r\n\r\n\r\n";
+            this.buttonRemoveMods.UseVisualStyleBackColor = true;
+            this.buttonRemoveMods.Click += new System.EventHandler(this.buttonRemoveMods_Click);
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.buttonChangeBeatSaberLocation);
@@ -343,7 +400,7 @@
             this.tabPageAbout.Controls.Add(this.label4);
             this.tabPageAbout.Location = new System.Drawing.Point(4, 22);
             this.tabPageAbout.Name = "tabPageAbout";
-            this.tabPageAbout.Size = new System.Drawing.Size(752, 322);
+            this.tabPageAbout.Size = new System.Drawing.Size(792, 402);
             this.tabPageAbout.TabIndex = 2;
             this.tabPageAbout.Text = "About";
             // 
@@ -352,7 +409,7 @@
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label4.Location = new System.Drawing.Point(0, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(752, 322);
+            this.label4.Size = new System.Drawing.Size(792, 402);
             this.label4.TabIndex = 0;
             this.label4.Text = "Beat-Modder \r\nby CodeStix\r\n\r\npowered by beatmods.com \r\nby vanZeben";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -401,60 +458,12 @@
             this.uninstallToolStripMenuItem.Text = "Uninstall";
             this.uninstallToolStripMenuItem.Click += new System.EventHandler(this.uninstallToolStripMenuItem_Click);
             // 
-            // buttonRemoveMods
+            // notifyIcon
             // 
-            this.buttonRemoveMods.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonRemoveMods.Location = new System.Drawing.Point(6, 19);
-            this.buttonRemoveMods.Name = "buttonRemoveMods";
-            this.buttonRemoveMods.Size = new System.Drawing.Size(185, 24);
-            this.buttonRemoveMods.TabIndex = 1;
-            this.buttonRemoveMods.Text = "Remove all mods\r\n\r\n\r\n";
-            this.buttonRemoveMods.UseVisualStyleBackColor = true;
-            this.buttonRemoveMods.Click += new System.EventHandler(this.buttonRemoveMods_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.buttonRemoveModsAndData);
-            this.groupBox2.Controls.Add(this.buttonRemoveMods);
-            this.groupBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.groupBox2.Location = new System.Drawing.Point(17, 116);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(199, 128);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Danger Zone";
-            // 
-            // buttonRemoveModsAndData
-            // 
-            this.buttonRemoveModsAndData.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.buttonRemoveModsAndData.Location = new System.Drawing.Point(6, 76);
-            this.buttonRemoveModsAndData.Name = "buttonRemoveModsAndData";
-            this.buttonRemoveModsAndData.Size = new System.Drawing.Size(185, 24);
-            this.buttonRemoveModsAndData.TabIndex = 2;
-            this.buttonRemoveModsAndData.Text = "Remove all mods and mod data\r\n\r\n";
-            this.buttonRemoveModsAndData.UseVisualStyleBackColor = true;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label5.Location = new System.Drawing.Point(6, 46);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(138, 13);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "(but keep custom songs, ...)";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label6.Location = new System.Drawing.Point(6, 103);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(140, 13);
-            this.label6.TabIndex = 4;
-            this.label6.Text = "(but don\'t keep ANYTHING)";
+            this.notifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.notifyIcon.BalloonTipTitle = "Beat Modder Notification";
+            this.notifyIcon.Text = "Beat Modder Notification";
+            this.notifyIcon.Visible = true;
             // 
             // FormMain
             // 
@@ -474,12 +483,12 @@
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
             this.tabPageSettings.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPageAbout.ResumeLayout(false);
             this.contextMenu.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -523,6 +532,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button buttonRemoveModsAndData;
         private System.Windows.Forms.Button buttonRemoveMods;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
     }
 }
 

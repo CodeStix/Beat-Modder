@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LetsModBeatSaber
+namespace Stx.BeatModder
 {
     [Serializable]
     public struct InstalledMod
@@ -35,7 +35,20 @@ namespace LetsModBeatSaber
 
         public bool Is(Mod mod)
         {
-            return name == mod.name && author == mod.author.username && version == mod.version;
+            return string.Compare(name, mod.name, StringComparison.OrdinalIgnoreCase) == 0 && 
+                string.Compare(author, mod.author.username, StringComparison.OrdinalIgnoreCase) == 0;
+        }
+
+        public bool IsExact(Mod mod)
+        {
+            return string.Compare(name, mod.name, StringComparison.OrdinalIgnoreCase) == 0 &&
+                string.Compare(author, mod.author.username, StringComparison.OrdinalIgnoreCase) == 0 &&
+                string.Compare(version, mod.version, StringComparison.OrdinalIgnoreCase) == 0;
+        }
+
+        public override string ToString()
+        {
+            return $"{ name.ToLower() }-{ version }";
         }
     }
 }

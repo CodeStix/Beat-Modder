@@ -1,4 +1,4 @@
-﻿namespace LetsModBeatSaber
+﻿namespace Stx.BeatModder
 {
     partial class FormModInfo
     {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LetsModBeatSaber.Properties {
+namespace Stx.BeatModder.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace LetsModBeatSaber.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LetsModBeatSaber.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Stx.BeatModder.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,24 @@ namespace LetsModBeatSaber.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Program Files\Steam\steamapps\common
+        ///Program Files (x86)\Steam\steamapps\common
+        ///Program Files
+        ///Program Files (x86)
+        ///Program Files\Oculus\Software
+        ///Program Files (x86)\Oculus\Software
+        ///Program Files\Oculus\Software\hyperbolic-magnetism-beat-saber\
+        ///Program Files\Oculus\Oculus Apps\Software\hyperbolic-magnetism-beat-saber\
+        ///Program Files\Oculus Apps\Software\hyperbolic-magnetism-beat-saber\
+        ///Steam\steamapps\common
+        ///Games\Steam\steamapps\common
+        ///VR
+        ///Games\VR
+        ///Rift
+        ///Games\Rift
+        ///Oculus
+        ///Games\Oculus
+        ///Oculus Ri [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string locations {
             get {

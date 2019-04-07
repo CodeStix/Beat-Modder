@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LetsModBeatSaber
+namespace Stx.BeatModder
 {
     public partial class FormListSelect : Form
     {
