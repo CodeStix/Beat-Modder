@@ -241,7 +241,7 @@ namespace LetsModBeatSaber
 
                     if (await InstallIPA())
                     {
-                        SetStatus("Installed IPA!", true);
+                        SetStatus("Installation of IPA succeeded!", true);
 
                         await Task.Delay(1000);
                     }
@@ -249,11 +249,19 @@ namespace LetsModBeatSaber
                     {
                         SetStatus("Installation of IPA failed!", true);
 
-                        MessageBox.Show("Yikes, could not install Illusion Plugin Architecture.\nMaybe run as administrator?", "Could not install IPA...", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Yikes, could not install Illusion Plugin Architecture.\nMaybe run as administrator?", "Could not install...", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         Environment.Exit(0);
                         return;
                     }
+
+                    SetStatus("Installing core components...", false);
+
+                    await InstallCoreComponents();
+
+                    SetStatus("Installation of core components succeeded!", true);
+
+                    BeginInvoke(new Action(() => ShowMods()));
                 }
 
                 string beatSaberHash = ComputeFileHash(BeatSaberFile);
@@ -381,7 +389,19 @@ namespace LetsModBeatSaber
 
         private async Task<bool> InstallIPA()
         {
-            return await Task.Run<bool>(() =>
+            Mod ipaMod = mods.First((e) => string.Compare(e.name, "BSIPA", StringComparison.OrdinalIgnoreCase) == 0);
+
+            return await InstallMod(ipaMod); 
+        }
+
+        private async Task InstallCoreComponents()
+        {
+            var coreMods = mods.Where((e) => e.Category == ModCategory.Core || e.Category == ModCategory.Libraries);
+
+            foreach (Mod m in coreMods)
+                await InstallMod(m);
+
+            /*return await Task.Run<bool>(() =>
             {
                 using (WebClient wc = new WebClient())
                 {
@@ -399,7 +419,7 @@ namespace LetsModBeatSaber
                         return false;
                     }
                 }
-            });
+            });*/
         }
 
         private async void installToolStripMenuItem_Click(object sender, EventArgs e)
@@ -460,6 +480,8 @@ namespace LetsModBeatSaber
                         if (string.IsNullOrEmpty(md.DownloadUrl))
                             return false;
 
+                        new FileInfo(file).Directory.Create();
+
                         wc.DownloadFile(md.DownloadUrl, file);
 
                         using (FileStream fs = new FileStream(file, FileMode.Open))
@@ -473,13 +495,14 @@ namespace LetsModBeatSaber
 
                         return true;
                     }
-                    catch
+                    catch(Exception e)
                     {
                         return false;
                     }
                     finally
                     {
-                        File.Delete(file);
+                        if (File.Exists(file))
+                            File.Delete(file);
                     }
                 }
             });
