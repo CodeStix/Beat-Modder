@@ -407,27 +407,9 @@ namespace LetsModBeatSaber
             var coreMods = mods.Where((e) => e.Category == ModCategory.Core || e.Category == ModCategory.Libraries);
 
             foreach (Mod m in coreMods)
-                await InstallMod(m);
-
-            /*return await Task.Run<bool>(() =>
             {
-                using (WebClient wc = new WebClient())
-                {
-                    try
-                    {
-                        wc.DownloadFile(Properties.Settings.Default.IPADownloadUrl, GetBeatSaberFile("IPA.zip"));
-
-                        ZipFile.ExtractToDirectory(GetBeatSaberFile("IPA.zip"), config.beatSaberLocation);
-                        File.Delete(GetBeatSaberFile("IPA.zip"));
-
-                        return true;
-                    }
-                    catch
-                    {
-                        return false;
-                    }
-                }
-            });*/
+                await InstallMod(m);
+            }
         }
 
         private async void installToolStripMenuItem_Click(object sender, EventArgs e)
@@ -652,109 +634,6 @@ namespace LetsModBeatSaber
         {
             lastBeatSaberHash = null;
             installedMods = new List<InstalledMod>();
-        }
-    }
-
-    [Serializable]
-    public struct InstalledMod
-    {
-        public string name;
-        public string version;
-        public string description;
-        public string author;
-        public List<string> affectedFiles;
-
-        public InstalledMod(string name, string author, string version, string description)
-        {
-            this.name = name;
-            this.author = author;
-            this.version = version;
-            this.description = description;
-            affectedFiles = new List<string>();
-        }
-
-        public InstalledMod(Mod mod, List<string> affectedFiles)
-        {
-            name = mod.name;
-            author = mod.author.username;
-            version = mod.version;
-            description = mod.description;
-            this.affectedFiles = affectedFiles;
-        }
-
-        public bool Is(Mod mod)
-        {
-            return name == mod.name && author == mod.author.username && version == mod.version;
-        }
-    }
-
-    public static class ListViewExtensions
-    {
-        public static void SetEnabled(this ListViewItem item, bool enabled)
-        {
-            if (enabled)
-            {
-                item.Font = new Font(FontFamily.GenericSansSerif, 8.5f, FontStyle.Regular);
-                item.ForeColor = Color.Black;
-            }
-            else
-            {
-                item.Font = new Font(FontFamily.GenericSansSerif, 8.5f, FontStyle.Italic);
-                item.ForeColor = Color.DarkGray;
-            }
-        }
-
-        public static ListViewGroup GetOrCreateGroup(this ListView item, string groupName)
-        {
-            for(int i = 0; i < item.Groups.Count; i++)
-            {
-                if (string.Compare(item.Groups[i].Name, groupName) == 0)
-                    return item.Groups[i];
-            }
-
-            return item.Groups.Add(groupName, groupName);
-        }
-    }
-
-    public static class ZipArchiveExtensions
-    {
-        public static List<string> ExtractToDirectory(this ZipArchive archive, string destinationDirectoryName, bool overwrite)
-        {
-            List<string> affectedFiles = new List<string>();
-
-            if (!overwrite)
-            {
-                archive.ExtractToDirectory(destinationDirectoryName);
-                return affectedFiles;
-            }
-
-            DirectoryInfo di = Directory.CreateDirectory(destinationDirectoryName);
-            string destinationDirectoryFullPath = di.FullName;
-
-            foreach (ZipArchiveEntry file in archive.Entries)
-            {
-                string completeFileName = Path.GetFullPath(Path.Combine(destinationDirectoryFullPath, file.FullName));
-
-                if (!completeFileName.StartsWith(destinationDirectoryFullPath, StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-
-                if (string.IsNullOrWhiteSpace(file.Name))
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(completeFileName));
-
-                    continue;
-                }
-
-                new FileInfo(completeFileName).Directory.Create();
-
-                affectedFiles.Add(completeFileName);
-
-                file.ExtractToFile(completeFileName, true);
-            }
-
-            return affectedFiles;
         }
     }
 }
