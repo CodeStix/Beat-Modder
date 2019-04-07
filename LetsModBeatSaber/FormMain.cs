@@ -453,7 +453,9 @@ namespace LetsModBeatSaber
 
         private void viewInformationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start(((Mod)selected.Tag).link);
+            FormModInfo fmi = new FormModInfo((Mod)selected.Tag);
+
+            fmi.Show(this);
         }
 
         private async void buttonInstall_Click(object sender, EventArgs e)
@@ -505,7 +507,7 @@ namespace LetsModBeatSaber
 
         private async Task<bool> InstallMod(Mod mod)
         {
-            return await Task.Run<bool>(() =>
+            return await Task.Run<bool>(async () =>
             {
                 using (WebClient wc = new WebClient())
                 {
@@ -532,6 +534,10 @@ namespace LetsModBeatSaber
 
                         config.installedMods.Add(new InstalledMod(mod, affectedFiles));
                         SaveConfig();
+
+                        foreach (Mod dep in mod.dependencies)
+                            if (!IsInstalled(dep))
+                                await InstallMod(dep);
 
                         return true;
                     }

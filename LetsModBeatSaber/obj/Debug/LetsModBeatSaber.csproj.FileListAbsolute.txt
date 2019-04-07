@@ -21,3 +21,4 @@ H:\Documents\GitHub\LetsModBeatSaber\LetsModBeatSaber\obj\Debug\LetsModBeatSaber
 H:\Documents\GitHub\LetsModBeatSaber\LetsModBeatSaber\bin\Debug\HtmlAgilityPack.dll
 H:\Documents\GitHub\LetsModBeatSaber\LetsModBeatSaber\bin\Debug\HtmlAgilityPack.pdb
 H:\Documents\GitHub\LetsModBeatSaber\LetsModBeatSaber\bin\Debug\HtmlAgilityPack.xml
+H:\Documents\GitHub\LetsModBeatSaber\LetsModBeatSaber\obj\Debug\LetsModBeatSaber.FormModInfo.resources

@@ -74,14 +74,26 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormModInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormModInfo.Designer.cs">
+      <DependentUpon>FormModInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InstalledMod.cs" />
+    <Compile Include="ListViewExtensions.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ZipArchiveExtensions.cs" />
     <EmbeddedResource Include="FormListSelect.resx">
       <DependentUpon>FormListSelect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormModInfo.resx">
+      <DependentUpon>FormModInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

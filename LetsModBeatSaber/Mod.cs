@@ -20,8 +20,8 @@ namespace LetsModBeatSaber
         public string link;
         public string name;
         public string status;
-        public string updatedData;
-        public string uploadData;
+        public string updatedDate;
+        public string uploadDate;
         public string version;
         [JsonProperty("_id")]
         public string id;
@@ -124,6 +124,7 @@ namespace LetsModBeatSaber
         public string type; // universal, steam, oculus
         public string url;
 
+        [JsonIgnore]
         public string DownloadUrl
         {
             get

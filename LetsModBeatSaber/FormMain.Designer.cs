@@ -35,6 +35,7 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageMods = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.label3 = new System.Windows.Forms.Label();
             this.listView = new System.Windows.Forms.ListView();
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderAuthor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -58,7 +59,6 @@
             this.viewInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.installToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uninstallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label3 = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPageMods.SuspendLayout();
@@ -154,6 +154,15 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(786, 396);
             this.tableLayoutPanel.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 361);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(226, 26);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "To uninstall a mod, right click an installed mod and click uninstall.";
             // 
             // listView
             // 
@@ -321,6 +330,7 @@
             // 
             // tabPageAbout
             // 
+            this.tabPageAbout.BackColor = System.Drawing.SystemColors.Window;
             this.tabPageAbout.Location = new System.Drawing.Point(4, 22);
             this.tabPageAbout.Name = "tabPageAbout";
             this.tabPageAbout.Size = new System.Drawing.Size(792, 402);
@@ -370,15 +380,6 @@
             this.uninstallToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
             this.uninstallToolStripMenuItem.Text = "Uninstall";
             this.uninstallToolStripMenuItem.Click += new System.EventHandler(this.uninstallToolStripMenuItem_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 361);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(226, 26);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "To uninstall a mod, right click an installed mod and click uninstall.";
             // 
             // FormMain
             // 
