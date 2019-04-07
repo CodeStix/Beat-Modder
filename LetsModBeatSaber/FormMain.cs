@@ -210,7 +210,8 @@ namespace LetsModBeatSaber
             if (config.installedMods == null)
                 return false;
 
-            return config.installedMods.Contains(new InstalledMod(m));
+            return config.installedMods.Any((e) => e.Is(m));
+            //return config.installedMods.Any((e) => e == new InstalledMod(m));
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -484,18 +485,20 @@ namespace LetsModBeatSaber
 
                         wc.DownloadFile(md.DownloadUrl, file);
 
+                        List<string> affectedFiles = new List<string>();
+
                         using (FileStream fs = new FileStream(file, FileMode.Open))
                         using (ZipArchive archive = new ZipArchive(fs))
                         {
-                            archive.ExtractToDirectory(config.beatSaberLocation, true);
+                            affectedFiles = archive.ExtractToDirectory(config.beatSaberLocation, true);
                         }
 
-                        config.installedMods.Add(new InstalledMod(mod));
+                        config.installedMods.Add(new InstalledMod(mod, affectedFiles));
                         SaveConfig();
 
                         return true;
                     }
-                    catch(Exception e)
+                    catch
                     {
                         return false;
                     }
@@ -605,6 +608,7 @@ namespace LetsModBeatSaber
         public string version;
         public string description;
         public string author;
+        public List<string> affectedFiles;
 
         public InstalledMod(string name, string author, string version, string description)
         {
@@ -612,14 +616,21 @@ namespace LetsModBeatSaber
             this.author = author;
             this.version = version;
             this.description = description;
+            affectedFiles = new List<string>();
         }
-        
-        public InstalledMod(Mod mod)
+
+        public InstalledMod(Mod mod, List<string> affectedFiles)
         {
             name = mod.name;
             author = mod.author.username;
             version = mod.version;
             description = mod.description;
+            this.affectedFiles = affectedFiles;
+        }
+
+        public bool Is(Mod mod)
+        {
+            return name == mod.name && author == mod.author.username && version == mod.version;
         }
     }
 
@@ -653,12 +664,14 @@ namespace LetsModBeatSaber
 
     public static class ZipArchiveExtensions
     {
-        public static void ExtractToDirectory(this ZipArchive archive, string destinationDirectoryName, bool overwrite)
+        public static List<string> ExtractToDirectory(this ZipArchive archive, string destinationDirectoryName, bool overwrite)
         {
+            List<string> affectedFiles = new List<string>();
+
             if (!overwrite)
             {
                 archive.ExtractToDirectory(destinationDirectoryName);
-                return;
+                return affectedFiles;
             }
 
             DirectoryInfo di = Directory.CreateDirectory(destinationDirectoryName);
@@ -676,13 +689,18 @@ namespace LetsModBeatSaber
                 if (string.IsNullOrWhiteSpace(file.Name))
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(completeFileName));
+
                     continue;
                 }
 
                 new FileInfo(completeFileName).Directory.Create();
 
+                affectedFiles.Add(completeFileName);
+
                 file.ExtractToFile(completeFileName, true);
             }
+
+            return affectedFiles;
         }
     }
 }
