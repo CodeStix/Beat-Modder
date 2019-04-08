@@ -59,10 +59,10 @@
             this.labelBeatSaberType = new System.Windows.Forms.Label();
             this.tabPageAbout = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.linkLabelBeatMods = new System.Windows.Forms.LinkLabel();
-            this.linkLabelCodeStix = new System.Windows.Forms.LinkLabel();
-            this.label4 = new System.Windows.Forms.Label();
+            this.panelAbout = new System.Windows.Forms.Panel();
+            this.linkLabelAbout = new System.Windows.Forms.LinkLabel();
+            this.labelVersion = new System.Windows.Forms.Label();
+            this.linkLabelDiscord = new System.Windows.Forms.LinkLabel();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.itemNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -79,7 +79,7 @@
             this.groupBox1.SuspendLayout();
             this.tabPageAbout.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.panelAbout.SuspendLayout();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,10 +88,10 @@
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
             this.progressBar});
-            this.statusStrip.Location = new System.Drawing.Point(0, 428);
+            this.statusStrip.Location = new System.Drawing.Point(0, 439);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.statusStrip.Size = new System.Drawing.Size(800, 22);
+            this.statusStrip.Size = new System.Drawing.Size(784, 22);
             this.statusStrip.TabIndex = 0;
             this.statusStrip.Text = "statusStrip";
             // 
@@ -117,7 +117,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(800, 428);
+            this.tabControl.Size = new System.Drawing.Size(784, 439);
             this.tabControl.TabIndex = 1;
             // 
             // tabPageMods
@@ -127,7 +127,7 @@
             this.tabPageMods.Location = new System.Drawing.Point(4, 22);
             this.tabPageMods.Name = "tabPageMods";
             this.tabPageMods.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMods.Size = new System.Drawing.Size(792, 402);
+            this.tabPageMods.Size = new System.Drawing.Size(776, 413);
             this.tabPageMods.TabIndex = 0;
             this.tabPageMods.Text = "Mods";
             // 
@@ -167,15 +167,15 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.90909F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(786, 396);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(770, 407);
             this.tableLayoutPanel.TabIndex = 1;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 361);
+            this.label3.Location = new System.Drawing.Point(3, 372);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(226, 26);
+            this.label3.Size = new System.Drawing.Size(203, 26);
             this.label3.TabIndex = 5;
             this.label3.Text = "To uninstall a mod, right click an installed mod and click uninstall.";
             // 
@@ -197,7 +197,7 @@
             this.listView.Name = "listView";
             this.tableLayoutPanel.SetRowSpan(this.listView, 2);
             this.listView.ShowItemToolTips = true;
-            this.listView.Size = new System.Drawing.Size(583, 355);
+            this.listView.Size = new System.Drawing.Size(567, 366);
             this.listView.TabIndex = 0;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
@@ -229,10 +229,10 @@
             // 
             this.textBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxDescription.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxDescription.Location = new System.Drawing.Point(592, 3);
+            this.textBoxDescription.Location = new System.Drawing.Point(576, 3);
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
-            this.textBoxDescription.Size = new System.Drawing.Size(191, 323);
+            this.textBoxDescription.Size = new System.Drawing.Size(191, 333);
             this.textBoxDescription.TabIndex = 3;
             this.textBoxDescription.Text = "Press any mod to display information.";
             // 
@@ -241,7 +241,7 @@
             this.label1.AutoSize = true;
             this.tableLayoutPanel.SetColumnSpan(this.label1, 2);
             this.label1.ForeColor = System.Drawing.Color.Gray;
-            this.label1.Location = new System.Drawing.Point(241, 361);
+            this.label1.Location = new System.Drawing.Point(225, 372);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(240, 13);
             this.label1.TabIndex = 2;
@@ -250,7 +250,7 @@
             // buttonInstall
             // 
             this.buttonInstall.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonInstall.Location = new System.Drawing.Point(592, 364);
+            this.buttonInstall.Location = new System.Drawing.Point(576, 375);
             this.buttonInstall.Name = "buttonInstall";
             this.buttonInstall.Size = new System.Drawing.Size(191, 29);
             this.buttonInstall.TabIndex = 1;
@@ -262,9 +262,9 @@
             // 
             this.buttonMoreInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonMoreInfo.Enabled = false;
-            this.buttonMoreInfo.Location = new System.Drawing.Point(592, 332);
+            this.buttonMoreInfo.Location = new System.Drawing.Point(576, 342);
             this.buttonMoreInfo.Name = "buttonMoreInfo";
-            this.buttonMoreInfo.Size = new System.Drawing.Size(191, 26);
+            this.buttonMoreInfo.Size = new System.Drawing.Size(191, 27);
             this.buttonMoreInfo.TabIndex = 4;
             this.buttonMoreInfo.Text = "More info...\r\n";
             this.buttonMoreInfo.UseVisualStyleBackColor = true;
@@ -278,7 +278,7 @@
             this.tabPageSettings.Location = new System.Drawing.Point(4, 22);
             this.tabPageSettings.Name = "tabPageSettings";
             this.tabPageSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSettings.Size = new System.Drawing.Size(792, 402);
+            this.tabPageSettings.Size = new System.Drawing.Size(792, 259);
             this.tabPageSettings.TabIndex = 1;
             this.tabPageSettings.Text = "Settings";
             // 
@@ -406,7 +406,7 @@
             this.tabPageAbout.Controls.Add(this.tableLayoutPanel1);
             this.tabPageAbout.Location = new System.Drawing.Point(4, 22);
             this.tabPageAbout.Name = "tabPageAbout";
-            this.tabPageAbout.Size = new System.Drawing.Size(792, 402);
+            this.tabPageAbout.Size = new System.Drawing.Size(776, 413);
             this.tabPageAbout.TabIndex = 2;
             this.tabPageAbout.Text = "About";
             // 
@@ -418,7 +418,9 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.labelVersion, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.linkLabelDiscord, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.panelAbout, 1, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -428,53 +430,55 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(792, 402);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(776, 413);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // panel1
+            // panelAbout
             // 
-            this.panel1.Controls.Add(this.linkLabelBeatMods);
-            this.panel1.Controls.Add(this.linkLabelCodeStix);
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(239, 123);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(310, 154);
-            this.panel1.TabIndex = 2;
+            this.tableLayoutPanel1.SetColumnSpan(this.panelAbout, 3);
+            this.panelAbout.Controls.Add(this.linkLabelAbout);
+            this.panelAbout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelAbout.Location = new System.Drawing.Point(119, 125);
+            this.panelAbout.Name = "panelAbout";
+            this.panelAbout.Size = new System.Drawing.Size(536, 159);
+            this.panelAbout.TabIndex = 2;
             // 
-            // linkLabelBeatMods
+            // linkLabelAbout
             // 
-            this.linkLabelBeatMods.AutoSize = true;
-            this.linkLabelBeatMods.Location = new System.Drawing.Point(143, 83);
-            this.linkLabelBeatMods.Name = "linkLabelBeatMods";
-            this.linkLabelBeatMods.Size = new System.Drawing.Size(76, 13);
-            this.linkLabelBeatMods.TabIndex = 3;
-            this.linkLabelBeatMods.TabStop = true;
-            this.linkLabelBeatMods.Text = "beatmods.com";
-            this.linkLabelBeatMods.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelBeatMods_LinkClicked);
+            this.linkLabelAbout.DisabledLinkColor = System.Drawing.SystemColors.ControlText;
+            this.linkLabelAbout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.linkLabelAbout.Location = new System.Drawing.Point(0, 0);
+            this.linkLabelAbout.Name = "linkLabelAbout";
+            this.linkLabelAbout.Size = new System.Drawing.Size(536, 159);
+            this.linkLabelAbout.TabIndex = 0;
+            this.linkLabelAbout.TabStop = true;
+            this.linkLabelAbout.Text = "Beat Modder\r\nby CodeStix\r\n\r\npowered by beatmods.com\r\nby vanZeben";
+            this.linkLabelAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linkLabelAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAbout_LinkClicked);
             // 
-            // linkLabelCodeStix
+            // labelVersion
             // 
-            this.linkLabelCodeStix.AutoSize = true;
-            this.linkLabelCodeStix.Location = new System.Drawing.Point(136, 58);
-            this.linkLabelCodeStix.Name = "linkLabelCodeStix";
-            this.linkLabelCodeStix.Size = new System.Drawing.Size(49, 13);
-            this.linkLabelCodeStix.TabIndex = 2;
-            this.linkLabelCodeStix.TabStop = true;
-            this.linkLabelCodeStix.Text = "CodeStix";
-            this.linkLabelCodeStix.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelCodeStix_LinkClicked);
+            this.labelVersion.AutoSize = true;
+            this.labelVersion.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelVersion.Location = new System.Drawing.Point(235, 287);
+            this.labelVersion.Name = "labelVersion";
+            this.labelVersion.Size = new System.Drawing.Size(304, 61);
+            this.labelVersion.TabIndex = 3;
+            this.labelVersion.Text = "Version 1.0";
+            this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label4
+            // linkLabelDiscord
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.Location = new System.Drawing.Point(78, 36);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(152, 80);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Beat Modder \r\nby CodeStix\r\n\r\npowered by beatmods.com \r\nby vanZeben";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linkLabelDiscord.AutoSize = true;
+            this.linkLabelDiscord.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.linkLabelDiscord.Location = new System.Drawing.Point(235, 348);
+            this.linkLabelDiscord.Name = "linkLabelDiscord";
+            this.linkLabelDiscord.Size = new System.Drawing.Size(304, 65);
+            this.linkLabelDiscord.TabIndex = 4;
+            this.linkLabelDiscord.TabStop = true;
+            this.linkLabelDiscord.Text = "Join Beat Saber modding server on discord";
+            this.linkLabelDiscord.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linkLabelDiscord.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelDiscord_LinkClicked);
             // 
             // contextMenu
             // 
@@ -531,9 +535,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.statusStrip);
+            this.MinimumSize = new System.Drawing.Size(668, 377);
             this.Name = "FormMain";
             this.Text = "Beat Modder - A Beat Saber mod installer and remover";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
@@ -551,8 +556,8 @@
             this.groupBox1.PerformLayout();
             this.tabPageAbout.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.tableLayoutPanel1.PerformLayout();
+            this.panelAbout.ResumeLayout(false);
             this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -598,10 +603,10 @@
         private System.Windows.Forms.Button buttonRemoveMods;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.LinkLabel linkLabelBeatMods;
-        private System.Windows.Forms.LinkLabel linkLabelCodeStix;
+        private System.Windows.Forms.Panel panelAbout;
+        private System.Windows.Forms.Label labelVersion;
+        private System.Windows.Forms.LinkLabel linkLabelDiscord;
+        private System.Windows.Forms.LinkLabel linkLabelAbout;
     }
 }
 

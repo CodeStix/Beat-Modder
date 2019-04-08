@@ -7,6 +7,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -84,6 +85,12 @@ namespace Stx.BeatModder
         public FormMain()
         {
             InitializeComponent();
+
+            linkLabelAbout.LinkArea = new LinkArea(0, 0);
+            linkLabelAbout.Links.Add(16, 8, @"https://github.com/CodeStix");
+            linkLabelAbout.Links.Add(39, 13, @"https://beatmods.com");
+
+            labelVersion.Text = $"Version: { Assembly.GetExecutingAssembly().GetName().Version }";
         }
 
         public string GetBeatSaberFile(string name)
@@ -281,6 +288,9 @@ namespace Stx.BeatModder
         {
             return await Task.Run<bool>(async () =>
             {
+                if (IsInstalled(mod))
+                    return true;
+
                 using (WebClient wc = new WebClient())
                 {
                     string file = GetBeatSaberFile($@"Plugins\{ mod.ToString() }.zip");
@@ -789,6 +799,20 @@ namespace Stx.BeatModder
             }
         }
 
+        private void linkLabelCodeStix_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(@"https://github.com/CodeStix");
+        }
+
+        private void linkLabelBeatMods_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(@"https://beatmods.com");
+        }
+
+        private void linkLabelDiscord_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(@"https://discord.gg/beatsabermods");
+        }
 
         private void SelfDestruct()
         {
@@ -835,14 +859,9 @@ namespace Stx.BeatModder
             m.AddToList(listView, !IsInstalled(m));
         }
 
-        private void linkLabelCodeStix_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void linkLabelAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(@"https://github.com/CodeStix");
-        }
-
-        private void linkLabelBeatMods_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start(@"https://beatmods.com");
+            Process.Start(e.Link.LinkData.ToString());
         }
     }
 
