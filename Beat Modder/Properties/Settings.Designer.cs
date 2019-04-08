@@ -35,5 +35,17 @@ namespace Stx.BeatModder.Properties {
                 this["IPADownloadUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AllowUnApproved {
+            get {
+                return ((bool)(this["AllowUnApproved"]));
+            }
+            set {
+                this["AllowUnApproved"] = value;
+            }
+        }
     }
 }

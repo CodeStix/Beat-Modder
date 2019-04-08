@@ -120,6 +120,7 @@
             // 
             // labelBeatSaberVersion
             // 
+            this.labelBeatSaberVersion.ForeColor = System.Drawing.Color.Maroon;
             this.labelBeatSaberVersion.Name = "labelBeatSaberVersion";
             this.labelBeatSaberVersion.Size = new System.Drawing.Size(118, 17);
             this.labelBeatSaberVersion.Text = "Beat Saber version: ...";
@@ -342,6 +343,7 @@
             // checkBoxAllowNonApproved
             // 
             this.checkBoxAllowNonApproved.AutoSize = true;
+            this.checkBoxAllowNonApproved.Enabled = false;
             this.checkBoxAllowNonApproved.Location = new System.Drawing.Point(14, 65);
             this.checkBoxAllowNonApproved.Name = "checkBoxAllowNonApproved";
             this.checkBoxAllowNonApproved.Size = new System.Drawing.Size(175, 30);

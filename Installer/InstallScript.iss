@@ -19,7 +19,7 @@ LicenseFile=H:\Documents\GitHub\Beat-Modder\Installer\license.txt
 InfoBeforeFile=H:\Documents\GitHub\Beat-Modder\Installer\installInfo.txt
 OutputDir=C:\Users\Stijn Rogiest\Desktop
 OutputBaseFilename=BeatModder-1.0-install
-SetupIconFile=H:\Downloads\saber.ico
+SetupIconFile=H:\Documents\GitHub\Beat-Modder\Beat Modder\Resources\saber.ico
 Compression=lzma
 SolidCompression=yes
 
