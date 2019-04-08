@@ -587,6 +587,9 @@ namespace Stx.BeatModder
                 BeginInvoke(new Action(() =>
                 {
                     ShowMods();
+
+                    labelBeatSaberVersion.ForeColor = Color.Green;
+                    labelBeatSaberVersion.Text = $"Beat Saber version: { redVersion }";
                 }));
             }
             ));

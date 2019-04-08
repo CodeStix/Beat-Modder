@@ -31,13 +31,14 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.buttonCheckForUpdatesNow = new System.Windows.Forms.ToolStripDropDownButton();
+            this.labelBeatSaberVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.buttonCheckForUpdatesNow = new System.Windows.Forms.ToolStripDropDownButton();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageMods = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.listView = new System.Windows.Forms.ListView();
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderAuthor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -46,6 +47,7 @@
             this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.buttonInstall = new System.Windows.Forms.Button();
             this.buttonMoreInfo = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.tabPageSettings = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.checkBoxAutoUpdate = new System.Windows.Forms.CheckBox();
@@ -75,7 +77,6 @@
             this.installToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uninstallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.label1 = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPageMods.SuspendLayout();
@@ -93,9 +94,10 @@
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buttonCheckForUpdatesNow,
+            this.labelBeatSaberVersion,
             this.statusLabel,
-            this.progressBar,
-            this.buttonCheckForUpdatesNow});
+            this.progressBar});
             this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.statusStrip.Location = new System.Drawing.Point(0, 439);
             this.statusStrip.Name = "statusStrip";
@@ -103,6 +105,24 @@
             this.statusStrip.Size = new System.Drawing.Size(784, 22);
             this.statusStrip.TabIndex = 0;
             this.statusStrip.Text = "statusStrip";
+            // 
+            // buttonCheckForUpdatesNow
+            // 
+            this.buttonCheckForUpdatesNow.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonCheckForUpdatesNow.Image = ((System.Drawing.Image)(resources.GetObject("buttonCheckForUpdatesNow.Image")));
+            this.buttonCheckForUpdatesNow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonCheckForUpdatesNow.Name = "buttonCheckForUpdatesNow";
+            this.buttonCheckForUpdatesNow.ShowDropDownArrow = false;
+            this.buttonCheckForUpdatesNow.Size = new System.Drawing.Size(160, 20);
+            this.buttonCheckForUpdatesNow.Text = "Check for mod updates...";
+            this.buttonCheckForUpdatesNow.ToolTipText = "Check for mod updates right now...";
+            this.buttonCheckForUpdatesNow.Click += new System.EventHandler(this.buttonCheckForUpdatesNow_Click);
+            // 
+            // labelBeatSaberVersion
+            // 
+            this.labelBeatSaberVersion.Name = "labelBeatSaberVersion";
+            this.labelBeatSaberVersion.Size = new System.Drawing.Size(118, 17);
+            this.labelBeatSaberVersion.Text = "Beat Saber version: ...";
             // 
             // statusLabel
             // 
@@ -116,18 +136,6 @@
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(250, 16);
             this.progressBar.Visible = false;
-            // 
-            // buttonCheckForUpdatesNow
-            // 
-            this.buttonCheckForUpdatesNow.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.buttonCheckForUpdatesNow.Image = ((System.Drawing.Image)(resources.GetObject("buttonCheckForUpdatesNow.Image")));
-            this.buttonCheckForUpdatesNow.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonCheckForUpdatesNow.Name = "buttonCheckForUpdatesNow";
-            this.buttonCheckForUpdatesNow.ShowDropDownArrow = false;
-            this.buttonCheckForUpdatesNow.Size = new System.Drawing.Size(160, 20);
-            this.buttonCheckForUpdatesNow.Text = "Check for mod updates...";
-            this.buttonCheckForUpdatesNow.ToolTipText = "Check for mod updates right now...";
-            this.buttonCheckForUpdatesNow.Click += new System.EventHandler(this.buttonCheckForUpdatesNow_Click);
             // 
             // tabControl
             // 
@@ -192,16 +200,15 @@
             this.tableLayoutPanel.Size = new System.Drawing.Size(770, 407);
             this.tableLayoutPanel.TabIndex = 1;
             // 
-            // label3
+            // label1
             // 
-            this.label3.AutoSize = true;
-            this.tableLayoutPanel.SetColumnSpan(this.label3, 2);
-            this.label3.Location = new System.Drawing.Point(225, 372);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(290, 26);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "To install/uninstall a mod, right click on any mod.\r\nTo install multiple, check t" +
-    "he boxes and press the button  -->\r\n";
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Gray;
+            this.label1.Location = new System.Drawing.Point(3, 372);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(216, 26);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "All installed mods are marked in an italic grey font.\r\n";
             // 
             // listView
             // 
@@ -282,6 +289,17 @@
             this.buttonMoreInfo.Text = "More info...\r\n";
             this.buttonMoreInfo.UseVisualStyleBackColor = true;
             this.buttonMoreInfo.Click += new System.EventHandler(this.buttonMoreInfo_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.tableLayoutPanel.SetColumnSpan(this.label3, 2);
+            this.label3.Location = new System.Drawing.Point(225, 372);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(290, 26);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "To install/uninstall a mod, right click on any mod.\r\nTo install multiple, check t" +
+    "he boxes and press the button  -->\r\n";
             // 
             // tabPageSettings
             // 
@@ -592,16 +610,6 @@
             this.notifyIcon.Text = "Beat Modder Notification";
             this.notifyIcon.Visible = true;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.Gray;
-            this.label1.Location = new System.Drawing.Point(3, 372);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(216, 26);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "All installed mods are marked in an italic grey font.\r\n";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -609,6 +617,7 @@
             this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.statusStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(668, 377);
             this.Name = "FormMain";
             this.Text = "Beat Modder - A Beat Saber mod installer and remover";
@@ -685,6 +694,7 @@
         private System.Windows.Forms.CheckBox checkBoxAllowNonApproved;
         private System.Windows.Forms.ToolStripDropDownButton buttonCheckForUpdatesNow;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripStatusLabel labelBeatSaberVersion;
     }
 }
 

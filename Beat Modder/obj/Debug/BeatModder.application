@@ -7,14 +7,14 @@
     <framework targetVersion="4.7.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="BeatModder.exe.manifest" size="8973">
+    <dependentAssembly dependencyType="install" codebase="BeatModder.exe.manifest" size="9449">
       <assemblyIdentity name="BeatModder.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Xk7lpuWEO+qm7RyehUk5Mh8QJ32BHTg92PkyGPbu1qk=</dsig:DigestValue>
+        <dsig:DigestValue>64253fHaffAW8T1+4ANbuaYhs0ksx8wXEwS9WhqQMbU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
