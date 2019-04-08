@@ -31,7 +31,7 @@ namespace Stx.BeatModder
                 return "https://beatmods.com"
                     .AppendPathSegments("api", "v1", "mod")
                     .SetQueryParam("search", null, Flurl.NullValueHandling.Ignore)
-                    .SetQueryParam("status", null/*"approved"*/)
+                    .SetQueryParam("status", "approved")
                     .SetQueryParam("sortDirection", 1);
             }
         }
@@ -135,10 +135,13 @@ namespace Stx.BeatModder
 
         private InstalledMod GetInstalledMod(Mod m)
         {
-            if (config.installedMods == null)
-                return default(InstalledMod);
-
             return config.installedMods.FirstOrDefault((e) => e.Is(m));
+        }
+
+        private Mod GetNewestModWithName(string modName)
+        {
+            return mods.Where((e) => string.Compare(e.name, modName, StringComparison.OrdinalIgnoreCase) == 0)
+                    .OrderByDescending((e) => StringUtil.StringVersionToNumber(e.version)).FirstOrDefault();
         }
 
         private IEnumerable<Mod> CheckForModUpdates()
@@ -304,10 +307,23 @@ namespace Stx.BeatModder
                         config.installedMods.Add(new InstalledMod(mod, affectedFiles));
                         SaveConfig();
 
+                        // Installing required dependencies for this mod to work.
                         foreach (Mod dep in mod.dependencies)
-                            if (!IsAnyVersionInstalled(dep))
-                                await InstallMod(dep);
+                        {
+                            Mod latest = GetNewestModWithName(dep.name);
 
+                            if (!IsInstalled(latest))
+                            {
+                                // Uninstall old dependency version.
+                                if (IsAnyVersionInstalled(latest))
+                                {
+                                    await UninstallMod(GetInstalledMod(latest));
+                                }
+
+                                await InstallMod(latest);
+                            }
+
+                        }
                         return true;
                     }
                     catch
@@ -323,6 +339,7 @@ namespace Stx.BeatModder
             });
         }
 
+        [Obsolete("Use InstallCoreComponents instead.")]
         private async Task<bool> InstallIPA()
         {
             Mod ipaMod = mods.First((e) => string.Compare(e.name, "BSIPA", StringComparison.OrdinalIgnoreCase) == 0);
@@ -332,10 +349,11 @@ namespace Stx.BeatModder
 
         private async Task InstallCoreComponents()
         {
-            foreach (Mod m in mods.Where((e) => e.IsCoreComponent))
+            foreach (Mod m in mods.Where((e) => e.IsRequired))
             {
-                Mod latest = mods.Where((e) => string.Compare(e.name, m.name, StringComparison.OrdinalIgnoreCase) == 0)
-                    .OrderByDescending((e) => StringUtil.StringVersionToNumber(e.version)).First();
+                Mod latest = GetNewestModWithName(m.name);
+                    /*mods.Where((e) => string.Compare(e.name, m.name, StringComparison.OrdinalIgnoreCase) == 0)
+                    .OrderByDescending((e) => StringUtil.StringVersionToNumber(e.version)).First()*/;
 
                 await InstallMod(latest);
             }
@@ -470,8 +488,8 @@ namespace Stx.BeatModder
                     config.ogFiles.AddRange(Directory.GetDirectories(config.beatSaberLocation));
                     SaveConfig();
 
-                    SetStatus("Installing IPA...", false);
-
+                    /*SetStatus("Installing IPA...", false);
+                    
                     if (await InstallIPA())
                     {
                         SetStatus("Installation of IPA succeeded!", true);
@@ -486,7 +504,7 @@ namespace Stx.BeatModder
                             "Could not install...", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         SelfDestruct();
-                    }
+                    }*/
 
                     SetStatus("Installing core components...", false);
 
@@ -538,6 +556,11 @@ namespace Stx.BeatModder
                         await Task.Delay(1000);
                     }
                 }
+
+                BeginInvoke(new Action(() =>
+                {
+                    ShowMods();
+                }));
             }
             ));
         }
@@ -583,7 +606,7 @@ namespace Stx.BeatModder
 
             InstalledMod m = GetInstalledMod(mod);
 
-            if (mod.IsCoreComponent)
+            if (mod.IsRequired || mod.Category == ModCategory.Libraries)
             {
                 if (MessageBox.Show($"You are willing to remove a core component, please note that removing these can cause the game to break.\n" +
                     $"Are you sure you want to remove { mod.ToString() }?", "Sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
@@ -799,11 +822,12 @@ namespace Stx.BeatModder
         private void ShowMods()
         {
             listView.Items.Clear();
+            Point p = listView.AutoScrollOffset;
 
             foreach (Mod m in mods)
-            {
                 ShowMod(m);
-            }
+
+            listView.AutoScrollOffset = p;
         }
 
         public void ShowMod(Mod m)

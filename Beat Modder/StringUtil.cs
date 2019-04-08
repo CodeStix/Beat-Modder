@@ -11,9 +11,9 @@ namespace Stx.BeatModder
             for (int i = 0; i < s.Length; i++)
             {
                 int k = 0;
-                int.TryParse(s[0], out k);
+                int.TryParse(s[i], out k);
 
-                j += (int)Math.Pow(10, i) * ++k;
+                j += ((int)Math.Pow(1000, s.Length - i - 1)) * k;
             }
             return j;
         }

@@ -248,7 +248,7 @@
             this.buttonInstall.Name = "buttonInstall";
             this.buttonInstall.Size = new System.Drawing.Size(191, 29);
             this.buttonInstall.TabIndex = 1;
-            this.buttonInstall.Text = "Install Selected &Mods";
+            this.buttonInstall.Text = "Install Checked &Mods";
             this.buttonInstall.UseVisualStyleBackColor = true;
             this.buttonInstall.Click += new System.EventHandler(this.buttonInstall_Click);
             // 

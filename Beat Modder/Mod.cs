@@ -21,6 +21,7 @@ namespace Stx.BeatModder
         public string link;
         public string name;
         public string status;
+        public bool required;
         public string updatedDate;
         public string uploadDate;
         public string version;
@@ -79,11 +80,11 @@ namespace Stx.BeatModder
         }
 
         [JsonIgnore]
-        public bool IsCoreComponent
+        public bool IsRequired
         {
             get
             {
-                return Category == ModCategory.Core || Category == ModCategory.Libraries;
+                return required;
             }
         }
 
@@ -101,7 +102,7 @@ namespace Stx.BeatModder
             lvi.Group = listView.GetOrCreateGroup(Category.ToString());
             lvi.Tag = this;
             lvi.SetEnabled(enable);
-            if (IsCoreComponent)
+            if (IsRequired)
                 lvi.BackColor = Color.WhiteSmoke;
             listView.Items.Add(lvi);
         }
