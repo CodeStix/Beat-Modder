@@ -6,6 +6,9 @@ namespace Stx.BeatModder
     {
         public static int StringVersionToNumber(string version)
         {
+            if (string.IsNullOrEmpty(version))
+                return 0;
+
             string[] s = version.Split('.');
             int j = 1;
             for (int i = 0; i < s.Length; i++)

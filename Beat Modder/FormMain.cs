@@ -93,7 +93,7 @@ namespace Stx.BeatModder
 
                 try
                 {
-                    return File.Exists(BeatSaberVersionFile);
+                    return File.Exists(GetBeatSaberFile(BeatSaberVersionFile));
                 }
                 catch
                 {
@@ -107,7 +107,7 @@ namespace Stx.BeatModder
             {
                 try
                 {
-                    return File.ReadAllText(BeatSaberVersionFile);
+                    return File.ReadAllText(GetBeatSaberFile(BeatSaberVersionFile));
                 }
                 catch
                 {
@@ -572,10 +572,10 @@ namespace Stx.BeatModder
                 if (StringUtil.StringVersionToNumber(config.lastBeatSaberVersion) < StringUtil.StringVersionToNumber(redVersion))
                 {
                     MessageBox.Show($"Good news!" +
-                        $"\nThere was a Beat Saber update ({ config.lastBeatSaberVersion } -> { redVersion })\n" +
-                        $", this means that some of the mods have to get updated too.\n" +
-                        $"If the update was released recently, be aware that some mods could be broken.\n" +
-                        $"At any moment you can open this program to automatically check for and install mod updates!", "Oh snap!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        $"\nThere was a Beat Saber update ({ config.lastBeatSaberVersion } -> { redVersion }),\n" +
+                        $"this means that some of the mods have to get updated too.\n" +
+                        $"If the update was released recently, be aware that some mods could be broken.\n\n" +
+                        $"At any moment you can open this program to automatically repatch, check for and install mod updates!", "Oh snap!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     SetStatus("Patching Beat Saber...", false);
 

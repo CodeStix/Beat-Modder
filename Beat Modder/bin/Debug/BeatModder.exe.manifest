@@ -3,7 +3,7 @@
   <asmv1:assemblyIdentity name="BeatModder.exe" version="1.0.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="BeatModder" version="1.0.0.24491" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="BeatModder" version="1.0.7037.25217" language="neutral" processorArchitecture="msil" />
     <commandLine file="BeatModder.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BeatModder.exe" size="74240">
-      <assemblyIdentity name="BeatModder" version="1.0.0.24491" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BeatModder.exe" size="74752">
+      <assemblyIdentity name="BeatModder" version="1.0.7037.25217" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>lgzYMhrJnp8dci7gqR27ePRBbj2Vy+vddbc5Y2d+D+w=</dsig:DigestValue>
+        <dsig:DigestValue>cBdMLDfO5aeJcEp01mTAlL0jCRPUtb+JY2p0NmL8dGc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
