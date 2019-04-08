@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Flurl;
 using Newtonsoft.Json;
+using Octokit;
 using Ookii.Dialogs.WinForms;
 
 namespace Stx.BeatModder
@@ -127,6 +128,14 @@ namespace Stx.BeatModder
             labelVersion.Text = $"Version: { Assembly.GetExecutingAssembly().GetName().Version }";
 
             checkBoxAllowNonApproved.Enabled = Properties.Settings.Default.AllowUnApproved;
+
+            
+        }
+
+        public async Task CheckForUpdateAndWarn(string currentVersion)
+        {
+            
+
         }
 
         public string GetBeatSaberFile(string name)
