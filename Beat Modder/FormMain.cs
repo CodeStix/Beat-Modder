@@ -125,6 +125,8 @@ namespace Stx.BeatModder
             linkLabelAbout.Links.Add(39, 13, @"https://beatmods.com");
 
             labelVersion.Text = $"Version: { Assembly.GetExecutingAssembly().GetName().Version }";
+
+            checkBoxAllowNonApproved.Enabled = Properties.Settings.Default.AllowUnApproved;
         }
 
         public string GetBeatSaberFile(string name)

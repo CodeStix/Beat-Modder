@@ -145,6 +145,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MetroFramework.txt" />
+    <Content Include="Resources\refresh.ico" />
+    <Content Include="Resources\saber.ico" />
     <Content Include="saber.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
