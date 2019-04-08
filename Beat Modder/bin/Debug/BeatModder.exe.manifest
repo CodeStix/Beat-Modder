@@ -4,7 +4,7 @@
   <description asmv2:iconFile="saber.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="BeatModder" version="1.0.7037.27378" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="BeatModder" version="1.0.7037.32641" language="neutral" processorArchitecture="msil" />
     <commandLine file="BeatModder.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -44,13 +44,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BeatModder.exe" size="248320">
-      <assemblyIdentity name="BeatModder" version="1.0.7037.27378" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="BeatModder" version="1.0.7037.32641" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>1TzD8DHvNUijapzrUMg0PIOJInfJ/cMru0JbKlpqyuE=</dsig:DigestValue>
+        <dsig:DigestValue>JhcFsBZmt4fwi5Q5BwXMDWOCj9FCKtp9xx9qMyI8aig=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
