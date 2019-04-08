@@ -58,6 +58,10 @@
             this.buttonChangeBeatSaberType = new System.Windows.Forms.Button();
             this.labelBeatSaberType = new System.Windows.Forms.Label();
             this.tabPageAbout = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.linkLabelBeatMods = new System.Windows.Forms.LinkLabel();
+            this.linkLabelCodeStix = new System.Windows.Forms.LinkLabel();
             this.label4 = new System.Windows.Forms.Label();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.itemNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,6 +78,8 @@
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPageAbout.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -397,21 +403,77 @@
             // tabPageAbout
             // 
             this.tabPageAbout.BackColor = System.Drawing.SystemColors.Window;
-            this.tabPageAbout.Controls.Add(this.label4);
+            this.tabPageAbout.Controls.Add(this.tableLayoutPanel1);
             this.tabPageAbout.Location = new System.Drawing.Point(4, 22);
             this.tabPageAbout.Name = "tabPageAbout";
             this.tabPageAbout.Size = new System.Drawing.Size(792, 402);
             this.tabPageAbout.TabIndex = 2;
             this.tabPageAbout.Text = "About";
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 5;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 2, 2);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(792, 402);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.linkLabelBeatMods);
+            this.panel1.Controls.Add(this.linkLabelCodeStix);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(239, 123);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(310, 154);
+            this.panel1.TabIndex = 2;
+            // 
+            // linkLabelBeatMods
+            // 
+            this.linkLabelBeatMods.AutoSize = true;
+            this.linkLabelBeatMods.Location = new System.Drawing.Point(143, 83);
+            this.linkLabelBeatMods.Name = "linkLabelBeatMods";
+            this.linkLabelBeatMods.Size = new System.Drawing.Size(76, 13);
+            this.linkLabelBeatMods.TabIndex = 3;
+            this.linkLabelBeatMods.TabStop = true;
+            this.linkLabelBeatMods.Text = "beatmods.com";
+            this.linkLabelBeatMods.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelBeatMods_LinkClicked);
+            // 
+            // linkLabelCodeStix
+            // 
+            this.linkLabelCodeStix.AutoSize = true;
+            this.linkLabelCodeStix.Location = new System.Drawing.Point(136, 58);
+            this.linkLabelCodeStix.Name = "linkLabelCodeStix";
+            this.linkLabelCodeStix.Size = new System.Drawing.Size(49, 13);
+            this.linkLabelCodeStix.TabIndex = 2;
+            this.linkLabelCodeStix.TabStop = true;
+            this.linkLabelCodeStix.Text = "CodeStix";
+            this.linkLabelCodeStix.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelCodeStix_LinkClicked);
+            // 
             // label4
             // 
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(0, 0);
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.Location = new System.Drawing.Point(78, 36);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(792, 402);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Beat-Modder \r\nby CodeStix\r\n\r\npowered by beatmods.com \r\nby vanZeben";
+            this.label4.Size = new System.Drawing.Size(152, 80);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Beat Modder \r\nby CodeStix\r\n\r\npowered by beatmods.com \r\nby vanZeben";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // contextMenu
@@ -488,6 +550,9 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPageAbout.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -526,13 +591,17 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxBeatSaberLocation;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button buttonRemoveModsAndData;
         private System.Windows.Forms.Button buttonRemoveMods;
         private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.LinkLabel linkLabelBeatMods;
+        private System.Windows.Forms.LinkLabel linkLabelCodeStix;
     }
 }
 

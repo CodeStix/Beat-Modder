@@ -835,6 +835,15 @@ namespace Stx.BeatModder
             m.AddToList(listView, !IsInstalled(m));
         }
 
+        private void linkLabelCodeStix_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(@"https://github.com/CodeStix");
+        }
+
+        private void linkLabelBeatMods_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(@"https://beatmods.com");
+        }
     }
 
     [Serializable]
