@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.539
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beat-Modder", "LetsModBeatSaber\Beat-Modder.csproj", "{285EBB79-D472-4928-8B97-E9007CD9965A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beat-Modder", "Beat Modder\Beat-Modder.csproj", "{285EBB79-D472-4928-8B97-E9007CD9965A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

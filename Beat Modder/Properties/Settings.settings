@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LetsModBeatSaber.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="IPADownloadUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://github.com/nike4613/BeatSaber-IPA-Reloaded/releases/download/3.12.7/Release.zip</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
