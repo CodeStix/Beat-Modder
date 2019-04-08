@@ -4,7 +4,7 @@
   <description asmv2:iconFile="saber.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="BeatModder" version="1.0.7037.37034" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="BeatModder" version="1.0.7037.37287" language="neutral" processorArchitecture="msil" />
     <commandLine file="BeatModder.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BeatModder.exe" size="248832">
-      <assemblyIdentity name="BeatModder" version="1.0.7037.37034" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BeatModder.exe" size="601600">
+      <assemblyIdentity name="BeatModder" version="1.0.7037.37287" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>GEW3ZVtiuVOM707vZBHd+9H8fe0Fjg7rlGqrtT6yQuo=</dsig:DigestValue>
+        <dsig:DigestValue>JrljZO5ha7s8Fe3tJcYVbscei1Ylaj5EAYAj4jvLoaA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -160,6 +160,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>efHHKpsq3d/7p2JcAGmprEpnU0pftzvJvShBqIrHw/8=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\saber2.ico" size="82726">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>TEWIBWBsl3bYHRoL3mVxHExpbtxdlyOeZlDLgnT3kBA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="saber.ico" size="82726">

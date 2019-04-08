@@ -85,5 +85,35 @@ namespace Stx.BeatModder.Properties {
                 return ResourceManager.GetString("locations", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon refresh {
+            get {
+                object obj = ResourceManager.GetObject("refresh", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon saber {
+            get {
+                object obj = ResourceManager.GetObject("saber", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon saber2 {
+            get {
+                object obj = ResourceManager.GetObject("saber2", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

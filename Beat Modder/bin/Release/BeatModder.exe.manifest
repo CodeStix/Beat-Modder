@@ -4,7 +4,7 @@
   <description asmv2:iconFile="saber.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="BeatModder" version="1.0.7037.32639" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="BeatModder" version="1.0.7037.37290" language="neutral" processorArchitecture="msil" />
     <commandLine file="BeatModder.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BeatModder.exe" size="243712">
-      <assemblyIdentity name="BeatModder" version="1.0.7037.32639" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BeatModder.exe" size="596480">
+      <assemblyIdentity name="BeatModder" version="1.0.7037.37290" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>cmaZVb4019BTcjC4627L7xP/HyGUzHHuNm8QQ9TyZCE=</dsig:DigestValue>
+        <dsig:DigestValue>veUhmrtMKOEpJ3E9/bQ92rBHHvBM0lBh8MR0DLh6Z7s=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -126,13 +126,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="BeatModder.exe.config" size="1387">
+  <file name="BeatModder.exe.config" size="2077">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>WqbTYZ16zM0+DdAAzAHKeGpKnETvapx2F9evrDdN9Os=</dsig:DigestValue>
+      <dsig:DigestValue>UDqGagIDaO0p9fg3K4kTST56fl6N77a0hLWFy+YAQQ8=</dsig:DigestValue>
     </hash>
   </file>
   <file name="MetroFramework.txt" size="1266">
@@ -142,6 +142,33 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>+yV6adEVlpUIOiH/IdsfqaixKo0MB7DiB/hBOyI4wKw=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\refresh.ico" size="186104">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>UHKoeMi0u7Vl27HwFs38znwHvNJx9s4xXlyrofGpGOs=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\saber.ico" size="82726">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>efHHKpsq3d/7p2JcAGmprEpnU0pftzvJvShBqIrHw/8=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\saber2.ico" size="82726">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>TEWIBWBsl3bYHRoL3mVxHExpbtxdlyOeZlDLgnT3kBA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="saber.ico" size="82726">
