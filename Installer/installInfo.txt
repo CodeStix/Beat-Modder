@@ -1,0 +1,2 @@
+The setup will install Beat Modder on your computer. 
+!! Do not install this program in the same folder as the Beat Saber executable!
