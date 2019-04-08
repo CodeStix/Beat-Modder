@@ -35,7 +35,7 @@ namespace Stx.BeatModder
                 return "https://beatmods.com"
                     .AppendPathSegments("api", "v1", "mod")
                     .SetQueryParam("search", null, Flurl.NullValueHandling.Ignore)
-                    .SetQueryParam("status", "approved")
+                    .SetQueryParam("status", config.allowNonApproved ? null : "approved")
                     .SetQueryParam("sortDirection", 1);
             }
         }
@@ -203,7 +203,7 @@ namespace Stx.BeatModder
 
         private async void RunBeatSaberAndExit()
         {
-            await RunIPA(launch: true);
+            await RunIPA(revert: false, launch: true, wait: config.showConsole, shown: config.showConsole);
 
             SelfDestruct();
         }
@@ -266,7 +266,7 @@ namespace Stx.BeatModder
 
             beatSaberType = actualPath.ToLower().Contains("steam") ? ModDownloadType.Steam : ModDownloadType.Oculus;
 
-            return actualPath; //@"C:\Users\Stijn Rogiest\Desktop\test";
+            return actualPath;
         }
 
 
@@ -299,17 +299,16 @@ namespace Stx.BeatModder
             }));
         }
 
-        private async Task RunIPA(bool revert = false, bool launch = false)
+        private async Task RunIPA(bool revert = false, bool launch = false, bool wait = false, bool shown = false)
         {
             await Task.Run(() =>
             {
                 ProcessStartInfo psi = new ProcessStartInfo()
                 {
-                    Arguments = $"\"{ BeatSaberFile }\" --nowait" + (revert ? " --revert" : "") + (launch ? " --launch" : ""),
+                    Arguments = $"\"{ BeatSaberFile }\"" + (wait ? "" : " --nowait") + (revert ? " --revert" : "") + (launch ? " --launch" : ""),
                     FileName = IPAFile,
                     WorkingDirectory = config.beatSaberLocation,
-                    WindowStyle = ProcessWindowStyle.Minimized
-
+                    WindowStyle = shown? ProcessWindowStyle.Normal : ProcessWindowStyle.Minimized
                 };
 
                 Process p = Process.Start(psi);
@@ -405,7 +404,7 @@ namespace Stx.BeatModder
 
         private async Task UninstallAllMods()
         {
-            await RunIPA(true);
+            await RunIPA(revert: true, wait: config.showConsole, shown: config.showConsole);
 
             var toRemove = new List<InstalledMod>(config.installedMods);
 
@@ -415,7 +414,7 @@ namespace Stx.BeatModder
 
         private async Task UninstallAllModsAndData()
         {
-            await RunIPA(true);
+            await RunIPA(revert: true, wait: config.showConsole, shown: config.showConsole);
 
             File.Delete(ConfigFile);
 
@@ -503,6 +502,10 @@ namespace Stx.BeatModder
             {
                 LoadConfig();
 
+                checkBoxConsole.Checked = config.showConsole;
+                checkBoxAllowNonApproved.Checked = config.allowNonApproved;
+                checkBoxAutoUpdate.Checked = config.autoUpdate;
+
                 if (!BeatSaberFound)
                 {
                     config.beatSaberLocation = FindBeatSaberLocation(out config.beatSaberType);
@@ -541,24 +544,6 @@ namespace Stx.BeatModder
                     config.ogFiles.AddRange(Directory.GetDirectories(config.beatSaberLocation));
                     SaveConfig();
 
-                    /*SetStatus("Installing IPA...", false);
-                    
-                    if (await InstallIPA())
-                    {
-                        SetStatus("Installation of IPA succeeded!", true);
-
-                        await Task.Delay(1000);
-                    }
-                    else
-                    {
-                        SetStatus("Installation of IPA failed!", true);
-
-                        MessageBox.Show("Yikes, could not install Illusion Plugin Architecture.\nMaybe run as administrator?",
-                            "Could not install...", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                        SelfDestruct();
-                    }*/
-
                     SetStatus("Installing core components...", false);
 
                     await InstallCoreComponents();
@@ -579,7 +564,7 @@ namespace Stx.BeatModder
 
                     SetStatus("Patching Beat Saber...", false);
 
-                    await RunIPA();
+                    await RunIPA(revert: false, wait: config.showConsole, shown: config.showConsole);
 
                     SetStatus("Patched Beat Saber!", true);
 
@@ -587,29 +572,16 @@ namespace Stx.BeatModder
                     SaveConfig();
                 }
 
-                foreach (Mod m in CheckForModUpdates())
+                if (config.autoUpdate)
                 {
-                    SetStatus($"Updating { m.ToString() }...", false);
-
-                    if (!await UninstallMod(GetInstalledMod(m)))
+                    if (!await CheckForAndInstallModUpdates())
                     {
-                        SetStatus($"Could not remove old version, overwriting...", false);
-
-                        await Task.Delay(1000);
+                        SetStatus($"All mods are up-to-date!", true);
                     }
-
-                    if (await InstallMod(m))
-                    {
-                        SetStatus($"Updated { m.ToString() }!", true);
-
-                        ShowNotification($"Updated Beat Saber plugin:\n{ m.ToString() }");
-                    }
-                    else
-                    {
-                        SetStatus($"Could not update { m.ToString() }!", true);
-
-                        await Task.Delay(1000);
-                    }
+                }
+                else
+                {
+                    SetStatus($"Auto mod updates are disabled in settings.", true);
                 }
 
                 BeginInvoke(new Action(() =>
@@ -618,6 +590,40 @@ namespace Stx.BeatModder
                 }));
             }
             ));
+        }
+
+        private async Task<bool> CheckForAndInstallModUpdates()
+        {
+            bool anyGotUpdated = false;
+
+            foreach (Mod m in CheckForModUpdates())
+            {
+                SetStatus($"Updating { m.ToString() }...", false);
+
+                if (!await UninstallMod(GetInstalledMod(m)))
+                {
+                    SetStatus($"Could not remove old version, overwriting...", false);
+
+                    await Task.Delay(1000);
+                }
+
+                if (await InstallMod(m))
+                {
+                    SetStatus($"Updated { m.ToString() }!", true);
+
+                    ShowNotification($"Updated Beat Saber plugin:\n{ m.ToString() }");
+
+                    anyGotUpdated = true;
+                }
+                else
+                {
+                    SetStatus($"Could not update { m.ToString() }!", true);
+
+                    await Task.Delay(1000);
+                }
+            }
+
+            return anyGotUpdated;
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e) => SaveConfig();
@@ -647,7 +653,7 @@ namespace Stx.BeatModder
                 ShowMods();
                 ShowNotification($"Mod { m.ToString() } was successfully installed into Beat Saber!");
 
-                await RunIPA();
+                //await RunIPA(revert: false, wait: config.showConsole, shown: config.showConsole);
             }
             else
             {
@@ -677,7 +683,7 @@ namespace Stx.BeatModder
                 ShowMods();
                 ShowNotification($"The mod { m.ToString() } was successfully removed from Beat Saber.");
 
-                await RunIPA();
+                //await RunIPA(revert: false, wait: config.showConsole, shown: config.showConsole);
             }
             else
             {
@@ -713,10 +719,13 @@ namespace Stx.BeatModder
                 }
             }
 
-            ShowMods();
-            ShowNotification($"{ installedCount } mods were installed into Beat Saber successfully.");
+            if (installedCount > 0)
+            {
+                ShowMods();
+                ShowNotification($"{ installedCount } mods were installed into Beat Saber successfully.");
 
-            await RunIPA();
+                //await RunIPA(revert: false, wait: config.showConsole, shown: config.showConsole);
+            }
         }
 
         private void buttonMoreInfo_Click(object sender, EventArgs e)
@@ -859,6 +868,71 @@ namespace Stx.BeatModder
             Process.Start(@"https://discord.gg/beatsabermods");
         }
 
+        private void linkLabelAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(e.Link.LinkData.ToString());
+        }
+
+        private void checkBoxConsole_CheckedChanged(object sender, EventArgs e)
+        {
+            config.showConsole = checkBoxConsole.Checked;
+            SaveConfig();
+        }
+
+        private async void checkBoxAllowNonApproved_CheckedChanged(object sender, EventArgs e)
+        {
+            config.allowNonApproved = checkBoxAllowNonApproved.Checked;
+            config.autoUpdate = false;
+            SaveConfig();
+
+            await DownloadModInformations();
+
+            BeginInvoke(new Action(() =>
+            {
+                ShowMods();
+                checkBoxAutoUpdate.Checked = false;
+            }));
+        }
+
+        private void checkBoxAutoUpdate_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxAutoUpdate.Checked && config.allowNonApproved)
+            {
+                if (MessageBox.Show("Are you sure you want to enable auto update with NOT-approved mods?\n" +
+                    "This can be very game breaking!", "Uhmmm?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation) != DialogResult.Yes)
+
+                {
+                    checkBoxAutoUpdate.Checked = false;
+
+                    return;
+                }
+            }
+
+            config.autoUpdate = checkBoxAutoUpdate.Checked;
+            SaveConfig();
+        }
+
+        private async void buttonCheckForUpdatesNow_Click(object sender, EventArgs e)
+        {
+            if (config.allowNonApproved)
+            {
+                if (MessageBox.Show("Are you sure you want to check for and install mods updates with NOT-approved mods?\n" +
+                    "This can be very game breaking!", "Uhmmm?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation) != DialogResult.Yes)
+                {
+                    return;
+                }
+            }
+
+            SetStatus($"Checking for updates...", false);
+
+            await Task.Delay(1000);
+
+            if (!await CheckForAndInstallModUpdates())
+            {
+                SetStatus($"All mods are up-to-date!", true);
+            }
+        }
+
         private void SelfDestruct()
         {
             Environment.Exit(0);
@@ -903,11 +977,6 @@ namespace Stx.BeatModder
         {
             m.AddToList(listView, !IsInstalled(m));
         }
-
-        private void linkLabelAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start(e.Link.LinkData.ToString());
-        }
     }
 
     [Serializable]
@@ -918,6 +987,9 @@ namespace Stx.BeatModder
         public List<string> ogFiles;
         public ModDownloadType beatSaberType;
         public List<InstalledMod> installedMods;
+        public bool showConsole = false;
+        public bool allowNonApproved = false;
+        public bool autoUpdate = true;
 
         public Config()
         {

@@ -36,8 +36,6 @@ H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\BeatModder.pdb
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Flurl.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Flurl.Http.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\HtmlAgilityPack.dll
-H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\MetroFramework.dll
-H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\MetroFramework.Fonts.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Newtonsoft.Json.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Ookii.Dialogs.WinForms.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Ookii.Dialogs.Wpf.dll
@@ -50,7 +48,6 @@ H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Newtonsoft.Json.xml
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Ookii.Dialogs.WinForms.pdb
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Ookii.Dialogs.WinForms.xml
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Ookii.Dialogs.Wpf.xml
-H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Beat-Modder.csprojAssemblyReference.cache
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Stx.BeatModder.FormListSelect.resources
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Stx.BeatModder.FormMain.resources
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Stx.BeatModder.FormModInfo.resources

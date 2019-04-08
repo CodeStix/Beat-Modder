@@ -29,9 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.buttonCheckForUpdatesNow = new System.Windows.Forms.ToolStripDropDownButton();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageMods = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -42,10 +44,13 @@
             this.columnHeaderVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderInfo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.textBoxDescription = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.buttonInstall = new System.Windows.Forms.Button();
             this.buttonMoreInfo = new System.Windows.Forms.Button();
             this.tabPageSettings = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBoxAutoUpdate = new System.Windows.Forms.CheckBox();
+            this.checkBoxAllowNonApproved = new System.Windows.Forms.CheckBox();
+            this.checkBoxConsole = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -59,10 +64,10 @@
             this.labelBeatSaberType = new System.Windows.Forms.Label();
             this.tabPageAbout = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panelAbout = new System.Windows.Forms.Panel();
-            this.linkLabelAbout = new System.Windows.Forms.LinkLabel();
             this.labelVersion = new System.Windows.Forms.Label();
             this.linkLabelDiscord = new System.Windows.Forms.LinkLabel();
+            this.panelAbout = new System.Windows.Forms.Panel();
+            this.linkLabelAbout = new System.Windows.Forms.LinkLabel();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.itemNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -70,11 +75,13 @@
             this.installToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uninstallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.label1 = new System.Windows.Forms.Label();
             this.statusStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPageMods.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.tabPageSettings.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPageAbout.SuspendLayout();
@@ -87,7 +94,9 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
-            this.progressBar});
+            this.progressBar,
+            this.buttonCheckForUpdatesNow});
+            this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.statusStrip.Location = new System.Drawing.Point(0, 439);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -107,6 +116,18 @@
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(250, 16);
             this.progressBar.Visible = false;
+            // 
+            // buttonCheckForUpdatesNow
+            // 
+            this.buttonCheckForUpdatesNow.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonCheckForUpdatesNow.Image = ((System.Drawing.Image)(resources.GetObject("buttonCheckForUpdatesNow.Image")));
+            this.buttonCheckForUpdatesNow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonCheckForUpdatesNow.Name = "buttonCheckForUpdatesNow";
+            this.buttonCheckForUpdatesNow.ShowDropDownArrow = false;
+            this.buttonCheckForUpdatesNow.Size = new System.Drawing.Size(160, 20);
+            this.buttonCheckForUpdatesNow.Text = "Check for mod updates...";
+            this.buttonCheckForUpdatesNow.ToolTipText = "Check for mod updates right now...";
+            this.buttonCheckForUpdatesNow.Click += new System.EventHandler(this.buttonCheckForUpdatesNow_Click);
             // 
             // tabControl
             // 
@@ -154,12 +175,12 @@
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.Controls.Add(this.label3, 0, 2);
+            this.tableLayoutPanel.Controls.Add(this.label1, 0, 2);
             this.tableLayoutPanel.Controls.Add(this.listView, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.textBoxDescription, 3, 0);
-            this.tableLayoutPanel.Controls.Add(this.label1, 0, 2);
             this.tableLayoutPanel.Controls.Add(this.buttonInstall, 3, 2);
             this.tableLayoutPanel.Controls.Add(this.buttonMoreInfo, 3, 1);
+            this.tableLayoutPanel.Controls.Add(this.label3, 1, 2);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
@@ -167,17 +188,20 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.90909F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(770, 407);
             this.tableLayoutPanel.TabIndex = 1;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 372);
+            this.tableLayoutPanel.SetColumnSpan(this.label3, 2);
+            this.label3.Location = new System.Drawing.Point(225, 372);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(203, 26);
+            this.label3.Size = new System.Drawing.Size(290, 26);
             this.label3.TabIndex = 5;
-            this.label3.Text = "To uninstall a mod, right click an installed mod and click uninstall.";
+            this.label3.Text = "To install/uninstall a mod, right click on any mod.\r\nTo install multiple, check t" +
+    "he boxes and press the button  -->\r\n";
             // 
             // listView
             // 
@@ -236,17 +260,6 @@
             this.textBoxDescription.TabIndex = 3;
             this.textBoxDescription.Text = "Press any mod to display information.";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.tableLayoutPanel.SetColumnSpan(this.label1, 2);
-            this.label1.ForeColor = System.Drawing.Color.Gray;
-            this.label1.Location = new System.Drawing.Point(225, 372);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(240, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "All installed mods are marked in an italic grey font.\r\n";
-            // 
             // buttonInstall
             // 
             this.buttonInstall.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -273,14 +286,62 @@
             // tabPageSettings
             // 
             this.tabPageSettings.BackColor = System.Drawing.SystemColors.Window;
+            this.tabPageSettings.Controls.Add(this.groupBox3);
             this.tabPageSettings.Controls.Add(this.groupBox2);
             this.tabPageSettings.Controls.Add(this.groupBox1);
             this.tabPageSettings.Location = new System.Drawing.Point(4, 22);
             this.tabPageSettings.Name = "tabPageSettings";
             this.tabPageSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSettings.Size = new System.Drawing.Size(792, 259);
+            this.tabPageSettings.Size = new System.Drawing.Size(776, 413);
             this.tabPageSettings.TabIndex = 1;
             this.tabPageSettings.Text = "Settings";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.checkBoxAutoUpdate);
+            this.groupBox3.Controls.Add(this.checkBoxAllowNonApproved);
+            this.groupBox3.Controls.Add(this.checkBoxConsole);
+            this.groupBox3.Location = new System.Drawing.Point(243, 116);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(202, 128);
+            this.groupBox3.TabIndex = 4;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Advanced";
+            // 
+            // checkBoxAutoUpdate
+            // 
+            this.checkBoxAutoUpdate.AutoSize = true;
+            this.checkBoxAutoUpdate.Checked = true;
+            this.checkBoxAutoUpdate.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxAutoUpdate.Location = new System.Drawing.Point(14, 46);
+            this.checkBoxAutoUpdate.Name = "checkBoxAutoUpdate";
+            this.checkBoxAutoUpdate.Size = new System.Drawing.Size(122, 17);
+            this.checkBoxAutoUpdate.TabIndex = 5;
+            this.checkBoxAutoUpdate.Text = "Auto-update on start\r\n";
+            this.checkBoxAutoUpdate.UseVisualStyleBackColor = true;
+            this.checkBoxAutoUpdate.CheckedChanged += new System.EventHandler(this.checkBoxAutoUpdate_CheckedChanged);
+            // 
+            // checkBoxAllowNonApproved
+            // 
+            this.checkBoxAllowNonApproved.AutoSize = true;
+            this.checkBoxAllowNonApproved.Location = new System.Drawing.Point(14, 65);
+            this.checkBoxAllowNonApproved.Name = "checkBoxAllowNonApproved";
+            this.checkBoxAllowNonApproved.Size = new System.Drawing.Size(175, 30);
+            this.checkBoxAllowNonApproved.TabIndex = 4;
+            this.checkBoxAllowNonApproved.Text = "Allow not-approved mods\r\n(warning: can break your game)";
+            this.checkBoxAllowNonApproved.UseVisualStyleBackColor = true;
+            this.checkBoxAllowNonApproved.CheckedChanged += new System.EventHandler(this.checkBoxAllowNonApproved_CheckedChanged);
+            // 
+            // checkBoxConsole
+            // 
+            this.checkBoxConsole.AutoSize = true;
+            this.checkBoxConsole.Location = new System.Drawing.Point(14, 19);
+            this.checkBoxConsole.Name = "checkBoxConsole";
+            this.checkBoxConsole.Size = new System.Drawing.Size(137, 17);
+            this.checkBoxConsole.TabIndex = 3;
+            this.checkBoxConsole.Text = "Show patching console";
+            this.checkBoxConsole.UseVisualStyleBackColor = true;
+            this.checkBoxConsole.CheckedChanged += new System.EventHandler(this.checkBoxConsole_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -433,29 +494,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(776, 413);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // panelAbout
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.panelAbout, 3);
-            this.panelAbout.Controls.Add(this.linkLabelAbout);
-            this.panelAbout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelAbout.Location = new System.Drawing.Point(119, 125);
-            this.panelAbout.Name = "panelAbout";
-            this.panelAbout.Size = new System.Drawing.Size(536, 159);
-            this.panelAbout.TabIndex = 2;
-            // 
-            // linkLabelAbout
-            // 
-            this.linkLabelAbout.DisabledLinkColor = System.Drawing.SystemColors.ControlText;
-            this.linkLabelAbout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.linkLabelAbout.Location = new System.Drawing.Point(0, 0);
-            this.linkLabelAbout.Name = "linkLabelAbout";
-            this.linkLabelAbout.Size = new System.Drawing.Size(536, 159);
-            this.linkLabelAbout.TabIndex = 0;
-            this.linkLabelAbout.TabStop = true;
-            this.linkLabelAbout.Text = "Beat Modder\r\nby CodeStix\r\n\r\npowered by beatmods.com\r\nby vanZeben";
-            this.linkLabelAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.linkLabelAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAbout_LinkClicked);
-            // 
             // labelVersion
             // 
             this.labelVersion.AutoSize = true;
@@ -479,6 +517,29 @@
             this.linkLabelDiscord.Text = "Join Beat Saber modding server on discord";
             this.linkLabelDiscord.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.linkLabelDiscord.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelDiscord_LinkClicked);
+            // 
+            // panelAbout
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.panelAbout, 3);
+            this.panelAbout.Controls.Add(this.linkLabelAbout);
+            this.panelAbout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelAbout.Location = new System.Drawing.Point(119, 125);
+            this.panelAbout.Name = "panelAbout";
+            this.panelAbout.Size = new System.Drawing.Size(536, 159);
+            this.panelAbout.TabIndex = 2;
+            // 
+            // linkLabelAbout
+            // 
+            this.linkLabelAbout.DisabledLinkColor = System.Drawing.SystemColors.ControlText;
+            this.linkLabelAbout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.linkLabelAbout.Location = new System.Drawing.Point(0, 0);
+            this.linkLabelAbout.Name = "linkLabelAbout";
+            this.linkLabelAbout.Size = new System.Drawing.Size(536, 159);
+            this.linkLabelAbout.TabIndex = 0;
+            this.linkLabelAbout.TabStop = true;
+            this.linkLabelAbout.Text = "Beat Modder\r\nby CodeStix\r\n\r\npowered by beatmods.com\r\nby vanZeben";
+            this.linkLabelAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.linkLabelAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAbout_LinkClicked);
             // 
             // contextMenu
             // 
@@ -531,6 +592,16 @@
             this.notifyIcon.Text = "Beat Modder Notification";
             this.notifyIcon.Visible = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Gray;
+            this.label1.Location = new System.Drawing.Point(3, 372);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(216, 26);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "All installed mods are marked in an italic grey font.\r\n";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -550,6 +621,8 @@
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
             this.tabPageSettings.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -580,7 +653,6 @@
         private System.Windows.Forms.ColumnHeader columnHeaderInfo;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.Button buttonInstall;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ToolStripMenuItem viewInformationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem installToolStripMenuItem;
@@ -607,6 +679,12 @@
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.LinkLabel linkLabelDiscord;
         private System.Windows.Forms.LinkLabel linkLabelAbout;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox checkBoxConsole;
+        private System.Windows.Forms.CheckBox checkBoxAutoUpdate;
+        private System.Windows.Forms.CheckBox checkBoxAllowNonApproved;
+        private System.Windows.Forms.ToolStripDropDownButton buttonCheckForUpdatesNow;
+        private System.Windows.Forms.Label label1;
     }
 }
 
