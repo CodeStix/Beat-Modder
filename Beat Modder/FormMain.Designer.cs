@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.buttonPlayAndExit = new System.Windows.Forms.ToolStripDropDownButton();
             this.buttonCheckForUpdatesNow = new System.Windows.Forms.ToolStripDropDownButton();
             this.labelBeatSaberVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -94,6 +95,7 @@
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buttonPlayAndExit,
             this.buttonCheckForUpdatesNow,
             this.labelBeatSaberVersion,
             this.statusLabel,
@@ -105,6 +107,18 @@
             this.statusStrip.Size = new System.Drawing.Size(784, 22);
             this.statusStrip.TabIndex = 0;
             this.statusStrip.Text = "statusStrip";
+            // 
+            // buttonPlayAndExit
+            // 
+            this.buttonPlayAndExit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonPlayAndExit.Image = global::Stx.BeatModder.Properties.Resources.play;
+            this.buttonPlayAndExit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonPlayAndExit.Name = "buttonPlayAndExit";
+            this.buttonPlayAndExit.ShowDropDownArrow = false;
+            this.buttonPlayAndExit.Size = new System.Drawing.Size(107, 20);
+            this.buttonPlayAndExit.Text = "Play Beat Saber";
+            this.buttonPlayAndExit.ToolTipText = "Play Beat Saber and close this program.";
+            this.buttonPlayAndExit.Click += new System.EventHandler(this.buttonPlayAndExit_Click);
             // 
             // buttonCheckForUpdatesNow
             // 
@@ -135,7 +149,7 @@
             // 
             this.progressBar.MarqueeAnimationSpeed = 5;
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(250, 16);
+            this.progressBar.Size = new System.Drawing.Size(150, 16);
             this.progressBar.Visible = false;
             // 
             // tabControl
@@ -165,7 +179,7 @@
             // 
             this.tableLayoutPanel.ColumnCount = 4;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 146F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 205F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 197F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -207,7 +221,7 @@
             this.label1.ForeColor = System.Drawing.Color.Gray;
             this.label1.Location = new System.Drawing.Point(3, 372);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(216, 26);
+            this.label1.Size = new System.Drawing.Size(240, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "All installed mods are marked in an italic grey font.\r\n";
             // 
@@ -295,7 +309,7 @@
             // 
             this.label3.AutoSize = true;
             this.tableLayoutPanel.SetColumnSpan(this.label3, 2);
-            this.label3.Location = new System.Drawing.Point(225, 372);
+            this.label3.Location = new System.Drawing.Point(257, 372);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(290, 26);
             this.label3.TabIndex = 5;
@@ -697,6 +711,7 @@
         private System.Windows.Forms.ToolStripDropDownButton buttonCheckForUpdatesNow;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripStatusLabel labelBeatSaberVersion;
+        private System.Windows.Forms.ToolStripDropDownButton buttonPlayAndExit;
     }
 }
 

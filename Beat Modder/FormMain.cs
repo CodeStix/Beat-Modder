@@ -23,6 +23,8 @@ namespace Stx.BeatModder
         public const string IPAExecutable = "IPA.exe";
         public const string BeatSaberExecutable = "Beat Saber.exe";
         public const string BeatSaberVersionFile = "BeatSaberVersion.txt";
+        public readonly string[] OriginalBeatSaberFiles = new string[] { "Beat Saber_Data", "Beat Saber.exe", "MonoBleedingEdge",
+            "UnityPlayer.dll", "UnityCrashHandler64.exe", "WinPixEventRuntime.dll" };
 
         private ListViewItem selected = null;
         private Config config;
@@ -131,7 +133,7 @@ namespace Stx.BeatModder
 
         public async Task CheckForUpdateAndWarn(string currentVersion)
         {
-            const string VersionSource = @"https://github.com/CodeStix/Beat-Modder/blob/master/Installer/latestVersion.txt";
+            const string VersionSource = @"https://raw.githubusercontent.com/CodeStix/Beat-Modder/master/Installer/latestVersion.txt";
             const string UpdatesLink = @"https://github.com/CodeStix/Beat-Modder/releases";
 
             bool update = false;
@@ -308,13 +310,12 @@ namespace Stx.BeatModder
         }
 
 
-        private async Task DownloadModInformations()
+        private async Task<bool> DownloadModInformations()
         {
-            SetStatus("Updating mod information...", false);
-
             mods = new List<Mod>();
 
             var request = WebRequest.Create(ModListUrl);
+            bool successful = false;
 
             await Task.Factory.FromAsync<WebResponse>(request.BeginGetResponse, request.EndGetResponse, null).ContinueWith((Action<Task<WebResponse>>)((Task<WebResponse> task) =>
             {
@@ -328,13 +329,15 @@ namespace Stx.BeatModder
                     mods = JsonConvert.DeserializeObject<List<Mod>>(raw);
                     SaveConfig();
 
-                    SetStatus("Mod information updated!", true);
+                    successful = true;
                 }
                 else
                 {
-                    SetStatus("Could not update mod information.", true);
+                    successful = false;
                 }
             }));
+
+            return successful;
         }
 
         private async Task RunIPA(bool revert = false, bool launch = false, bool wait = false, bool shown = false)
@@ -538,7 +541,11 @@ namespace Stx.BeatModder
         {
             Task.Run(new Action(async () =>
             {
+                SetStatus("Checking for update...", false);
+
                 await CheckForUpdateAndWarn(StringUtil.GetCurrentVersion(2));
+
+                SetStatus("Loading files...", false);
 
                 LoadConfig();
 
@@ -552,7 +559,16 @@ namespace Stx.BeatModder
                     SaveConfig();
                 }
 
-                await DownloadModInformations();
+                SetStatus("Refreshing mod informatiosn...", false);
+
+                if (!await DownloadModInformations())
+                {
+                    SetStatus("Could not update mod information.", false);
+
+                    await Task.Delay(1000);
+                }
+
+                SetStatus("List of mods has been refreshed.", true);
 
                 BeginInvoke(new Action(() =>
                 {
@@ -562,8 +578,34 @@ namespace Stx.BeatModder
                     textBoxBeatSaberLocation.Text = config.beatSaberLocation;
                 }));
 
-                if (!IPAFound)
+                if (!IPAFound || (IPAFound && config.firstTime))
                 {
+                    if (IPAFound && config.firstTime)
+                    {
+                        if (MessageBox.Show("It looks like your Beat Saber was already modded outside this application.\n" +
+                        "Beat Modder will remove the mods that are currently installed. (keeps custom songs, custom avatars ...)\n" +
+                        "You will have to reinstall the mods later using this application.\n\n" +
+                        "Press OK to remove the mods and reinstall them later.\n" +
+                        "Press Cancel to quit.", "We are getting there...", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) != DialogResult.OK)
+                        {
+                            SelfDestruct();
+                        }
+
+                        SetStatus("Removing old plugins...", false);
+
+                        try
+                        {
+                            Directory.Delete(GetBeatSaberFile("Plugins"), true);
+                            Directory.CreateDirectory(GetBeatSaberFile("Plugins"));
+                        }
+                        catch
+                        {
+                            SetStatus("Could not remove old plugins...", false);
+
+                            await Task.Delay(1000);
+                        }
+                    }
+
                     if (!BeatSaberVersionFileFound)
                     {
                         MessageBox.Show("Hey you!\n" +
@@ -580,8 +622,8 @@ namespace Stx.BeatModder
                         SelfDestruct();
                     }
 
-                    config.ogFiles.AddRange(Directory.GetFiles(config.beatSaberLocation));
-                    config.ogFiles.AddRange(Directory.GetDirectories(config.beatSaberLocation));
+                    foreach (string ogFile in OriginalBeatSaberFiles)
+                        config.ogFiles.Add(GetBeatSaberFile(ogFile));
                     SaveConfig();
 
                     SetStatus("Installing core components...", false);
@@ -669,7 +711,11 @@ namespace Stx.BeatModder
             return anyGotUpdated;
         }
 
-        private void FormMain_FormClosed(object sender, FormClosedEventArgs e) => SaveConfig();
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            config.firstTime = false;
+            SaveConfig();
+        }
 
         private void listView_MouseClick(object sender, MouseEventArgs e)
         {
@@ -695,8 +741,6 @@ namespace Stx.BeatModder
 
                 ShowMods();
                 ShowNotification($"Mod { m.ToString() } was successfully installed into Beat Saber!");
-
-                //await RunIPA(revert: false, wait: config.showConsole, shown: config.showConsole);
             }
             else
             {
@@ -725,8 +769,6 @@ namespace Stx.BeatModder
 
                 ShowMods();
                 ShowNotification($"The mod { m.ToString() } was successfully removed from Beat Saber.");
-
-                //await RunIPA(revert: false, wait: config.showConsole, shown: config.showConsole);
             }
             else
             {
@@ -766,8 +808,6 @@ namespace Stx.BeatModder
             {
                 ShowMods();
                 ShowNotification($"{ installedCount } mods were installed into Beat Saber successfully.");
-
-                //await RunIPA(revert: false, wait: config.showConsole, shown: config.showConsole);
             }
         }
 
@@ -968,7 +1008,8 @@ namespace Stx.BeatModder
 
             SetStatus($"Checking for updates...", false);
 
-            await Task.Delay(1000);
+            await Task.Delay(500);
+            await DownloadModInformations();
 
             if (!await CheckForAndInstallModUpdates())
             {
@@ -978,6 +1019,7 @@ namespace Stx.BeatModder
 
         private void SelfDestruct()
         {
+            Close();
             Environment.Exit(0);
             while (true) ;
         }
@@ -1002,6 +1044,12 @@ namespace Stx.BeatModder
 
                 progressBar.Style = done ? System.Windows.Forms.ProgressBarStyle.Continuous : System.Windows.Forms.ProgressBarStyle.Marquee;
                 progressBar.Visible = !done;
+
+                buttonPlayAndExit.Enabled = done;
+                contextMenu.Enabled = done;
+                buttonInstall.Enabled = done;
+                buttonMoreInfo.Enabled = done;
+                buttonCheckForUpdatesNow.Enabled = done;
             }));
         }
 
@@ -1020,6 +1068,11 @@ namespace Stx.BeatModder
         {
             m.AddToList(listView, !IsInstalled(m));
         }
+
+        private void buttonPlayAndExit_Click(object sender, EventArgs e)
+        {
+            RunBeatSaberAndExit();
+        }
     }
 
     [Serializable]
@@ -1033,6 +1086,7 @@ namespace Stx.BeatModder
         public bool showConsole = false;
         public bool allowNonApproved = false;
         public bool autoUpdate = true;
+        public bool firstTime = true;
 
         public Config()
         {
