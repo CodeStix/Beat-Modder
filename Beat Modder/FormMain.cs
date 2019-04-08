@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Flurl;
 using Newtonsoft.Json;
-using Octokit;
 using Ookii.Dialogs.WinForms;
 
 namespace Stx.BeatModder
@@ -125,17 +124,45 @@ namespace Stx.BeatModder
             linkLabelAbout.Links.Add(16, 8, @"https://github.com/CodeStix");
             linkLabelAbout.Links.Add(39, 13, @"https://beatmods.com");
 
-            labelVersion.Text = $"Version: { Assembly.GetExecutingAssembly().GetName().Version }";
+            labelVersion.Text = $"Version: { StringUtil.GetCurrentVersion(2) }";
 
             checkBoxAllowNonApproved.Enabled = Properties.Settings.Default.AllowUnApproved;
-
-            
         }
 
         public async Task CheckForUpdateAndWarn(string currentVersion)
         {
-            
+            const string VersionSource = @"https://github.com/CodeStix/Beat-Modder/blob/master/Installer/latestVersion.txt";
+            const string UpdatesLink = @"https://github.com/CodeStix/Beat-Modder/releases";
 
+            bool update = false;
+
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    string redVersion = await client.DownloadStringTaskAsync(VersionSource);
+
+                    if (StringUtil.StringVersionToNumber(redVersion) > StringUtil.StringVersionToNumber(currentVersion))
+                    {
+                        update = true;
+                    }
+                }
+            }
+            catch
+            {
+                update = true;
+            }
+
+            if (update)
+            {
+                if (MessageBox.Show("There is an update available for Beat Modder, please download the newest version " +
+                    "to ensure that everything can work correctly. Go to the download page right now?", "An update!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                {
+                    Process.Start(UpdatesLink);
+
+                    SelfDestruct();
+                }
+            }
         }
 
         public string GetBeatSaberFile(string name)
@@ -511,6 +538,8 @@ namespace Stx.BeatModder
         {
             Task.Run(new Action(async () =>
             {
+                await CheckForUpdateAndWarn(StringUtil.GetCurrentVersion(2));
+
                 LoadConfig();
 
                 checkBoxConsole.Checked = config.showConsole;

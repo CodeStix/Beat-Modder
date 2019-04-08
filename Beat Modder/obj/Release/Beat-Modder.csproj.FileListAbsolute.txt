@@ -1,6 +1,4 @@
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\BeatModder.exe.config
-H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\BeatModder.exe.manifest
-H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\BeatModder.application
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\BeatModder.exe
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\BeatModder.pdb
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Flurl.dll
@@ -24,9 +22,6 @@ H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\Stx.BeatModder.FormModIn
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\Stx.BeatModder.Properties.Resources.resources
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\Beat-Modder.csproj.GenerateResource.cache
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\Beat-Modder.csproj.CoreCompileInputs.cache
-H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\BeatModder.TrustInfo.xml
-H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\BeatModder.exe.manifest
-H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\BeatModder.application
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\Beat-Modder.csproj.CopyComplete
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\BeatModder.exe
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\BeatModder.pdb

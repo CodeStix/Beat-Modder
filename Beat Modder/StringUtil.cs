@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Stx.BeatModder
 {
@@ -8,6 +9,8 @@ namespace Stx.BeatModder
         {
             if (string.IsNullOrEmpty(version))
                 return 0;
+
+            version = version.Trim().ToLower();
 
             string[] s = version.Split('.');
             int j = 1;
@@ -19,6 +22,11 @@ namespace Stx.BeatModder
                 j += ((int)Math.Pow(1000, s.Length - i - 1)) * k;
             }
             return j;
+        }
+
+        public static string GetCurrentVersion(int components = 4)
+        {
+            return Assembly.GetExecutingAssembly().GetName().Version.ToString(components);
         }
     }
 }

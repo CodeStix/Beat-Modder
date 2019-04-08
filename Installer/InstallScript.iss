@@ -17,7 +17,7 @@ DefaultDirName={pf}\Beat Modder
 DisableProgramGroupPage=yes
 LicenseFile=H:\Documents\GitHub\Beat-Modder\Installer\license.txt
 InfoBeforeFile=H:\Documents\GitHub\Beat-Modder\Installer\installInfo.txt
-OutputDir=C:\Users\Stijn Rogiest\Desktop
+OutputDir=H:\Documents\GitHub\Beat-Modder\Installer\
 OutputBaseFilename=BeatModder-1.0-install
 SetupIconFile=H:\Documents\GitHub\Beat-Modder\Beat Modder\Resources\saber.ico
 Compression=lzma
@@ -33,7 +33,6 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\BeatModder.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\BeatModder.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\BeatModder.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\BeatModder.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
 Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Flurl.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Flurl.Http.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\HtmlAgilityPack.dll"; DestDir: "{app}"; Flags: ignoreversion
