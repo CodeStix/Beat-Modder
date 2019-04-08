@@ -6,8 +6,6 @@ H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\BeatModder.pdb
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Flurl.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Flurl.Http.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\HtmlAgilityPack.dll
-H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\MetroFramework.dll
-H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\MetroFramework.Fonts.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Newtonsoft.Json.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Ookii.Dialogs.WinForms.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Ookii.Dialogs.Wpf.dll
@@ -32,3 +30,4 @@ H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\BeatModder.application
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\Beat-Modder.csproj.CopyComplete
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\BeatModder.exe
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\BeatModder.pdb
+H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\Beat-Modder.csprojAssemblyReference.cache
