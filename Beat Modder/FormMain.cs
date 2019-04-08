@@ -20,6 +20,9 @@ namespace Stx.BeatModder
     public partial class FormMain : Form
     {
         public const string ConfigFile = @"mods.json";
+        public const string IPAExecutable = "IPA.exe";
+        public const string BeatSaberExecutable = "Beat Saber.exe";
+        public const string BeatSaberVersionFile = "BeatSaberVersion.txt";
 
         private ListViewItem selected = null;
         private Config config;
@@ -40,14 +43,14 @@ namespace Stx.BeatModder
         {
             get
             {
-                return GetBeatSaberFile("Beat Saber.exe");
+                return GetBeatSaberFile(BeatSaberExecutable);
             }
         }
         private string IPAFile
         {
             get
             {
-                return GetBeatSaberFile("IPA.exe");
+                return GetBeatSaberFile(IPAExecutable);
             }
         }
         private bool BeatSaberFound
@@ -78,6 +81,37 @@ namespace Stx.BeatModder
                 catch
                 {
                     return false;
+                }
+            }
+        }
+        private bool BeatSaberVersionFileFound
+        {
+            get
+            {
+                if (!BeatSaberFound)
+                    return false;
+
+                try
+                {
+                    return File.Exists(BeatSaberVersionFile);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+        private string BeatSaberVersion
+        {
+            get
+            {
+                try
+                {
+                    return File.ReadAllText(BeatSaberVersionFile);
+                }
+                catch
+                {
+                    return null;
                 }
             }
         }
@@ -189,7 +223,7 @@ namespace Stx.BeatModder
 
             Parallel.ForEach(searchLocations, (loc) =>
             {
-                if (File.Exists(loc + @"\Beat Saber\Beat Saber.exe"))
+                if (File.Exists(loc + @"\Beat Saber\" + BeatSaberExecutable))
                     foundLocations.Add(loc + @"\Beat Saber");
             });
 
@@ -487,6 +521,15 @@ namespace Stx.BeatModder
 
                 if (!IPAFound)
                 {
+                    if (!BeatSaberVersionFileFound)
+                    {
+                        MessageBox.Show("Hey you!\n" +
+                            "Before modding Beat Saber, you must at least play it once without mods.\n" +
+                            "Please open and close Beat Saber and come back in a moment.", "Too excited?", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                        SelfDestruct();
+                    }
+
                     if (MessageBox.Show("Do you want to mod Beat Saber right now?\n" +
                         "The core components will get installed.\n" +
                         "You can undo all the mods at any time in the settings tab.", "Let's mod?", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) != DialogResult.OK)
@@ -525,12 +568,14 @@ namespace Stx.BeatModder
                     BeginInvoke(new Action(() => ShowMods()));
                 }
 
-                string beatSaberHash = FileUtil.ComputeFileHash(BeatSaberFile);
-                if (config.lastBeatSaberHash != beatSaberHash)
+                string redVersion = BeatSaberVersion;
+                if (StringUtil.StringVersionToNumber(config.lastBeatSaberVersion) < StringUtil.StringVersionToNumber(redVersion))
                 {
-                    MessageBox.Show("Good news! There was a Beat Saber update, this means that some of the mods have to get updated too.\n" +
-                        "If the update was released recently, be aware that some mods could be broken.\n" +
-                        "At any moment you can open this program to automatically check for and install mod updates!", "Oh snap!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Good news!" +
+                        $"\nThere was a Beat Saber update ({ config.lastBeatSaberVersion } -> { redVersion })\n" +
+                        $", this means that some of the mods have to get updated too.\n" +
+                        $"If the update was released recently, be aware that some mods could be broken.\n" +
+                        $"At any moment you can open this program to automatically check for and install mod updates!", "Oh snap!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     SetStatus("Patching Beat Saber...", false);
 
@@ -538,7 +583,7 @@ namespace Stx.BeatModder
 
                     SetStatus("Patched Beat Saber!", true);
 
-                    config.lastBeatSaberHash = beatSaberHash;
+                    config.lastBeatSaberVersion = redVersion;
                     SaveConfig();
                 }
 
@@ -688,7 +733,7 @@ namespace Stx.BeatModder
 
             if (fbd.ShowDialog() == DialogResult.OK)
             {
-                if (!File.Exists(Path.Combine(fbd.SelectedPath, "Beat Saber.exe")))
+                if (!File.Exists(Path.Combine(fbd.SelectedPath, BeatSaberExecutable)))
                 {
                     var r = MessageBox.Show("The Beat Saber executable was not found in this folder, \n" +
                         "are you sure you want to use this location?", "Uhm?", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Exclamation);
@@ -869,7 +914,7 @@ namespace Stx.BeatModder
     public class Config
     {
         public string beatSaberLocation;
-        public string lastBeatSaberHash;
+        public string lastBeatSaberVersion;
         public List<string> ogFiles;
         public ModDownloadType beatSaberType;
         public List<InstalledMod> installedMods;
