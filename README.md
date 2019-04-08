@@ -1,3 +1,4 @@
 # Beat-Modder
 
-A simple modding program used to install mods to Beat Saber.
+A Beat Saber mod installer and remover.
+Makes use of [beatmods.com](https://beatmods.com) by vanZeben.
