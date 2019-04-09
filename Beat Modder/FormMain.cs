@@ -273,12 +273,18 @@ namespace Stx.BeatModder
                 SetStatus("Could not find beat saber location, please select manually...", false);
 
                 FolderBrowserDialog ofd = new FolderBrowserDialog();
-                ofd.Description = "Please select the location of your beat saber installation.";
+                ofd.Description = "Please select the location of your Beat Saber installation.";
 
-                if (ofd.ShowDialog() != DialogResult.OK)
+                do
                 {
-                    SelfDestruct();
-                }
+                    if (ofd.ShowDialog(this) != DialogResult.OK)
+                    {
+                        SelfDestruct();
+                    }
+
+                    ofd.Description = "The Beat Saber executable was not found in that folder. Please select the location of your Beat Saber installation.";
+
+                } while (!File.Exists(Path.Combine(ofd.SelectedPath, "Beat Saber.exe")));
 
                 actualPath = ofd.SelectedPath;
             }
