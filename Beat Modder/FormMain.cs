@@ -540,27 +540,26 @@ namespace Stx.BeatModder
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+            SetStatus("Loading files...", false);
+
+            LoadConfig();
+            checkBoxConsole.Checked = config.showConsole;
+            checkBoxAllowNonApproved.Checked = config.allowNonApproved;
+            checkBoxAutoUpdate.Checked = config.autoUpdate;
+
+            if (!BeatSaberFound)
+            {
+                config.beatSaberLocation = FindBeatSaberLocation(out config.beatSaberType);
+                SaveConfig();
+            }
+
             Task.Run(new Action(async () =>
             {
                 SetStatus("Checking for update...", false);
 
                 await CheckForUpdateAndWarn(StringUtil.GetCurrentVersion(2));
 
-                SetStatus("Loading files...", false);
-
-                LoadConfig();
-
-                checkBoxConsole.Checked = config.showConsole;
-                checkBoxAllowNonApproved.Checked = config.allowNonApproved;
-                checkBoxAutoUpdate.Checked = config.autoUpdate;
-
-                if (!BeatSaberFound)
-                {
-                    config.beatSaberLocation = FindBeatSaberLocation(out config.beatSaberType);
-                    SaveConfig();
-                }
-
-                SetStatus("Refreshing mod informatiosn...", false);
+                SetStatus("Refreshing mod informations...", false);
 
                 if (!await DownloadModInformations())
                 {

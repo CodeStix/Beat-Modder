@@ -22,6 +22,7 @@ OutputBaseFilename=BeatModder-1.0-install
 SetupIconFile=H:\Documents\GitHub\Beat-Modder\Beat Modder\Resources\saber.ico
 Compression=lzma
 SolidCompression=yes
+PrivilegesRequired=admin
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -42,9 +43,9 @@ Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Ookii.Dialogs.W
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{commonprograms}\Beat Modder"; Filename: "{app}\BeatModder.exe"
-Name: "{commondesktop}\Beat Modder"; Filename: "{app}\BeatModder.exe"; Tasks: desktopicon
+Name: "{commonprograms}\Beat Modder v1.0"; Filename: "{app}\BeatModder.exe"
+Name: "{commondesktop}\Beat Modder v1.0"; Filename: "{app}\BeatModder.exe"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\BeatModder.exe"; Description: "{cm:LaunchProgram,Beat Modder}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\BeatModder.exe"; Description: "{cm:LaunchProgram,Beat Modder}"; Flags: nowait postinstall skipifsilent runascurrentuser
 
