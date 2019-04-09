@@ -16,3 +16,7 @@ Until now, Beat Modder consists of the following features:
 Download the latest Beat Modder installer from the releases page: [here](https://github.com/CodeStix/Beat-Modder/releases).
 
 Open the downloaded file and follow its instructions.
+
+## Screenshot
+
+![Screenshot](https://github.com/CodeStix/Beat-Modder/raw/master/Installer/screenshot.PNG)
