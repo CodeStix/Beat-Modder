@@ -11,12 +11,27 @@ Until now, Beat Modder consists of the following features:
 * Clean your Beat Saber folder by removing all mods when needed.
 * View information about mods.
 
-## How to install
+## Screenshot
 
+![Screenshot](https://github.com/CodeStix/Beat-Modder/raw/master/Installer/screenshot.PNG)
+
+## How to install
 Download the latest Beat Modder installer from the releases page: [here](https://github.com/CodeStix/Beat-Modder/releases).
 
 Open the downloaded file and follow its instructions.
 
-## Screenshot
+## How to install/uninstall mods
 
-![Screenshot](https://github.com/CodeStix/Beat-Modder/raw/master/Installer/screenshot.PNG)
+Open Beat Modder and follow its instructions.
+When ready, a list of mods should appear, mods in _italics_ are already installed. Mods with a grey background are required mods and shall not get removed.
+
+#### To install a mod
+* Right click the mod you want to install, then press install. When successful, you should see a message in the bottom left corner.
+* Check all the boxes in front of the mods that you wish to install and press 'Install Checked Mods'. When successful, you should see a message in the bottom left corner.
+
+#### To uninstall a mod
+Right click the mod you want to uninstall, then press uninstall. When successful, you should see a message in the bottom left corner.
+
+## How to remove all mods
+Go to the settings tab, then press 'Remove All Mods' or 'Remove All Mods And Data'.
+You mods will get removed and your Beat Saber install will be fresh.
