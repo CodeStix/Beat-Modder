@@ -34,4 +34,4 @@ Right click the mod you want to uninstall, then press uninstall. When successful
 
 ## How to remove all mods
 Go to the settings tab, then press 'Remove All Mods' or 'Remove All Mods And Data'.
-You mods will get removed and your Beat Saber install will be fresh.
+Your mods will get removed and your Beat Saber install will be fresh.
