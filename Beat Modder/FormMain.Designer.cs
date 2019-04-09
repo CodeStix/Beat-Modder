@@ -50,16 +50,16 @@
             this.buttonMoreInfo = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPageSettings = new System.Windows.Forms.TabPage();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBoxAdvanced = new System.Windows.Forms.GroupBox();
             this.checkBoxAutoUpdate = new System.Windows.Forms.CheckBox();
             this.checkBoxAllowNonApproved = new System.Windows.Forms.CheckBox();
             this.checkBoxConsole = new System.Windows.Forms.CheckBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBoxDangerZone = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.buttonRemoveModsAndData = new System.Windows.Forms.Button();
             this.buttonRemoveMods = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxBeatSaber = new System.Windows.Forms.GroupBox();
             this.buttonChangeBeatSaberLocation = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxBeatSaberLocation = new System.Windows.Forms.TextBox();
@@ -83,9 +83,9 @@
             this.tabPageMods.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.tabPageSettings.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.groupBoxAdvanced.SuspendLayout();
+            this.groupBoxDangerZone.SuspendLayout();
+            this.groupBoxBeatSaber.SuspendLayout();
             this.tabPageAbout.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelAbout.SuspendLayout();
@@ -309,6 +309,7 @@
             // 
             this.label3.AutoSize = true;
             this.tableLayoutPanel.SetColumnSpan(this.label3, 2);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(257, 372);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(290, 26);
@@ -319,9 +320,9 @@
             // tabPageSettings
             // 
             this.tabPageSettings.BackColor = System.Drawing.SystemColors.Window;
-            this.tabPageSettings.Controls.Add(this.groupBox3);
-            this.tabPageSettings.Controls.Add(this.groupBox2);
-            this.tabPageSettings.Controls.Add(this.groupBox1);
+            this.tabPageSettings.Controls.Add(this.groupBoxAdvanced);
+            this.tabPageSettings.Controls.Add(this.groupBoxDangerZone);
+            this.tabPageSettings.Controls.Add(this.groupBoxBeatSaber);
             this.tabPageSettings.Location = new System.Drawing.Point(4, 22);
             this.tabPageSettings.Name = "tabPageSettings";
             this.tabPageSettings.Padding = new System.Windows.Forms.Padding(3);
@@ -329,17 +330,17 @@
             this.tabPageSettings.TabIndex = 1;
             this.tabPageSettings.Text = "Settings";
             // 
-            // groupBox3
+            // groupBoxAdvanced
             // 
-            this.groupBox3.Controls.Add(this.checkBoxAutoUpdate);
-            this.groupBox3.Controls.Add(this.checkBoxAllowNonApproved);
-            this.groupBox3.Controls.Add(this.checkBoxConsole);
-            this.groupBox3.Location = new System.Drawing.Point(243, 116);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(202, 128);
-            this.groupBox3.TabIndex = 4;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Advanced";
+            this.groupBoxAdvanced.Controls.Add(this.checkBoxAutoUpdate);
+            this.groupBoxAdvanced.Controls.Add(this.checkBoxAllowNonApproved);
+            this.groupBoxAdvanced.Controls.Add(this.checkBoxConsole);
+            this.groupBoxAdvanced.Location = new System.Drawing.Point(243, 116);
+            this.groupBoxAdvanced.Name = "groupBoxAdvanced";
+            this.groupBoxAdvanced.Size = new System.Drawing.Size(202, 128);
+            this.groupBoxAdvanced.TabIndex = 4;
+            this.groupBoxAdvanced.TabStop = false;
+            this.groupBoxAdvanced.Text = "Advanced";
             // 
             // checkBoxAutoUpdate
             // 
@@ -377,19 +378,19 @@
             this.checkBoxConsole.UseVisualStyleBackColor = true;
             this.checkBoxConsole.CheckedChanged += new System.EventHandler(this.checkBoxConsole_CheckedChanged);
             // 
-            // groupBox2
+            // groupBoxDangerZone
             // 
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.buttonRemoveModsAndData);
-            this.groupBox2.Controls.Add(this.buttonRemoveMods);
-            this.groupBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.groupBox2.Location = new System.Drawing.Point(17, 116);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(199, 128);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Danger Zone";
+            this.groupBoxDangerZone.Controls.Add(this.label6);
+            this.groupBoxDangerZone.Controls.Add(this.label5);
+            this.groupBoxDangerZone.Controls.Add(this.buttonRemoveModsAndData);
+            this.groupBoxDangerZone.Controls.Add(this.buttonRemoveMods);
+            this.groupBoxDangerZone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.groupBoxDangerZone.Location = new System.Drawing.Point(17, 116);
+            this.groupBoxDangerZone.Name = "groupBoxDangerZone";
+            this.groupBoxDangerZone.Size = new System.Drawing.Size(199, 128);
+            this.groupBoxDangerZone.TabIndex = 2;
+            this.groupBoxDangerZone.TabStop = false;
+            this.groupBoxDangerZone.Text = "Danger Zone";
             // 
             // label6
             // 
@@ -433,18 +434,18 @@
             this.buttonRemoveMods.UseVisualStyleBackColor = true;
             this.buttonRemoveMods.Click += new System.EventHandler(this.buttonRemoveMods_Click);
             // 
-            // groupBox1
+            // groupBoxBeatSaber
             // 
-            this.groupBox1.Controls.Add(this.buttonChangeBeatSaberLocation);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.textBoxBeatSaberLocation);
-            this.groupBox1.Controls.Add(this.buttonChangeBeatSaberType);
-            this.groupBox1.Controls.Add(this.labelBeatSaberType);
-            this.groupBox1.Location = new System.Drawing.Point(17, 17);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(608, 79);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
+            this.groupBoxBeatSaber.Controls.Add(this.buttonChangeBeatSaberLocation);
+            this.groupBoxBeatSaber.Controls.Add(this.label2);
+            this.groupBoxBeatSaber.Controls.Add(this.textBoxBeatSaberLocation);
+            this.groupBoxBeatSaber.Controls.Add(this.buttonChangeBeatSaberType);
+            this.groupBoxBeatSaber.Controls.Add(this.labelBeatSaberType);
+            this.groupBoxBeatSaber.Location = new System.Drawing.Point(17, 17);
+            this.groupBoxBeatSaber.Name = "groupBoxBeatSaber";
+            this.groupBoxBeatSaber.Size = new System.Drawing.Size(608, 79);
+            this.groupBoxBeatSaber.TabIndex = 0;
+            this.groupBoxBeatSaber.TabStop = false;
             // 
             // buttonChangeBeatSaberLocation
             // 
@@ -646,12 +647,12 @@
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
             this.tabPageSettings.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBoxAdvanced.ResumeLayout(false);
+            this.groupBoxAdvanced.PerformLayout();
+            this.groupBoxDangerZone.ResumeLayout(false);
+            this.groupBoxDangerZone.PerformLayout();
+            this.groupBoxBeatSaber.ResumeLayout(false);
+            this.groupBoxBeatSaber.PerformLayout();
             this.tabPageAbout.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -686,14 +687,14 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.TextBox textBoxDescription;
         private System.Windows.Forms.Button buttonMoreInfo;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBoxBeatSaber;
         private System.Windows.Forms.Label labelBeatSaberType;
         private System.Windows.Forms.Button buttonChangeBeatSaberType;
         private System.Windows.Forms.Button buttonChangeBeatSaberLocation;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxBeatSaberLocation;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupBoxDangerZone;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button buttonRemoveModsAndData;
@@ -704,7 +705,7 @@
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.LinkLabel linkLabelDiscord;
         private System.Windows.Forms.LinkLabel linkLabelAbout;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBoxAdvanced;
         private System.Windows.Forms.CheckBox checkBoxConsole;
         private System.Windows.Forms.CheckBox checkBoxAutoUpdate;
         private System.Windows.Forms.CheckBox checkBoxAllowNonApproved;

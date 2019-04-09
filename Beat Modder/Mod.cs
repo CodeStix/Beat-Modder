@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace Stx.BeatModder
 {
     [Serializable]
-    public struct Mod
+    public class Mod
     {
         public ModAuthor author;
         public string authorId;

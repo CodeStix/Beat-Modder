@@ -179,7 +179,6 @@ namespace Stx.BeatModder
                 if (!File.Exists(ConfigFile))
                 {
                     config = new Config();
-                    //config.mods.Add(new Mod("Mod 1", "Stijn", "1.0", "Test mod 1", "0.13.1", ModInstallStatus.CanInstall, "https://mod.net"));
                 }
                 else
                 {
@@ -342,6 +341,9 @@ namespace Stx.BeatModder
 
         private async Task RunIPA(bool revert = false, bool launch = false, bool wait = false, bool shown = false)
         {
+            if (!IPAFound)
+                return;
+
             await Task.Run(() =>
             {
                 ProcessStartInfo psi = new ProcessStartInfo()
@@ -396,6 +398,9 @@ namespace Stx.BeatModder
                         {
                             Mod latest = GetNewestModWithName(dep.name);
 
+                            if (latest == null)
+                                continue;
+
                             if (!IsInstalled(latest))
                             {
                                 // Uninstall old dependency version.
@@ -435,11 +440,7 @@ namespace Stx.BeatModder
         {
             foreach (Mod m in mods.Where((e) => e.IsRequired))
             {
-                Mod latest = GetNewestModWithName(m.name);
-                    /*mods.Where((e) => string.Compare(e.name, m.name, StringComparison.OrdinalIgnoreCase) == 0)
-                    .OrderByDescending((e) => StringUtil.StringVersionToNumber(e.version)).First()*/;
-
-                await InstallMod(latest);
+                await InstallMod(GetNewestModWithName(m.name));
             }
         }
 
@@ -570,18 +571,12 @@ namespace Stx.BeatModder
 
                 SetStatus("List of mods has been refreshed.", true);
 
-                BeginInvoke(new Action(() =>
-                {
-                    ShowMods();
-
-                    labelBeatSaberType.Text = "Beat Saber type: " + config.beatSaberType;
-                    textBoxBeatSaberLocation.Text = config.beatSaberLocation;
-                }));
-
                 if (!IPAFound || (IPAFound && config.firstTime))
                 {
                     if (IPAFound && config.firstTime)
                     {
+                        SetStatus("Removing old plugins...", false);
+
                         if (MessageBox.Show("It looks like your Beat Saber was already modded outside this application.\n" +
                         "Beat Modder will remove the mods that are currently installed. (keeps custom songs, custom avatars ...)\n" +
                         "You will have to reinstall the mods later using this application.\n\n" +
@@ -590,8 +585,6 @@ namespace Stx.BeatModder
                         {
                             SelfDestruct();
                         }
-
-                        SetStatus("Removing old plugins...", false);
 
                         try
                         {
@@ -606,6 +599,8 @@ namespace Stx.BeatModder
                         }
                     }
 
+                    SetStatus("Checking Beat Saber version...", false);
+
                     if (!BeatSaberVersionFileFound)
                     {
                         MessageBox.Show("Hey you!\n" +
@@ -614,6 +609,8 @@ namespace Stx.BeatModder
 
                         SelfDestruct();
                     }
+
+                    SetStatus("Getting ready...", false);
 
                     if (MessageBox.Show("Do you want to mod Beat Saber right now?\n" +
                         "The core components will get installed.\n" +
@@ -656,6 +653,8 @@ namespace Stx.BeatModder
 
                 if (config.autoUpdate)
                 {
+                    SetStatus($"Checking for mod updates...", false);
+
                     if (!await CheckForAndInstallModUpdates())
                     {
                         SetStatus($"All mods are up-to-date!", true);
@@ -670,9 +669,14 @@ namespace Stx.BeatModder
                 {
                     ShowMods();
 
+                    labelBeatSaberType.Text = "Beat Saber type: " + config.beatSaberType;
+                    textBoxBeatSaberLocation.Text = config.beatSaberLocation;
                     labelBeatSaberVersion.ForeColor = Color.Green;
-                    labelBeatSaberVersion.Text = $"Beat Saber version: { redVersion }";
+                    labelBeatSaberVersion.Text = $"Beat Saber version: {  config.lastBeatSaberVersion }";
                 }));
+
+                config.firstTime = false;
+                SaveConfig();
             }
             ));
         }
@@ -713,7 +717,6 @@ namespace Stx.BeatModder
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            config.firstTime = false;
             SaveConfig();
         }
 
@@ -785,6 +788,15 @@ namespace Stx.BeatModder
 
         private async void buttonInstall_Click(object sender, EventArgs e)
         {
+            if (listView.CheckedItems.Count <= 0)
+            {
+                MessageBox.Show("You want to install nothing? Please check the boxes in front of the mods " +
+                    "you want to install in the list and then press this button again.",
+                    "That isn't working...", MessageBoxButtons.OK, MessageBoxIcon.Question);
+
+                return;
+            }
+
             int installedCount = 0;
 
             foreach (ListViewItem item in listView.CheckedItems)
@@ -813,6 +825,9 @@ namespace Stx.BeatModder
 
         private void buttonMoreInfo_Click(object sender, EventArgs e)
         {
+            if (selected == null)
+                return;
+
             FormModInfo fmi = new FormModInfo((Mod)selected.Tag);
 
             fmi.Show(this);
@@ -914,13 +929,13 @@ namespace Stx.BeatModder
 
         private void listView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            Mod? s = e.Item.Tag as Mod?;
+            Mod s = e.Item.Tag as Mod;
 
             selected = e.Item;
 
-            if (selected != null)
+            if (s != null && selected != null)
             {
-                textBoxDescription.Text = $"{ s.Value.name }\r\n\tby { s.Value.author.username }\r\n\r\n{ s.Value.description }\r\n\r\nCategory: { s.Value.Category.ToString() }";
+                textBoxDescription.Text = $"{ s.name }\r\n\tby { s.author.username }\r\n\r\n{ s.description }\r\n\r\nCategory: { s.Category.ToString() }";
             }
 
             buttonMoreInfo.Enabled = selected != null;
@@ -928,9 +943,9 @@ namespace Stx.BeatModder
 
         private void listView_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
-            Mod? s = e.Item.Tag as Mod?;
+            Mod s = e.Item.Tag as Mod;
 
-            if (s != null && IsAnyVersionInstalled(s.Value))
+            if (s != null && IsAnyVersionInstalled(s))
             {
                 e.Item.Checked = false;
             }
@@ -1019,7 +1034,6 @@ namespace Stx.BeatModder
 
         private void SelfDestruct()
         {
-            Close();
             Environment.Exit(0);
             while (true) ;
         }
@@ -1050,6 +1064,9 @@ namespace Stx.BeatModder
                 buttonInstall.Enabled = done;
                 buttonMoreInfo.Enabled = done;
                 buttonCheckForUpdatesNow.Enabled = done;
+                groupBoxAdvanced.Enabled = done;
+                groupBoxBeatSaber.Enabled = done;
+                groupBoxDangerZone.Enabled = done;
             }));
         }
 
