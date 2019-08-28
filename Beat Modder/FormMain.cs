@@ -205,17 +205,17 @@ namespace Stx.BeatModder
 
         private bool IsAnyVersionInstalled(Mod m)
         {
-            return config.installedMods.Any((e) => e.Is(m));
+            return config.installedMods.Any((e) => e.EqualsModIgnoreVersion(m));
         }
 
         private bool IsInstalled(Mod m)
         {
-            return config.installedMods.Any((e) => e.IsExact(m));
+            return config.installedMods.Any((e) => e.EqualsMod(m));
         }
 
         private InstalledMod GetInstalledMod(Mod m)
         {
-            return config.installedMods.FirstOrDefault((e) => e.Is(m));
+            return config.installedMods.FirstOrDefault((e) => e.EqualsModIgnoreVersion(m));
         }
 
         private Mod GetNewestModWithName(string modName)
@@ -396,8 +396,7 @@ namespace Stx.BeatModder
                             affectedFiles = archive.ExtractToDirectory(config.beatSaberLocation, true);
                         }
 
-                        config.installedMods.Add(new InstalledMod(mod, affectedFiles));
-                        SaveConfig();
+                        InstalledMod im = new InstalledMod(mod, affectedFiles);
 
                         // Installing required dependencies for this mod to work.
                         foreach (Mod dep in mod.dependencies)
@@ -412,13 +411,24 @@ namespace Stx.BeatModder
                                 // Uninstall old dependency version.
                                 if (IsAnyVersionInstalled(latest))
                                 {
-                                    await UninstallMod(GetInstalledMod(latest));
+                                    await UninstallMod(GetInstalledMod(latest), true);
                                 }
 
                                 await InstallMod(latest);
                             }
 
+                            InstalledMod imdep = GetInstalledMod(latest);
+                            if (!imdep?.usedBy.Contains(mod.name) ?? false)
+                                imdep?.usedBy.Add(mod.name);
+                            if (!im.uses.Contains(latest.name))
+                                im.uses.Add(latest.name);
+
+                            SaveConfig();
                         }
+
+                        config.installedMods.Add(im);
+                        SaveConfig();
+
                         return true;
                     }
                     catch
@@ -457,7 +467,7 @@ namespace Stx.BeatModder
             var toRemove = new List<InstalledMod>(config.installedMods);
 
             foreach(InstalledMod mod in toRemove)
-                await UninstallMod(mod);
+                await UninstallMod(mod, true);
         }
 
         private async Task UninstallAllModsAndData()
@@ -479,12 +489,17 @@ namespace Stx.BeatModder
             }
         }
 
-        private async Task<bool> UninstallMod(InstalledMod mod)
+        private async Task<bool> UninstallMod(InstalledMod mod, bool forceRemoval = false)
         {
             return await Task.Run<bool>(() =>
             {
                 try
                 {
+                    if (!forceRemoval && (mod.preventRemoval || mod.usedBy.Count > 0))
+                    {
+                        return false;
+                    }
+
                     foreach (string file in mod.affectedFiles)
                     {
                         if (File.Exists(file))
@@ -506,9 +521,9 @@ namespace Stx.BeatModder
         }
 
         [Obsolete]
-        private async Task<bool> CreateBackup(string file)
+        private Task<bool> CreateBackup(string file)
         {
-            return await Task.Run<bool>(async () =>
+            return Task.Run<bool>(async () =>
             {
                 ProgressDialog pd = new ProgressDialog()
                 {
@@ -694,7 +709,7 @@ namespace Stx.BeatModder
             {
                 SetStatus($"Updating { m.ToString() }...", false);
 
-                if (!await UninstallMod(GetInstalledMod(m)))
+                if (!await UninstallMod(GetInstalledMod(m), true))
                 {
                     SetStatus($"Could not remove old version, overwriting...", false);
 
@@ -1080,7 +1095,7 @@ namespace Stx.BeatModder
             listView.Items.Clear();
             Point p = listView.AutoScrollOffset;
 
-            foreach (Mod m in mods)
+            foreach (Mod m in mods.GroupBy(x => x.name.ToUpper()).Select(x => x.OrderByDescending(e => StringUtil.StringVersionToNumber(e.version)).First()))
                 ShowMod(m);
 
             listView.AutoScrollOffset = p;
