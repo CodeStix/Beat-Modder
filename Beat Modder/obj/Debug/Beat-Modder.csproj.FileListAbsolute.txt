@@ -46,6 +46,7 @@ H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Newtonsoft.Json.xml
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Ookii.Dialogs.WinForms.pdb
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Ookii.Dialogs.WinForms.xml
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Ookii.Dialogs.Wpf.xml
+H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Stx.BeatModder.FormFindFile.resources
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Stx.BeatModder.FormListSelect.resources
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Stx.BeatModder.FormMain.resources
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Stx.BeatModder.FormModInfo.resources
@@ -55,5 +56,3 @@ H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Beat-Modder.csproj.CoreCom
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Beat-Modder.csproj.CopyComplete
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\BeatModder.exe
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\BeatModder.pdb
-H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Beat-Modder.csprojAssemblyReference.cache
-H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Stx.BeatModder.FormFindFile.resources

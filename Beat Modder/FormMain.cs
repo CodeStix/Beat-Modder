@@ -37,6 +37,7 @@ namespace Stx.BeatModder
             {
                 return "https://beatmods.com"
                     .AppendPathSegments("api", "v1", "mod")
+                    .SetQueryParam("gameVersion", BeatSaberVersion)
                     .SetQueryParam("search", null, Flurl.NullValueHandling.Ignore)
                     .SetQueryParam("status", config.allowNonApproved ? null : "approved")
                     .SetQueryParam("sortDirection", 1);
@@ -583,7 +584,7 @@ namespace Stx.BeatModder
                     SelfDestruct();
 
                 config.beatSaberType = fff.SelectedFile.ToLower().Contains("steam") ? ModDownloadType.Steam : ModDownloadType.Oculus;
-                config.beatSaberLocation = fff.SelectedFile;
+                config.beatSaberLocation = fff.SelectedDirectory;
                 SaveConfig();
             }
 
@@ -804,7 +805,7 @@ namespace Stx.BeatModder
             {
                 MessageBox.Show($"You are willing to remove '{ m.ToString() }', please not that this mod is currently being used by { m.usedBy.Count } other mods:\n\n" +
                     string.Join("\n", m.usedBy) +
-                    $"\nYou must first uninstall the mods above to succeed uninstalling this mod!", "Uninstall canceled.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    $"\n\nYou must first uninstall the mods above to succeed uninstalling this mod!", "Uninstall canceled.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
@@ -1119,15 +1120,27 @@ namespace Stx.BeatModder
             listView.Items.Clear();
             Point p = listView.AutoScrollOffset;
 
-            foreach (Mod m in mods.GroupBy(x => x.name.ToUpper()).Select(x => x.OrderByDescending(e => StringUtil.StringVersionToNumber(e.version)).First()))
-                ShowMod(m);
+            foreach (Mod m in mods.GroupBy(x => x.name.ToUpper()).Select(x => x.OrderByDescending(e => StringUtil.StringVersionToNumber(e.version)).First()).OrderByDescending((e) => IsInstalled(e)))
+            {
+                ListViewItem lvi = new ListViewItem(new string[] { m.name, m.author.username, m.version, m.description });
+                lvi.Group = listView.GetOrCreateGroup(m.Category.ToString());
+                lvi.Tag = m;
+
+                if (IsInstalled(m))
+                {
+                    lvi.ForeColor = Color.ForestGreen;
+                    lvi.Font = new Font(FontFamily.GenericSansSerif, 8.5f, FontStyle.Bold);
+                }
+
+                if (m.IsRequired)
+                {
+                    lvi.BackColor = Color.WhiteSmoke;
+                }
+
+                listView.Items.Add(lvi);
+            }
 
             listView.AutoScrollOffset = p;
-        }
-
-        public void ShowMod(Mod m)
-        {
-            m.AddToList(listView, !IsInstalled(m));
         }
 
         private void buttonPlayAndExit_Click(object sender, EventArgs e)

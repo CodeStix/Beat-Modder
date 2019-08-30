@@ -10,20 +10,6 @@ namespace Stx.BeatModder
 {
     public static class ListViewExtensions
     {
-        public static void SetEnabled(this ListViewItem item, bool enabled)
-        {
-            if (enabled)
-            {
-                item.Font = new Font(FontFamily.GenericSansSerif, 8.5f, FontStyle.Regular);
-                item.ForeColor = Color.Black;
-            }
-            else
-            {
-                item.Font = new Font(FontFamily.GenericSansSerif, 8.5f, FontStyle.Italic);
-                item.ForeColor = Color.DarkGray;
-            }
-        }
-
         public static ListViewGroup GetOrCreateGroup(this ListView item, string groupName)
         {
             for (int i = 0; i < item.Groups.Count; i++)

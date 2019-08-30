@@ -18,6 +18,7 @@ namespace Stx.BeatModder
         public List<string> searchLocations;
 
         public string SelectedFile { get; private set; }
+        public string SelectedDirectory => new FileInfo(SelectedFile).Directory.FullName;
 
         private CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
@@ -109,9 +110,12 @@ namespace Stx.BeatModder
                     }
                 });
                 
-                while (!plr.IsCompleted) ;
+                while (!plr.IsCompleted && !token.IsCancellationRequested) ;
 
                 SetStatus($"Done looking for { fileToFind }. Found { listBox.Items.Count } occurrences.", true);
+
+                if (token.IsCancellationRequested)
+                    return;
 
                 BeginInvoke(new MethodInvoker(() =>
                 {

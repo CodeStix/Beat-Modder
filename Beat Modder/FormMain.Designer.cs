@@ -147,7 +147,7 @@
             // 
             // progressBar
             // 
-            this.progressBar.MarqueeAnimationSpeed = 5;
+            this.progressBar.MarqueeAnimationSpeed = 10;
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(150, 16);
             this.progressBar.Visible = false;
@@ -221,9 +221,10 @@
             this.label1.ForeColor = System.Drawing.Color.Gray;
             this.label1.Location = new System.Drawing.Point(3, 556);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(240, 13);
+            this.label1.Size = new System.Drawing.Size(339, 26);
             this.label1.TabIndex = 6;
-            this.label1.Text = "All installed mods are marked in an italic grey font.\r\n";
+            this.label1.Text = "All installed mods are marked in an bold green font.\r\nOnly the mods compatible wi" +
+    "th the found Beat Saber version are listed.\r\n";
             // 
             // listView
             // 

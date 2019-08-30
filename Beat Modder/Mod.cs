@@ -84,9 +84,11 @@ namespace Stx.BeatModder
         {
             get
             {
-                return required;
+                return required || AlwaysRequired.Contains(name);
             }
         }
+
+        public static List<string> AlwaysRequired { get; set; } = new List<string>() { "BSIPA", "SongCore", "ScoreSaber", "SongLoader" };
 
         public ModDownload GetBestDownloadFor(ModDownloadType type)
         {
@@ -94,17 +96,6 @@ namespace Stx.BeatModder
                 return downloads.FirstOrDefault((m) => ModDownloadType.Universal == m.Type);
             else
                 return downloads.FirstOrDefault((m) => type == m.Type);
-        }
-
-        public void AddToList(ListView listView, bool enable)
-        {
-            ListViewItem lvi = new ListViewItem(new string[] { name, author.username, version, description });
-            lvi.Group = listView.GetOrCreateGroup(Category.ToString());
-            lvi.Tag = this;
-            lvi.SetEnabled(enable);
-            if (IsRequired)
-                lvi.BackColor = Color.WhiteSmoke;
-            listView.Items.Add(lvi);
         }
 
         public override string ToString()
