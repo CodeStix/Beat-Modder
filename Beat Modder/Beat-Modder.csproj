@@ -81,6 +81,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileUtil.cs" />
+    <Compile Include="FormFindFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormFindFile.Designer.cs">
+      <DependentUpon>FormFindFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormListSelect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +112,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringUtil.cs" />
     <Compile Include="ZipArchiveExtensions.cs" />
+    <EmbeddedResource Include="FormFindFile.resx">
+      <DependentUpon>FormFindFile.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormListSelect.resx">
       <DependentUpon>FormListSelect.cs</DependentUpon>
     </EmbeddedResource>

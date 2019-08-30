@@ -327,7 +327,7 @@
             this.tabPageSettings.Location = new System.Drawing.Point(4, 22);
             this.tabPageSettings.Name = "tabPageSettings";
             this.tabPageSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSettings.Size = new System.Drawing.Size(776, 413);
+            this.tabPageSettings.Size = new System.Drawing.Size(1071, 597);
             this.tabPageSettings.TabIndex = 1;
             this.tabPageSettings.Text = "Settings";
             // 
@@ -450,6 +450,7 @@
             // 
             // buttonChangeBeatSaberLocation
             // 
+            this.buttonChangeBeatSaberLocation.Enabled = false;
             this.buttonChangeBeatSaberLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonChangeBeatSaberLocation.Location = new System.Drawing.Point(567, 44);
             this.buttonChangeBeatSaberLocation.Name = "buttonChangeBeatSaberLocation";
@@ -503,7 +504,7 @@
             this.tabPageAbout.Controls.Add(this.tableLayoutPanel1);
             this.tabPageAbout.Location = new System.Drawing.Point(4, 22);
             this.tabPageAbout.Name = "tabPageAbout";
-            this.tabPageAbout.Size = new System.Drawing.Size(776, 413);
+            this.tabPageAbout.Size = new System.Drawing.Size(1071, 597);
             this.tabPageAbout.TabIndex = 2;
             this.tabPageAbout.Text = "About";
             // 
@@ -527,16 +528,16 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(776, 413);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1071, 597);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // labelVersion
             // 
             this.labelVersion.AutoSize = true;
             this.labelVersion.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelVersion.Location = new System.Drawing.Point(235, 287);
+            this.labelVersion.Location = new System.Drawing.Point(323, 416);
             this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(304, 61);
+            this.labelVersion.Size = new System.Drawing.Size(422, 89);
             this.labelVersion.TabIndex = 3;
             this.labelVersion.Text = "Version 1.0";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -545,9 +546,9 @@
             // 
             this.linkLabelDiscord.AutoSize = true;
             this.linkLabelDiscord.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.linkLabelDiscord.Location = new System.Drawing.Point(235, 348);
+            this.linkLabelDiscord.Location = new System.Drawing.Point(323, 505);
             this.linkLabelDiscord.Name = "linkLabelDiscord";
-            this.linkLabelDiscord.Size = new System.Drawing.Size(304, 65);
+            this.linkLabelDiscord.Size = new System.Drawing.Size(422, 92);
             this.linkLabelDiscord.TabIndex = 4;
             this.linkLabelDiscord.TabStop = true;
             this.linkLabelDiscord.Text = "Join Beat Saber modding server on discord";
@@ -559,9 +560,9 @@
             this.tableLayoutPanel1.SetColumnSpan(this.panelAbout, 3);
             this.panelAbout.Controls.Add(this.linkLabelAbout);
             this.panelAbout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelAbout.Location = new System.Drawing.Point(119, 125);
+            this.panelAbout.Location = new System.Drawing.Point(163, 181);
             this.panelAbout.Name = "panelAbout";
-            this.panelAbout.Size = new System.Drawing.Size(536, 159);
+            this.panelAbout.Size = new System.Drawing.Size(742, 232);
             this.panelAbout.TabIndex = 2;
             // 
             // linkLabelAbout
@@ -570,7 +571,7 @@
             this.linkLabelAbout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.linkLabelAbout.Location = new System.Drawing.Point(0, 0);
             this.linkLabelAbout.Name = "linkLabelAbout";
-            this.linkLabelAbout.Size = new System.Drawing.Size(536, 159);
+            this.linkLabelAbout.Size = new System.Drawing.Size(742, 232);
             this.linkLabelAbout.TabIndex = 0;
             this.linkLabelAbout.TabStop = true;
             this.linkLabelAbout.Text = "Beat Modder\r\nby CodeStix\r\n\r\npowered by beatmods.com\r\nby vanZeben";
@@ -586,7 +587,7 @@
             this.installToolStripMenuItem,
             this.uninstallToolStripMenuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(181, 120);
+            this.contextMenu.Size = new System.Drawing.Size(166, 98);
             // 
             // itemNameToolStripMenuItem
             // 

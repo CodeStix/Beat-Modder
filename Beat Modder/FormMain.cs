@@ -248,46 +248,9 @@ namespace Stx.BeatModder
             SelfDestruct();
         }
 
-        public static IEnumerable<string> FindFile(string rootDir, string name)
-        {
-            IEnumerable<string> files;
 
-            try
-            {
-                files = Directory.EnumerateFiles(rootDir);
-            }
-            catch
-            {
-                yield break;
-            }
 
-            foreach (string file in files)
-            {
-                FileInfo fi = new FileInfo(file);
-
-                if (string.Compare(fi.Name, name, StringComparison.OrdinalIgnoreCase) == 0)
-                    yield return file;
-            }
-
-            IEnumerable<string> dirs;
-
-            try
-            {
-                dirs = Directory.EnumerateDirectories(rootDir);
-            }
-            catch
-            {
-                yield break;
-            }
-
-            foreach (string dir in dirs)
-            {
-                foreach (string file in FindFile(dir, name))
-                    yield return file;
-            }
-        }
-
-        private string FindBeatSaberLocation(out ModDownloadType beatSaberType)
+        /*private string FindBeatSaberLocation(out ModDownloadType beatSaberType)
         {
             SetStatus("Finding beat saber location...", false);
 
@@ -302,13 +265,8 @@ namespace Stx.BeatModder
 
             Parallel.ForEach(searchLocations, (loc) =>
             {
-                foreach(string path in FindFile(loc, "Beat Saber.exe"))
-                {
+                if (File.Exists(loc + @"\Beat Saber\" + BeatSaberExecutable))
                     foundLocations.Add(loc + @"\Beat Saber");
-                }
-
-               /* if (File.Exists(loc + @"\Beat Saber\" + BeatSaberExecutable))
-                    foundLocations.Add(loc + @"\Beat Saber");*/
             });
 
             string actualPath = null;
@@ -357,7 +315,7 @@ namespace Stx.BeatModder
             beatSaberType = actualPath.ToLower().Contains("steam") ? ModDownloadType.Steam : ModDownloadType.Oculus;
 
             return actualPath;
-        }
+        }*/
 
 
         private async Task<bool> DownloadModInformations()
@@ -489,14 +447,6 @@ namespace Stx.BeatModder
             });
         }
 
-        [Obsolete("Use InstallCoreComponents instead.")]
-        private async Task<bool> InstallIPA()
-        {
-            Mod ipaMod = mods.First((e) => string.Compare(e.name, "BSIPA", StringComparison.OrdinalIgnoreCase) == 0);
-
-            return await InstallMod(ipaMod);
-        }
-
         private async Task InstallCoreComponents()
         {
             foreach (Mod m in mods.Where((e) => e.IsRequired))
@@ -618,7 +568,22 @@ namespace Stx.BeatModder
 
             if (!BeatSaberFound)
             {
-                config.beatSaberLocation = FindBeatSaberLocation(out config.beatSaberType);
+                string[] searchLocationPaths = Properties.Resources.locations.Split('\n');
+                List<string> searchLocations = new List<string>();
+
+                foreach (DriveInfo d in DriveInfo.GetDrives())
+                    foreach (string s in searchLocationPaths)
+                        searchLocations.Add(d.Name + s.Trim());
+
+                FormFindFile fff = new FormFindFile(@"Beat Saber.exe", searchLocations, "Please select the location of " +
+                    "Beat Saber you would like to mod. If the right Beat Saber installation is not listed, please use " +
+                    "the 'Browse' button to locate it yourself.");
+
+                if (fff.ShowDialog() != DialogResult.OK)
+                    SelfDestruct();
+
+                config.beatSaberType = fff.SelectedFile.ToLower().Contains("steam") ? ModDownloadType.Steam : ModDownloadType.Oculus;
+                config.beatSaberLocation = fff.SelectedFile;
                 SaveConfig();
             }
 
