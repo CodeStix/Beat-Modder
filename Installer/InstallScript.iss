@@ -46,6 +46,12 @@ Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Ookii.Dialogs.W
 Name: "{commonprograms}\Beat Modder v1.0"; Filename: "{app}\BeatModder.exe"
 Name: "{commondesktop}\Beat Modder v1.0"; Filename: "{app}\BeatModder.exe"; Tasks: desktopicon
 
+[Registry]
+Root: HKCR; Subkey: "beatsaver"; ValueType: "string"; ValueData: "URL:BeatSaver Protocol"; Flags: uninsdeletekey
+Root: HKCR; Subkey: "beatsaver"; ValueType: "string"; ValueName: "URL Protocol"; ValueData: ""
+Root: HKCR; Subkey: "beatsaver\DefaultIcon"; ValueType: "string"; ValueData: "{app}\BeatMapInstaller.exe,0"
+Root: HKCR; Subkey: "beatsaver\shell\open\command"; ValueType: "string"; ValueData: """{app}\BeatMapInstaller.exe"" ""%1"""
+
 [Run]
 Filename: "{app}\BeatModder.exe"; Description: "{cm:LaunchProgram,Beat Modder}"; Flags: nowait postinstall skipifsilent runascurrentuser
 

@@ -56,3 +56,4 @@ H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Beat-Modder.csproj.CoreCom
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Beat-Modder.csproj.CopyComplete
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\BeatModder.exe
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\BeatModder.pdb
+H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Beat-Modder.csprojAssemblyReference.cache

@@ -349,13 +349,13 @@ namespace Stx.BeatModder
             return successful;
         }
 
-        private async Task RunIPA(bool revert = false, bool launch = false, bool wait = false, bool shown = false)
+        private Task RunIPA(bool revert = false, bool launch = false, bool wait = false, bool shown = false)
         {
-            if (!IPAFound)
-                return;
-
-            await Task.Run(() =>
+            return Task.Run(() =>
             {
+                if (!IPAFound)
+                    return;
+
                 ProcessStartInfo psi = new ProcessStartInfo()
                 {
                     Arguments = $"\"{ BeatSaberFile }\"" + (wait ? "" : " --nowait") + (revert ? " --revert" : "") + (launch ? " --launch" : ""),
