@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Flurl;
@@ -247,6 +248,45 @@ namespace Stx.BeatModder
             SelfDestruct();
         }
 
+        public static IEnumerable<string> FindFile(string rootDir, string name)
+        {
+            IEnumerable<string> files;
+
+            try
+            {
+                files = Directory.EnumerateFiles(rootDir);
+            }
+            catch
+            {
+                yield break;
+            }
+
+            foreach (string file in files)
+            {
+                FileInfo fi = new FileInfo(file);
+
+                if (string.Compare(fi.Name, name, StringComparison.OrdinalIgnoreCase) == 0)
+                    yield return file;
+            }
+
+            IEnumerable<string> dirs;
+
+            try
+            {
+                dirs = Directory.EnumerateDirectories(rootDir);
+            }
+            catch
+            {
+                yield break;
+            }
+
+            foreach (string dir in dirs)
+            {
+                foreach (string file in FindFile(dir, name))
+                    yield return file;
+            }
+        }
+
         private string FindBeatSaberLocation(out ModDownloadType beatSaberType)
         {
             SetStatus("Finding beat saber location...", false);
@@ -262,8 +302,13 @@ namespace Stx.BeatModder
 
             Parallel.ForEach(searchLocations, (loc) =>
             {
-                if (File.Exists(loc + @"\Beat Saber\" + BeatSaberExecutable))
+                foreach(string path in FindFile(loc, "Beat Saber.exe"))
+                {
                     foundLocations.Add(loc + @"\Beat Saber");
+                }
+
+               /* if (File.Exists(loc + @"\Beat Saber\" + BeatSaberExecutable))
+                    foundLocations.Add(loc + @"\Beat Saber");*/
             });
 
             string actualPath = null;
@@ -366,7 +411,7 @@ namespace Stx.BeatModder
             });
         }
 
-        private async Task<bool> InstallMod(Mod mod)
+        private async Task<bool> InstallMod(Mod mod, bool preventRemoval = false)
         {
             return await Task.Run<bool>(async () =>
             {
@@ -396,7 +441,7 @@ namespace Stx.BeatModder
                             affectedFiles = archive.ExtractToDirectory(config.beatSaberLocation, true);
                         }
 
-                        InstalledMod im = new InstalledMod(mod, affectedFiles);
+                        InstalledMod im = new InstalledMod(mod, affectedFiles, preventRemoval);
 
                         // Installing required dependencies for this mod to work.
                         foreach (Mod dep in mod.dependencies)
@@ -456,7 +501,7 @@ namespace Stx.BeatModder
         {
             foreach (Mod m in mods.Where((e) => e.IsRequired))
             {
-                await InstallMod(GetNewestModWithName(m.name));
+                await InstallMod(GetNewestModWithName(m.name), true);
             }
         }
 
@@ -489,9 +534,9 @@ namespace Stx.BeatModder
             }
         }
 
-        private async Task<bool> UninstallMod(InstalledMod mod, bool forceRemoval = false)
+        private Task<bool> UninstallMod(InstalledMod mod, bool forceRemoval = false)
         {
-            return await Task.Run<bool>(() =>
+            return Task.Run<bool>(() =>
             {
                 try
                 {
@@ -568,6 +613,9 @@ namespace Stx.BeatModder
             checkBoxAllowNonApproved.Checked = config.allowNonApproved;
             checkBoxAutoUpdate.Checked = config.autoUpdate;
 
+            if (!config.firstTime)
+                Size = config.windowSize;
+
             if (!BeatSaberFound)
             {
                 config.beatSaberLocation = FindBeatSaberLocation(out config.beatSaberType);
@@ -633,7 +681,7 @@ namespace Stx.BeatModder
                     SetStatus("Getting ready...", false);
 
                     if (MessageBox.Show("Do you want to mod Beat Saber right now?\n" +
-                        "The core components will get installed.\n" +
+                        "The core modding components will get installed, these are needed for all mods to function.\n" +
                         "You can undo all the mods at any time in the settings tab.", "Let's mod?", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) != DialogResult.OK)
                     {
                         SelfDestruct();
@@ -737,6 +785,8 @@ namespace Stx.BeatModder
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
+            config.windowSize = this.Size;
+
             SaveConfig();
         }
 
@@ -777,11 +827,20 @@ namespace Stx.BeatModder
 
             InstalledMod m = GetInstalledMod(mod);
 
-            if (mod.IsRequired || mod.Category == ModCategory.Libraries)
+            if (m.preventRemoval)
             {
-                if (MessageBox.Show($"You are willing to remove a core component, please note that removing these can cause the game to break.\n" +
-                    $"Are you sure you want to remove { mod.ToString() }?", "Sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
-                    return;
+                MessageBox.Show($"Removal of '{ m.ToString() }' was canceled because " +
+                    $"this plugin is required for all mods to work.\nIf you want to remove all mods, please go to the settings tab.", "Uninstall canceled.",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            if (m.usedBy.Count > 0)
+            {
+                MessageBox.Show($"You are willing to remove '{ m.ToString() }', please not that this mod is currently being used by { m.usedBy.Count } other mods:\n\n" +
+                    string.Join("\n", m.usedBy) +
+                    $"\nYou must first uninstall the mods above to succeed uninstalling this mod!", "Uninstall canceled.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
 
             SetStatus($"Removing mod { m.ToString() }...", false);
@@ -1115,6 +1174,7 @@ namespace Stx.BeatModder
     [Serializable]
     public class Config
     {
+        public Size windowSize;
         public string beatSaberLocation;
         public string lastBeatSaberVersion;
         public List<string> ogFiles;

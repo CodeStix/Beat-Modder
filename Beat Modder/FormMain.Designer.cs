@@ -101,10 +101,10 @@
             this.statusLabel,
             this.progressBar});
             this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.statusStrip.Location = new System.Drawing.Point(0, 439);
+            this.statusStrip.Location = new System.Drawing.Point(0, 623);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.statusStrip.Size = new System.Drawing.Size(784, 22);
+            this.statusStrip.Size = new System.Drawing.Size(1079, 22);
             this.statusStrip.TabIndex = 0;
             this.statusStrip.Text = "statusStrip";
             // 
@@ -161,7 +161,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(784, 439);
+            this.tabControl.Size = new System.Drawing.Size(1079, 623);
             this.tabControl.TabIndex = 1;
             // 
             // tabPageMods
@@ -171,7 +171,7 @@
             this.tabPageMods.Location = new System.Drawing.Point(4, 22);
             this.tabPageMods.Name = "tabPageMods";
             this.tabPageMods.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMods.Size = new System.Drawing.Size(776, 413);
+            this.tabPageMods.Size = new System.Drawing.Size(1071, 597);
             this.tabPageMods.TabIndex = 0;
             this.tabPageMods.Text = "Mods";
             // 
@@ -212,14 +212,14 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(770, 407);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(1065, 591);
             this.tableLayoutPanel.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.Gray;
-            this.label1.Location = new System.Drawing.Point(3, 372);
+            this.label1.Location = new System.Drawing.Point(3, 556);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(240, 13);
             this.label1.TabIndex = 6;
@@ -239,11 +239,12 @@
             this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView.FullRowSelect = true;
             this.listView.GridLines = true;
+            this.listView.HideSelection = false;
             this.listView.Location = new System.Drawing.Point(3, 3);
             this.listView.Name = "listView";
             this.tableLayoutPanel.SetRowSpan(this.listView, 2);
             this.listView.ShowItemToolTips = true;
-            this.listView.Size = new System.Drawing.Size(567, 366);
+            this.listView.Size = new System.Drawing.Size(862, 550);
             this.listView.TabIndex = 0;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
@@ -275,17 +276,17 @@
             // 
             this.textBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxDescription.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxDescription.Location = new System.Drawing.Point(576, 3);
+            this.textBoxDescription.Location = new System.Drawing.Point(871, 3);
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
-            this.textBoxDescription.Size = new System.Drawing.Size(191, 333);
+            this.textBoxDescription.Size = new System.Drawing.Size(191, 500);
             this.textBoxDescription.TabIndex = 3;
             this.textBoxDescription.Text = "Press any mod to display information.";
             // 
             // buttonInstall
             // 
             this.buttonInstall.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonInstall.Location = new System.Drawing.Point(576, 375);
+            this.buttonInstall.Location = new System.Drawing.Point(871, 559);
             this.buttonInstall.Name = "buttonInstall";
             this.buttonInstall.Size = new System.Drawing.Size(191, 29);
             this.buttonInstall.TabIndex = 1;
@@ -297,9 +298,9 @@
             // 
             this.buttonMoreInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonMoreInfo.Enabled = false;
-            this.buttonMoreInfo.Location = new System.Drawing.Point(576, 342);
+            this.buttonMoreInfo.Location = new System.Drawing.Point(871, 509);
             this.buttonMoreInfo.Name = "buttonMoreInfo";
-            this.buttonMoreInfo.Size = new System.Drawing.Size(191, 27);
+            this.buttonMoreInfo.Size = new System.Drawing.Size(191, 44);
             this.buttonMoreInfo.TabIndex = 4;
             this.buttonMoreInfo.Text = "More info...\r\n";
             this.buttonMoreInfo.UseVisualStyleBackColor = true;
@@ -310,7 +311,7 @@
             this.label3.AutoSize = true;
             this.tableLayoutPanel.SetColumnSpan(this.label3, 2);
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(257, 372);
+            this.label3.Location = new System.Drawing.Point(552, 556);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(290, 26);
             this.label3.TabIndex = 5;
@@ -585,7 +586,7 @@
             this.installToolStripMenuItem,
             this.uninstallToolStripMenuItem});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(166, 98);
+            this.contextMenu.Size = new System.Drawing.Size(181, 120);
             // 
             // itemNameToolStripMenuItem
             // 
@@ -631,7 +632,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 461);
+            this.ClientSize = new System.Drawing.Size(1079, 645);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.statusStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

@@ -25,3 +25,4 @@ H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\Beat-Modder.csproj.CoreC
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\Beat-Modder.csproj.CopyComplete
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\BeatModder.exe
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\BeatModder.pdb
+H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\Beat-Modder.csprojAssemblyReference.cache
