@@ -35,6 +35,12 @@ namespace Stx.BeatModder
             {
                 switch (status.Trim().ToLower())
                 {
+                    case "inactive":
+                        return ModStatus.Inactive;
+
+                    case "declined":
+                        return ModStatus.Declined;
+
                     case "approved":
                     default:
                         return ModStatus.Approved;
@@ -167,7 +173,9 @@ namespace Stx.BeatModder
 
     public enum ModStatus
     {
-        Approved
+        Approved,
+        Inactive,
+        Declined
     }
 
     public enum ModCategory
