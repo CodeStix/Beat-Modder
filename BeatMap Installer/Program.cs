@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,12 +11,6 @@ using System.Threading.Tasks;
 
 namespace Stx.BeatModder.BeatMapInstaller
 {
-    [Serializable]
-    class Config
-    {
-        public string beatSaberLocation;
-    }
-
     class Program
     {
         const string BEAT_SAVER_KEY_DOWNLOAD = "https://beatsaver.com/api/download/key/";
@@ -50,9 +45,12 @@ namespace Stx.BeatModder.BeatMapInstaller
             }
             else if (File.Exists("config.json"))
             {
-                Config config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("config.json"));
+                JObject json = JObject.Parse(File.ReadAllText("config.json"));
 
-                extractLocation = Path.Combine(config.beatSaberLocation, "Beat Saber_Data", "CustomLevels");
+                string beatSaberLocation = json["beatSaberLocation"]?.ToString();
+
+                if (!string.IsNullOrEmpty(beatSaberLocation))
+                    extractLocation = Path.Combine(beatSaberLocation, "Beat Saber_Data", "CustomLevels");
             }
 
             extractLocation = Path.Combine(extractLocation, "TempBeatMap");

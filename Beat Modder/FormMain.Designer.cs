@@ -287,18 +287,18 @@
             // 
             this.imageListListIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListListIcons.ImageStream")));
             this.imageListListIcons.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListListIcons.Images.SetKeyName(0, "Uncategorized.ico");
-            this.imageListListIcons.Images.SetKeyName(1, "UIEnhancements.ico");
-            this.imageListListIcons.Images.SetKeyName(2, "Core.ico");
-            this.imageListListIcons.Images.SetKeyName(3, "Cosmetic.ico");
-            this.imageListListIcons.Images.SetKeyName(4, "Gameplay.ico");
-            this.imageListListIcons.Images.SetKeyName(5, "Installed.ico");
-            this.imageListListIcons.Images.SetKeyName(6, "Libraries.ico");
-            this.imageListListIcons.Images.SetKeyName(7, "Lighting.ico");
-            this.imageListListIcons.Images.SetKeyName(8, "Other.png");
-            this.imageListListIcons.Images.SetKeyName(9, "PracticeOrTraining.ico");
-            this.imageListListIcons.Images.SetKeyName(10, "StreamingTools.ico");
-            this.imageListListIcons.Images.SetKeyName(11, "Tools.ico");
+            this.imageListListIcons.Images.SetKeyName(0, "Uncategorized");
+            this.imageListListIcons.Images.SetKeyName(1, "UIEnhancements");
+            this.imageListListIcons.Images.SetKeyName(2, "Core");
+            this.imageListListIcons.Images.SetKeyName(3, "Cosmetic");
+            this.imageListListIcons.Images.SetKeyName(4, "Gameplay");
+            this.imageListListIcons.Images.SetKeyName(5, "Installed");
+            this.imageListListIcons.Images.SetKeyName(6, "Libraries");
+            this.imageListListIcons.Images.SetKeyName(7, "Lighting");
+            this.imageListListIcons.Images.SetKeyName(8, "Other");
+            this.imageListListIcons.Images.SetKeyName(9, "PracticeOrTraining");
+            this.imageListListIcons.Images.SetKeyName(10, "StreamingTools");
+            this.imageListListIcons.Images.SetKeyName(11, "Tools");
             // 
             // textBoxDescription
             // 

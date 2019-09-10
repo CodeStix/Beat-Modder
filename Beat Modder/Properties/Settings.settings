@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Stx.BeatModder.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="IPADownloadUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://github.com/nike4613/BeatSaber-IPA-Reloaded/releases/download/3.12.7/Release.zip</Value>
-    </Setting>
     <Setting Name="AllowUnApproved" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>

@@ -33,17 +33,15 @@ namespace Stx.BeatModder
 
         private GitHubBasedUpdateCheck updateCheck = new GitHubBasedUpdateCheck("CodeStix", "Beat-Modder", "Installer/latestVersion.txt");
 
+        private Task progressBarDoneDelayTask = Task.CompletedTask;
+
         public FormMain()
         {
             progress = new Progress<ProgressReport>(HandleProgressChange);
 
             InitializeComponent();
-
-           
         }
 
-
-        private Task progressBarDoneDelayTask = Task.CompletedTask;
 
         private void ProgressChange(string status, float progress = 1f)
         {
@@ -143,19 +141,6 @@ namespace Stx.BeatModder
                 beatSaber = new BeatSaberInstallation(config.beatSaberLocation, beatMods);
 
                 UpdateModList();
-
-                /*if (!beatSaber.IsIPAInstalled)
-                {
-                    ProgressChange("Getting ready...", 0.8f);
-
-                    if (MessageBox.Show("Do you want to mod Beat Saber right now?\n" +
-                        "The core modding components will get installed, these are needed for all mods to function.\n" +
-                        "You can undo all the mods at any time in the settings tab.", "Let's mod?", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
-                    {
-                        ProgressChange("Patching Beat Saber...", 0.8f);
-                        await beatSaber.InstallIPA(progress);
-                    }
-                }*/
 
                 ProgressChange("List of mods has been refreshed.", 1f);
 
@@ -603,10 +588,17 @@ namespace Stx.BeatModder
                 Mod mostRecentMod = beatMods.GetMostRecentModWithName(localMod.Name, beatSaber.BeatSaberVersion);
                 Mod mod = beatMods.GetModFromLocal(localMod);
 
-                ListViewItem lvi = new ListViewItem(new string[] { mod.Name, mod.author.username, mod.Version, mod.description });
+                ListViewItem lvi = new ListViewItem(new string[] 
+                {
+                    localMod.Name,
+                    mod?.author.username,
+                    localMod.Version,
+                    mod?.description
+                });
+
                 lvi.Group = listView.GetOrCreateGroup("Installed");
                 lvi.Tag = localMod;
-                lvi.ImageKey = mod.Category.ToString() + ".ico";
+                lvi.ImageKey = mod?.Category.ToString() ?? ModCategory.Other.ToString();
 
                 FontStyle fontStyle = localMod.usedBy.Count > 0 ? FontStyle.Regular : FontStyle.Bold;
 
@@ -640,7 +632,7 @@ namespace Stx.BeatModder
                 ListViewItem lvi = new ListViewItem(new string[] { m.Name, m.author.username, m.Version, m.description });
                 lvi.Group = listView.GetOrCreateGroup(m.Category.ToString());
                 lvi.Tag = m;
-                lvi.ImageKey = m.Category.ToString() + ".ico";
+                lvi.ImageKey = m.Category.ToString();
 
                 if (m.required)
                     lvi.BackColor = Color.WhiteSmoke;
