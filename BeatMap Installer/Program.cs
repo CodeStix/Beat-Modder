@@ -20,26 +20,46 @@ namespace Stx.BeatModder.BeatMapInstaller
     {
         const string BEAT_SAVER_KEY_DOWNLOAD = "https://beatsaver.com/api/download/key/";
 
-        private Config config;
-
         static void Main(string[] args)
         {
-            args = new string[] { "!bsr 56b8" };
+            args = new string[] { "1ef6,9d7,3a,1cdd,5182" };
 
-            if (args.Length == 0)
+            if (args.Length == 0 || args[0] == "!bsr")
             {
                 Console.WriteLine("Usage:");
-
-                Console.WriteLine($"Usage:\n" +
-                    $"\tBeatMapInstaller.exe <bsr> [extractLocation]\n" +
-                    $"\tBeatMapInstaller.exe <bsr1>,<bsr2>...<bsrN> [extractLocation]\n\n");
+                Console.WriteLine("\tBeatMapInstaller.exe <bsr> [extractLocation]");
+                Console.WriteLine("\tBeatMapInstaller.exe <bsr1>,<bsr2>...<bsrN> [extractLocation]");
+                Console.WriteLine();
+                Console.WriteLine("If no extract location is specified, 2 of the following things can happen:");
+                Console.WriteLine("\t- If 'config.json' exists, the location is red from the 'beatSaberLocation' field.");
+                Console.WriteLine("\t- The beat map is downloaded and extracted in the current directory.");
+                Console.WriteLine();
+                Console.WriteLine("A <bsr> parameter looks like this:");
+                Console.WriteLine("\t!bsr1ef6");
+                Console.WriteLine("\t1ef6");
+                Console.WriteLine("\tNOT: !bsr 1ef6");
+                Console.WriteLine();
 
                 return;
             }
 
             string[] bsrs = args[0].Split(',');
+            string extractLocation = ".";
 
-            foreach(string rawBsr in bsrs)
+            if (args.Length >= 2)
+            {
+                extractLocation = string.Join(" ", args, 1, args.Length - 1);
+            }
+            else if (File.Exists("config.json"))
+            {
+                Config config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("config.json"));
+
+                extractLocation = Path.Combine(config.beatSaberLocation, "Beat Saber_Data", "CustomLevels");
+            }
+
+            extractLocation = Path.Combine(extractLocation, "TempBeatMap");
+
+            foreach (string rawBsr in bsrs)
             {
                 string bsr = rawBsr;
 
@@ -48,8 +68,6 @@ namespace Stx.BeatModder.BeatMapInstaller
 
                 Console.Write(bsr);
 
-                string extractLocation = args.Length <= 1 ? $@".\BeatMap{ bsr }" : args[1];
-
                 try
                 {
                     DownloadAndExtract(bsr, extractLocation);
@@ -57,12 +75,33 @@ namespace Stx.BeatModder.BeatMapInstaller
                 catch(Exception e)
                 {
                     Console.Write(" Error: " + e.Message);
+                    return;
                 }
+
+                string infoFile = Directory.GetFiles(extractLocation, "info*", SearchOption.AllDirectories).FirstOrDefault();
+                if (!string.IsNullOrEmpty(infoFile))
+                {
+                    BeatMapInfo bmi = JsonConvert.DeserializeObject<BeatMapInfo>(File.ReadAllText(infoFile));
+
+                    Console.Write($" Song name: { bmi.songName }");
+
+                    string newLocation = Path.Combine(new DirectoryInfo(extractLocation).Parent.FullName, bmi.songName);
+
+                    if (Directory.Exists(newLocation))
+                        Directory.Delete(newLocation, true);
+
+                    Directory.Move(extractLocation, newLocation);
+
+                    Console.Write($" -> { newLocation }");
+                }
+                else
+                {
+                    Console.Write($" -> { extractLocation }");
+                }
+
 
                 Console.WriteLine();
             }
-
-            Console.ReadKey();
         }
 
         public static void DownloadAndExtract(string bsr, string extractLocation)
@@ -81,22 +120,6 @@ namespace Stx.BeatModder.BeatMapInstaller
                 }
 
                 ZipFile.ExtractToDirectory(tempPath, extractLocation);
-
-                string infoFile = FileUtil.FindFile(extractLocation, "info.json", "info.dat").FirstOrDefault();
-
-                if (!string.IsNullOrEmpty(infoFile))
-                {
-                    BeatMapInfo bmi = JsonConvert.DeserializeObject<BeatMapInfo>(File.ReadAllText(infoFile));
-
-                    Console.Write($" Song name: { bmi.songName }");
-
-                    string newLocation = Path.Combine(new DirectoryInfo(extractLocation).Parent.FullName, bmi.songName);
-
-                    if (Directory.Exists(newLocation))
-                        Directory.Delete(newLocation, true);
-
-                    Directory.Move(extractLocation, newLocation);
-                }
 
                 File.Delete(tempPath);
             }
