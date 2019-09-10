@@ -1,0 +1,15 @@
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Release\Stx.BeatModsAPI.dll
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Release\Stx.BeatModsAPI.pdb
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Release\Dynamitey.dll
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Release\Flurl.dll
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Release\ImpromptuInterface.dll
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Release\Newtonsoft.Json.dll
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Release\Semver.dll
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Release\Flurl.xml
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Release\Newtonsoft.Json.pdb
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Release\Newtonsoft.Json.xml
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Release\Semver.xml
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\obj\Release\Stx.BeatModsAPI.csproj.CoreCompileInputs.cache
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\obj\Release\Stx.BeatModsAPI.csproj.CopyComplete
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\obj\Release\Stx.BeatModsAPI.dll
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\obj\Release\Stx.BeatModsAPI.pdb

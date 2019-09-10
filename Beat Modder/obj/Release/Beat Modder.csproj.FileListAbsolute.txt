@@ -27,3 +27,7 @@ H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\Beat Modder.csproj.CoreC
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\Beat Modder.csproj.CopyComplete
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\BeatModder.exe
 H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Release\BeatModder.pdb
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Semver.dll
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Stx.BeatModsAPI.dll
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Stx.BeatModsAPI.pdb
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Semver.xml

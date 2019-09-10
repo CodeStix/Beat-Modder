@@ -30,6 +30,8 @@ namespace Stx.BeatModder.BeatMapInstaller
                 Console.WriteLine("A <bsr> parameter looks like this:");
                 Console.WriteLine("\t!bsr1ef6");
                 Console.WriteLine("\t1ef6");
+                Console.WriteLine("\tbeatsaver://1ef6/");
+                Console.WriteLine("\tbeatsaver://1ef6");
                 Console.WriteLine("\tNOT: !bsr 1ef6");
                 Console.WriteLine();
 
@@ -60,7 +62,9 @@ namespace Stx.BeatModder.BeatMapInstaller
                 string bsr = rawBsr;
 
                 if (bsr.StartsWith("!bsr"))
-                    bsr = bsr.Substring(4).Trim();
+                    bsr = bsr.Substring("!bsr".Length).Trim();
+                if (bsr.StartsWith("beatsaver://"))
+                    bsr = bsr.Substring("beatsaver://".Length).Trim('/');
 
                 Console.Write(bsr);
 
