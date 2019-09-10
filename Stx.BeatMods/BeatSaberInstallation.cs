@@ -50,6 +50,7 @@ namespace Stx.BeatModsAPI
             }
         }
         public bool RemoveModArchivesAfterInstall { get; set; } = true;
+        public string ModArchivesDownloadLocation { get; set; } = "Downloaded mods";
         public string ConfigFileName { get; private set; }
 
         private Config config;
@@ -335,16 +336,16 @@ namespace Stx.BeatModsAPI
             {
                 progress?.Report(new ProgressReport($"Starting to install { mod } ...", 0.1f));
 
-                if (!IsIPAInstalled && mod.Name != "BSIPA")
-                {
-                    progress?.Report(new ProgressReport($"Install failed: beat saber must be in a patched state before installing mods.", 1f));
-                    return null;
-                }
-
                 if (IsInstalledAnyVersion(mod))
                 {
                     progress?.Report(new ProgressReport($"Install skipped: another version of this mod was already installed.", 1f));
                     return GetInstalledModIgnoreVersion(mod);
+                }
+
+                // Every mod should required BSIPA
+                if (mod.Name != "BSIPA" && !mod.dependencies.Any((e) => string.Compare(e.Name, "BSIPA", StringComparison.OrdinalIgnoreCase) == 0))
+                {
+                    mod.dependencies.Add(beatMods.GetMostRecentModWithName("BSIPA", BeatSaberVersion));
                 }
 
                 Mod.Download md = mod.GetBestDownloadFor(config.beatSaberType);
@@ -355,7 +356,7 @@ namespace Stx.BeatModsAPI
                     return null;
                 }
 
-                string zipDownloadLocation = Path.Combine("Downloaded mods", mod.ToString() + ".zip");
+                string zipDownloadLocation = Path.Combine(ModArchivesDownloadLocation, mod.ToString() + ".zip");
                 new FileInfo(zipDownloadLocation).Directory.Create();
 
                 DownloadZip:

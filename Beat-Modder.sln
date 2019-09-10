@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beat Modder", "Beat Modder\Beat Modder.csproj", "{285EBB79-D472-4928-8B97-E9007CD9965A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeatMap Installer", "BeatMap Installer\BeatMap Installer.csproj", "{78E8810C-AD5D-448B-BE67-A7784FB24CF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeatMapInstaller", "BeatMap Installer\BeatMapInstaller.csproj", "{78E8810C-AD5D-448B-BE67-A7784FB24CF2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stx.BeatModsAPI", "Stx.BeatMods\Stx.BeatModsAPI.csproj", "{C68AA990-E1D3-4864-8933-2A31C4E91CB4}"
 EndProject

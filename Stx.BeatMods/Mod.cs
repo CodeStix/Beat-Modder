@@ -128,6 +128,14 @@ namespace Stx.BeatModsAPI
                 .FirstOrDefault();
         }
 
+        public bool IsCompatibleWith(string gameVersion)
+        {
+            SemVersion modVersion = SemVersion.Parse(this.gameVersion.TrimOddVersion());
+            SemVersion version = SemVersion.Parse(gameVersion.TrimOddVersion());
+
+            return modVersion.Major == version.Major && modVersion.Minor == version.Minor;
+        }
+
         public override string ToString()
         {
             return $"{ Name }-{ Version }";

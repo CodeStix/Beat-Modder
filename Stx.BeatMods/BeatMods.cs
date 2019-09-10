@@ -122,7 +122,7 @@ namespace Stx.BeatModsAPI
 
         public Mod GetMostRecentModWithName(string modName, string compatibleGameVersion = null)
         {
-            return GetModsWithName(modName).OnlyKeepCompatibleWith(compatibleGameVersion).First();
+            return GetModsWithName(modName).OnlyKeepCompatibleWith(compatibleGameVersion).FirstOrDefault();
         }
 
         public bool IsOutdated(IMod currentVersion, string compatibleGameVersion = null)

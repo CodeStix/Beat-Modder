@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Semver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace Stx.BeatModsAPI
             if (string.IsNullOrEmpty(gameVersion))
                 return mods;
 
-            return mods.Where((e) => e.gameVersion == gameVersion);
+            return mods.Where((e) => e.IsCompatibleWith(gameVersion));
         }
 
         public static IEnumerable<Mod> OnlyKeepMostRecentMods(this IEnumerable<Mod> mods)

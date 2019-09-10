@@ -35,15 +35,11 @@ namespace Stx.BeatModder
 
         public FormMain()
         {
+            progress = new Progress<ProgressReport>(HandleProgressChange);
+
             InitializeComponent();
 
-            linkLabelAbout.LinkArea = new LinkArea(0, 0);
-            linkLabelAbout.Links.Add(16, 8, @"https://github.com/CodeStix");
-            linkLabelAbout.Links.Add(39, 13, @"https://beatmods.com");
-
-            labelVersion.Text = $"Version: { StringUtil.GetCurrentVersion(2) }";
-
-            checkBoxAllowNonApproved.Enabled = Properties.Settings.Default.AllowUnApproved;
+           
         }
 
         public string GetBeatSaberFile(string name)
@@ -51,36 +47,7 @@ namespace Stx.BeatModder
             return Path.Combine(config.beatSaberLocation, name);
         }
 
-        private void LoadConfig()
-        {
-            try
-            {
-                if (!File.Exists(CONFIG_FILE))
-                {
-                    config = new Config();
-                }
-                else
-                {
-                    config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(CONFIG_FILE));
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Yikes, could not load required files.\nMaybe run as administrator?", "Could not load config...", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                SelfDestruct();
-            }
-        }
-
-        private void SaveConfig()
-        {
-            try
-            {
-                File.WriteAllText(CONFIG_FILE, JsonConvert.SerializeObject(config));
-            }
-            catch
-            { }
-        }
 
 
         private async void RunBeatSaberAndExit()
@@ -124,7 +91,13 @@ namespace Stx.BeatModder
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            progress = new Progress<ProgressReport>(HandleProgressChange);
+            linkLabelAbout.LinkArea = new LinkArea(0, 0);
+            linkLabelAbout.Links.Add(16, 8, @"https://github.com/CodeStix");
+            linkLabelAbout.Links.Add(39, 13, @"https://beatmods.com");
+
+            labelVersion.Text = $"Version: { StringUtil.GetCurrentVersion(2) }";
+
+            checkBoxAllowNonApproved.Enabled = Properties.Settings.Default.AllowUnApproved;
 
             ProgressChange("Loading files...", 0.2f);
 
@@ -132,6 +105,7 @@ namespace Stx.BeatModder
             checkBoxConsole.Checked = config.showConsole;
             checkBoxAllowNonApproved.Checked = config.allowNonApproved;
             checkBoxAutoUpdate.Checked = config.autoUpdate;
+            checkBoxKeepModDownloads.Checked = config.keepModArchives;
 
             if (!config.firstTime)
                 Size = config.windowSize;
@@ -190,13 +164,11 @@ namespace Stx.BeatModder
 
                     if (MessageBox.Show("Do you want to mod Beat Saber right now?\n" +
                         "The core modding components will get installed, these are needed for all mods to function.\n" +
-                        "You can undo all the mods at any time in the settings tab.", "Let's mod?", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) != DialogResult.OK)
+                        "You can undo all the mods at any time in the settings tab.", "Let's mod?", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                     {
-                        SelfDestruct();
+                        ProgressChange("Patching Beat Saber...", 0.8f);
+                        await beatSaber.InstallIPA(progress);
                     }
-
-                    ProgressChange("Patching Beat Saber...", 0.8f);
-                    await beatSaber.InstallIPA(progress);
                 }
 
                 ProgressChange("List of mods has been refreshed.", 1f);
@@ -204,8 +176,8 @@ namespace Stx.BeatModder
                 if (beatSaber.DidBeatSaberUpdate)
                 {
                     MessageBox.Show($"Good news!" +
-                        $"\nThere was a Beat Saber update -> { beatSaber.BeatSaberVersion }),\n" +
-                        $"this means that some of the mods have to get updated too.\n" +
+                        $"\nThere was a Beat Saber update: { beatSaber.BeatSaberVersion }\n" +
+                        $"This means that some of the mods have to get updated too.\n" +
                         $"If the update was released recently, be aware that some mods could be broken.\n\n" +
                         $"At any moment you can open this program to automatically repatch, check for and install mod updates!", "Oh snap!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -217,18 +189,14 @@ namespace Stx.BeatModder
                 }
 
                 if (config.autoUpdate)
-                {
                     await CheckForAndInstallModUpdates();
-                }
                 else
-                {
                     ProgressChange($"Mod updates on startup are disabled in settings.", 1f);
-                }
+
+                UpdateModList();
 
                 BeginInvoke(new Action(() =>
                 {
-                    UpdateModList();
-
                     labelBeatSaberType.Text = "Beat Saber type: " + beatSaber.BeatSaberType;
                     textBoxBeatSaberLocation.Text = config.beatSaberLocation;
                     labelBeatSaberVersion.ForeColor = Color.Green;
@@ -255,7 +223,7 @@ namespace Stx.BeatModder
                     LocalMod oldVersion = outDatedMods[i].Key;
                     Mod newVersion = outDatedMods[i].Value;
 
-                    if (null != await beatSaber.UpdateMod(oldVersion, newVersion, ProgressReport.Partial(progress, (float)(i + 1) / outDatedMods.Count * (1f / outDatedMods.Count), 1f / outDatedMods.Count)))
+                    if (null != await beatSaber.UpdateMod(oldVersion, newVersion, ProgressReport.Partial(progress, (float)i / outDatedMods.Count * (1f / outDatedMods.Count), 1f / outDatedMods.Count)))
                         updatedCount++;
                 }
 
@@ -411,32 +379,25 @@ namespace Stx.BeatModder
 
         private void buttonChangeBeatSaberLocation_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.Description = "Please select your Beat Saber installation folder.";
+            string[] searchLocationPaths = Properties.Resources.locations.Split('\n');
+            List<string> searchLocations = new List<string>();
 
-            if (fbd.ShowDialog() == DialogResult.OK)
-            {
-                if (!File.Exists(Path.Combine(fbd.SelectedPath, "Beat Saber.exe")))
-                {
-                    var r = MessageBox.Show("The Beat Saber executable was not found in this folder, \n" +
-                        "are you sure you want to use this location?", "Uhm?", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Exclamation);
+            foreach (DriveInfo d in DriveInfo.GetDrives())
+                foreach (string s in searchLocationPaths)
+                    searchLocations.Add(d.Name + s.Trim());
 
-                    if (r == DialogResult.Abort)
-                    {
-                        return;
-                    }
-                    else if (r == DialogResult.Retry)
-                    {
-                        buttonChangeBeatSaberLocation.PerformClick();
-                        return;
-                    }
-                }
+            FormFindFile fff = new FormFindFile(@"Beat Saber.exe", searchLocations, "Please select the location of " +
+                "Beat Saber you would like to mod. If the right Beat Saber installation is not listed, please use " +
+                "the 'Browse' button to locate it yourself.");
 
-                config.beatSaberLocation = fbd.SelectedPath;
-                SaveConfig();
+            if (fff.ShowDialog() != DialogResult.OK)
+                return;
 
-                textBoxBeatSaberLocation.Text = config.beatSaberLocation;
-            }
+            config.beatSaberLocation = fff.SelectedDirectory;
+            SaveConfig();
+
+            Process.Start(Application.ExecutablePath);
+            SelfDestruct();
         }
 
         private void buttonChangeBeatSaberType_Click(object sender, EventArgs e)
@@ -561,11 +522,8 @@ namespace Stx.BeatModder
 
             await beatMods.RefreshMods(true, !checkBoxAllowNonApproved.Checked);
 
-            BeginInvoke(new Action(() =>
-            {
-                UpdateModList();
-                checkBoxAutoUpdate.Checked = false;
-            }));
+            UpdateModList();
+            BeginInvoke(new Action(() => checkBoxAutoUpdate.Checked = false));
         }
 
         private void checkBoxAutoUpdate_CheckedChanged(object sender, EventArgs e)
@@ -664,7 +622,13 @@ namespace Stx.BeatModder
 
                 FontStyle fontStyle = localMod.usedBy.Count > 0 ? FontStyle.Regular : FontStyle.Bold;
 
-                if (mod.Version == localMod.Version) // This mod is up-to-date
+                if (!mod.IsCompatibleWith(beatSaber.BeatSaberVersion)) // This mod requires an update
+                {
+                    lvi.SubItems[0].Text += " (Incompatible)";
+                    lvi.ForeColor = Color.DarkOrange;
+                    lvi.Font = new Font(FontFamily.GenericSansSerif, 8.5f, fontStyle);
+                }
+                else if (mod.Version == localMod.Version) // This mod is up-to-date
                 {
                     lvi.ForeColor = Color.ForestGreen;
                     lvi.Font = new Font(FontFamily.GenericSansSerif, 8.5f, fontStyle);
@@ -703,8 +667,62 @@ namespace Stx.BeatModder
         {
             RunBeatSaberAndExit();
         }
-    }
 
+        private void LoadConfig()
+        {
+            try
+            {
+                if (!File.Exists(CONFIG_FILE))
+                {
+                    config = new Config();
+                }
+                else
+                {
+                    config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(CONFIG_FILE));
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Yikes, could not load required files.\nMaybe run as administrator?", "Could not load config...", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                SelfDestruct();
+            }
+        }
+
+        private void SaveConfig()
+        {
+            try
+            {
+                File.WriteAllText(CONFIG_FILE, JsonConvert.SerializeObject(config));
+            }
+            catch
+            { }
+        }
+
+        private void CheckBoxKeepModDownloads_CheckedChanged(object sender, EventArgs e)
+        {
+            config.keepModArchives = checkBoxKeepModDownloads.Checked;
+            SaveConfig();
+
+            if (config.keepModArchives && Directory.Exists(beatSaber.ModArchivesDownloadLocation))
+            {
+                string[] archives = Directory.GetFiles(beatSaber.ModArchivesDownloadLocation);
+
+                if (archives.Length > 0 && MessageBox.Show("The program will from now on remove every mod archive after it was installed." +
+                    "You will not be able to install/uninstall mods while offline from now on. " +
+                    "You can re-enable this feature at any time.\n" +
+                    "Do you wish to keep all past mod archives?",
+                    "Remove archives?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    ProgressChange("Removing old mod archives...", 0f);
+
+                    Directory.Delete(beatSaber.ModArchivesDownloadLocation, true);
+
+                    ProgressChange($"Removed { archives.Length } archives.", 1f);
+                }
+            }
+        }
+    }
 
     [Serializable]
     internal class Config
@@ -715,5 +733,6 @@ namespace Stx.BeatModder
         public bool allowNonApproved = false;
         public bool autoUpdate = true;
         public bool firstTime = true;
+        public bool keepModArchives = false;
     }
 }

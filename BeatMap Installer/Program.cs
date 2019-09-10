@@ -22,8 +22,6 @@ namespace Stx.BeatModder.BeatMapInstaller
 
         static void Main(string[] args)
         {
-            args = new string[] { "1ef6,9d7,3a,1cdd,5182" };
-
             if (args.Length == 0 || args[0] == "!bsr")
             {
                 Console.WriteLine("Usage:");

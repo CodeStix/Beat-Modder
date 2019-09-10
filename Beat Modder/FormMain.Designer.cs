@@ -34,8 +34,8 @@
             this.buttonPlayAndExit = new System.Windows.Forms.ToolStripDropDownButton();
             this.buttonCheckForUpdatesNow = new System.Windows.Forms.ToolStripDropDownButton();
             this.labelBeatSaberVersion = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageMods = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -52,6 +52,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tabPageSettings = new System.Windows.Forms.TabPage();
             this.groupBoxAdvanced = new System.Windows.Forms.GroupBox();
+            this.checkBoxKeepModDownloads = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoUpdate = new System.Windows.Forms.CheckBox();
             this.checkBoxAllowNonApproved = new System.Windows.Forms.CheckBox();
             this.checkBoxConsole = new System.Windows.Forms.CheckBox();
@@ -61,6 +62,7 @@
             this.buttonRemoveModsAndData = new System.Windows.Forms.Button();
             this.buttonRemoveMods = new System.Windows.Forms.Button();
             this.groupBoxBeatSaber = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.buttonChangeBeatSaberLocation = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxBeatSaberLocation = new System.Windows.Forms.TextBox();
@@ -140,18 +142,18 @@
             this.labelBeatSaberVersion.Size = new System.Drawing.Size(118, 17);
             this.labelBeatSaberVersion.Text = "Beat Saber version: ...";
             // 
-            // statusLabel
-            // 
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(77, 17);
-            this.statusLabel.Text = "Status: Ready";
-            // 
             // progressBar
             // 
             this.progressBar.MarqueeAnimationSpeed = 10;
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(150, 16);
             this.progressBar.Visible = false;
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(77, 17);
+            this.statusLabel.Text = "Status: Ready";
             // 
             // tabControl
             // 
@@ -265,7 +267,7 @@
             // columnHeaderName
             // 
             this.columnHeaderName.Text = "Name";
-            this.columnHeaderName.Width = 150;
+            this.columnHeaderName.Width = 180;
             // 
             // columnHeaderAuthor
             // 
@@ -275,12 +277,11 @@
             // columnHeaderVersion
             // 
             this.columnHeaderVersion.Text = "Version";
-            this.columnHeaderVersion.Width = 80;
             // 
             // columnHeaderInfo
             // 
             this.columnHeaderInfo.Text = "Description";
-            this.columnHeaderInfo.Width = 500;
+            this.columnHeaderInfo.Width = 1000;
             // 
             // imageListListIcons
             // 
@@ -337,15 +338,27 @@
             // 
             // groupBoxAdvanced
             // 
+            this.groupBoxAdvanced.Controls.Add(this.checkBoxKeepModDownloads);
             this.groupBoxAdvanced.Controls.Add(this.checkBoxAutoUpdate);
             this.groupBoxAdvanced.Controls.Add(this.checkBoxAllowNonApproved);
             this.groupBoxAdvanced.Controls.Add(this.checkBoxConsole);
-            this.groupBoxAdvanced.Location = new System.Drawing.Point(243, 116);
+            this.groupBoxAdvanced.Location = new System.Drawing.Point(17, 128);
             this.groupBoxAdvanced.Name = "groupBoxAdvanced";
-            this.groupBoxAdvanced.Size = new System.Drawing.Size(202, 128);
+            this.groupBoxAdvanced.Size = new System.Drawing.Size(245, 149);
             this.groupBoxAdvanced.TabIndex = 4;
             this.groupBoxAdvanced.TabStop = false;
             this.groupBoxAdvanced.Text = "Advanced";
+            // 
+            // checkBoxKeepModDownloads
+            // 
+            this.checkBoxKeepModDownloads.AutoSize = true;
+            this.checkBoxKeepModDownloads.Location = new System.Drawing.Point(14, 105);
+            this.checkBoxKeepModDownloads.Name = "checkBoxKeepModDownloads";
+            this.checkBoxKeepModDownloads.Size = new System.Drawing.Size(173, 30);
+            this.checkBoxKeepModDownloads.TabIndex = 6;
+            this.checkBoxKeepModDownloads.Text = "Keep mod archives after install.\r\n(install mods while offline, WIP)";
+            this.checkBoxKeepModDownloads.UseVisualStyleBackColor = true;
+            this.checkBoxKeepModDownloads.CheckedChanged += new System.EventHandler(this.CheckBoxKeepModDownloads_CheckedChanged);
             // 
             // checkBoxAutoUpdate
             // 
@@ -364,7 +377,7 @@
             // 
             this.checkBoxAllowNonApproved.AutoSize = true;
             this.checkBoxAllowNonApproved.Enabled = false;
-            this.checkBoxAllowNonApproved.Location = new System.Drawing.Point(14, 65);
+            this.checkBoxAllowNonApproved.Location = new System.Drawing.Point(14, 69);
             this.checkBoxAllowNonApproved.Name = "checkBoxAllowNonApproved";
             this.checkBoxAllowNonApproved.Size = new System.Drawing.Size(175, 30);
             this.checkBoxAllowNonApproved.TabIndex = 4;
@@ -390,9 +403,9 @@
             this.groupBoxDangerZone.Controls.Add(this.buttonRemoveModsAndData);
             this.groupBoxDangerZone.Controls.Add(this.buttonRemoveMods);
             this.groupBoxDangerZone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.groupBoxDangerZone.Location = new System.Drawing.Point(17, 116);
+            this.groupBoxDangerZone.Location = new System.Drawing.Point(282, 128);
             this.groupBoxDangerZone.Name = "groupBoxDangerZone";
-            this.groupBoxDangerZone.Size = new System.Drawing.Size(199, 128);
+            this.groupBoxDangerZone.Size = new System.Drawing.Size(199, 138);
             this.groupBoxDangerZone.TabIndex = 2;
             this.groupBoxDangerZone.TabStop = false;
             this.groupBoxDangerZone.Text = "Danger Zone";
@@ -441,6 +454,7 @@
             // 
             // groupBoxBeatSaber
             // 
+            this.groupBoxBeatSaber.Controls.Add(this.label4);
             this.groupBoxBeatSaber.Controls.Add(this.buttonChangeBeatSaberLocation);
             this.groupBoxBeatSaber.Controls.Add(this.label2);
             this.groupBoxBeatSaber.Controls.Add(this.textBoxBeatSaberLocation);
@@ -448,13 +462,23 @@
             this.groupBoxBeatSaber.Controls.Add(this.labelBeatSaberType);
             this.groupBoxBeatSaber.Location = new System.Drawing.Point(17, 17);
             this.groupBoxBeatSaber.Name = "groupBoxBeatSaber";
-            this.groupBoxBeatSaber.Size = new System.Drawing.Size(608, 79);
+            this.groupBoxBeatSaber.Size = new System.Drawing.Size(608, 93);
             this.groupBoxBeatSaber.TabIndex = 0;
             this.groupBoxBeatSaber.TabStop = false;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label4.Location = new System.Drawing.Point(112, 69);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(426, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "When changing Beat Saber location, information about the previous location will b" +
+    "e kept.";
+            // 
             // buttonChangeBeatSaberLocation
             // 
-            this.buttonChangeBeatSaberLocation.Enabled = false;
             this.buttonChangeBeatSaberLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonChangeBeatSaberLocation.Location = new System.Drawing.Point(567, 44);
             this.buttonChangeBeatSaberLocation.Name = "buttonChangeBeatSaberLocation";
@@ -720,6 +744,8 @@
         private System.Windows.Forms.Button buttonMoreInfo;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ImageList imageListListIcons;
+        private System.Windows.Forms.CheckBox checkBoxKeepModDownloads;
+        private System.Windows.Forms.Label label4;
     }
 }
 
