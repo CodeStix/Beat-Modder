@@ -1,11 +1,9 @@
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\BeatModder.exe.config
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\BeatModder.exe
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\BeatModder.pdb
-H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Dynamitey.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Flurl.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Flurl.Http.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\HtmlAgilityPack.dll
-H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\ImpromptuInterface.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Newtonsoft.Json.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Ookii.Dialogs.WinForms.dll
 H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Ookii.Dialogs.Wpf.dll

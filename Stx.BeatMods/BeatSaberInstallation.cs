@@ -413,7 +413,10 @@ namespace Stx.BeatModsAPI
                     }
                     else
                     {
-                        dependency = beatMods.GetMostRecentModWithName(dependency.Name, BeatSaberVersion);
+                        Mod mostRecentCompatible = beatMods.GetMostRecentModWithName(dependency.Name, BeatSaberVersion);
+
+                        if (mostRecentCompatible != null)
+                            dependency = mostRecentCompatible;
                     }
 
                     progress?.Report(new ProgressReport($"Installing dependencies: { dependency.ToString() } ...", 0.7f + (float)(d + 1) / mod.dependencies.Count * 0.3f));

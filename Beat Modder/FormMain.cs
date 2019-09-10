@@ -42,20 +42,6 @@ namespace Stx.BeatModder
            
         }
 
-        public string GetBeatSaberFile(string name)
-        {
-            return Path.Combine(config.beatSaberLocation, name);
-        }
-
-
-
-
-        private async void RunBeatSaberAndExit()
-        {
-            await beatSaber.RunIPA(revert: false, launch: true, wait: config.showConsole, shown: config.showConsole);
-
-            SelfDestruct();
-        }
 
         private Task progressBarDoneDelayTask = Task.CompletedTask;
 
@@ -439,9 +425,10 @@ namespace Stx.BeatModder
 
                 ShowNotification($"All Beat Saber mods were removed successfully.");
 
-                await Task.Delay(1000);
+                UpdateModList();
 
-                SelfDestruct();
+                /*await Task.Delay(1000);
+                SelfDestruct();*/
             }
         }
 
@@ -688,6 +675,13 @@ namespace Stx.BeatModder
 
                 SelfDestruct();
             }
+        }
+
+        private async void RunBeatSaberAndExit()
+        {
+            await beatSaber.RunIPA(revert: false, launch: true, wait: config.showConsole, shown: config.showConsole);
+
+            SelfDestruct();
         }
 
         private void SaveConfig()
