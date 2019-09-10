@@ -53,21 +53,48 @@ namespace Stx.BeatModder
 
             Console.WriteLine($"[ProgressChange] { status } ({ (progress * 100f) }%)");
 
-            progressBar.Value = (int)(progress * 100f);
+            progressBar.Value = Math.Min(100, (int)(progress * 100f));
 
             if (progress == 1f || progressBarDoneDelayTask.IsCompleted)
+            {
                 statusLabel.Text = "Status: " + status;
+                SetUI(true);
+            }
 
             if (progress <= 0.25f)
+            {
                 progressBar.Visible = true;
+                SetUI(false);
+            }
 
             if (progress >= 1f && progressBarDoneDelayTask.IsCompleted)
             {
                 progressBarDoneDelayTask = Task.Delay(1000).ContinueWith((e) =>
                 {
-                    BeginInvoke(new MethodInvoker(() => progressBar.Visible = false));//progressBar.Value < 100
+                    BeginInvoke(new MethodInvoker(() =>
+                    {
+                        progressBar.Visible = false;
+                        SetUI(true);
+                    }));
                 });
             }
+        }
+
+        private void SetUI(bool enabled)
+        {
+            if(InvokeRequired)
+            {
+                BeginInvoke(new MethodInvoker(() => SetUI(enabled)));
+                return;
+            }
+
+            buttonInstall.Enabled = enabled;
+            contextMenu.Enabled = enabled;
+            groupBoxAdvanced.Enabled = enabled;
+            groupBoxBeatSaber.Enabled = enabled;
+            groupBoxDangerZone.Enabled = enabled;
+            buttonCheckForUpdatesNow.Enabled = enabled;
+            buttonPlayAndExit.Enabled = enabled;
         }
 
         private void HandleProgressChange(ProgressReport pr)
@@ -438,23 +465,23 @@ namespace Stx.BeatModder
 
         private void listView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            Mod s = e.Item.Tag as Mod;
-
             selected = e.Item;
-
-            if (s != null && selected != null)
-            {
-                textBoxDescription.Text = $"{ s.Name }\r\n\tby { s.author.username }\r\n\r\n{ s.description }\r\n\r\nCategory: { s.Category.ToString() }";
-            }
-
             buttonMoreInfo.Enabled = selected != null;
+
+            if (selected == null)
+                return;
+
+            IMod selectedMod = (IMod)e.Item.Tag;
+            Mod mod = selectedMod is Mod ? (Mod)selectedMod : beatMods.GetModFromLocal((LocalMod)selectedMod);
+
+            textBoxDescription.Text = $"{ mod.Name }\r\n\tby { mod.author.username }\r\n\r\n{ mod.description }\r\n\r\nCategory: { mod.Category.ToString() }";
         }
 
         private void listView_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
-            Mod s = e.Item.Tag as Mod;
+            Mod selectedMod = e.Item.Tag as Mod;
 
-            if (s == null || beatSaber.IsInstalledAnyVersion(s))
+            if (selectedMod == null || beatSaber.IsInstalledAnyVersion(selectedMod))
             {
                 e.Item.Checked = false;
             }

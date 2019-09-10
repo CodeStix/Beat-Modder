@@ -354,9 +354,9 @@
             this.checkBoxKeepModDownloads.AutoSize = true;
             this.checkBoxKeepModDownloads.Location = new System.Drawing.Point(14, 105);
             this.checkBoxKeepModDownloads.Name = "checkBoxKeepModDownloads";
-            this.checkBoxKeepModDownloads.Size = new System.Drawing.Size(173, 30);
+            this.checkBoxKeepModDownloads.Size = new System.Drawing.Size(178, 30);
             this.checkBoxKeepModDownloads.TabIndex = 6;
-            this.checkBoxKeepModDownloads.Text = "Keep mod archives after install.\r\n(install mods while offline, WIP)";
+            this.checkBoxKeepModDownloads.Text = "Keep mod archives after install.\r\n(install mods while offline is WIP)";
             this.checkBoxKeepModDownloads.UseVisualStyleBackColor = true;
             this.checkBoxKeepModDownloads.CheckedChanged += new System.EventHandler(this.CheckBoxKeepModDownloads_CheckedChanged);
             // 
