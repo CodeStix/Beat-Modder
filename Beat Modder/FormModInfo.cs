@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
+using Stx.BeatModsAPI;
 
 namespace Stx.BeatModder
 {
@@ -25,9 +26,9 @@ namespace Stx.BeatModder
             InitializeComponent();
 
             this.mod = mod;
-            textBoxName.Text = mod.name + Environment.NewLine + "\tby " + mod.author.username;
+            textBoxName.Text = mod.Name + Environment.NewLine + "\tby " + mod.author.username;
             textBoxDescription.Text = mod.description + Environment.NewLine + Environment.NewLine + "Category: " + mod.category;
-            labelVersion.Text = mod.version;
+            labelVersion.Text = mod.Version;
 
             CreateTree();
         }

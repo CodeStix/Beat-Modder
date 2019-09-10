@@ -40,14 +40,15 @@
             this.tabPageMods = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonInstall = new System.Windows.Forms.Button();
+            this.buttonMoreInfo = new System.Windows.Forms.Button();
             this.listView = new System.Windows.Forms.ListView();
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderAuthor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderInfo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imageListListIcons = new System.Windows.Forms.ImageList(this.components);
             this.textBoxDescription = new System.Windows.Forms.TextBox();
-            this.buttonInstall = new System.Windows.Forms.Button();
-            this.buttonMoreInfo = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPageSettings = new System.Windows.Forms.TabPage();
             this.groupBoxAdvanced = new System.Windows.Forms.GroupBox();
@@ -75,7 +76,7 @@
             this.itemNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.viewInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.installToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.installOrUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uninstallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.statusStrip.SuspendLayout();
@@ -98,13 +99,13 @@
             this.buttonPlayAndExit,
             this.buttonCheckForUpdatesNow,
             this.labelBeatSaberVersion,
-            this.statusLabel,
-            this.progressBar});
+            this.progressBar,
+            this.statusLabel});
             this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.statusStrip.Location = new System.Drawing.Point(0, 623);
+            this.statusStrip.Location = new System.Drawing.Point(0, 635);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.statusStrip.Size = new System.Drawing.Size(1079, 22);
+            this.statusStrip.Size = new System.Drawing.Size(1041, 22);
             this.statusStrip.TabIndex = 0;
             this.statusStrip.Text = "statusStrip";
             // 
@@ -142,8 +143,8 @@
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(95, 17);
-            this.statusLabel.Text = "Status: Waiting...";
+            this.statusLabel.Size = new System.Drawing.Size(77, 17);
+            this.statusLabel.Text = "Status: Ready";
             // 
             // progressBar
             // 
@@ -161,7 +162,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1079, 623);
+            this.tabControl.Size = new System.Drawing.Size(1041, 635);
             this.tabControl.TabIndex = 1;
             // 
             // tabPageMods
@@ -171,60 +172,67 @@
             this.tabPageMods.Location = new System.Drawing.Point(4, 22);
             this.tabPageMods.Name = "tabPageMods";
             this.tabPageMods.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMods.Size = new System.Drawing.Size(1071, 597);
+            this.tabPageMods.Size = new System.Drawing.Size(1033, 609);
             this.tabPageMods.TabIndex = 0;
             this.tabPageMods.Text = "Mods";
             // 
             // tableLayoutPanel
             // 
             this.tableLayoutPanel.ColumnCount = 4;
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 205F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 197F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.Controls.Add(this.label1, 0, 2);
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 73F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 341F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 220F));
+            this.tableLayoutPanel.Controls.Add(this.label1, 0, 3);
+            this.tableLayoutPanel.Controls.Add(this.buttonInstall, 3, 3);
+            this.tableLayoutPanel.Controls.Add(this.buttonMoreInfo, 3, 2);
             this.tableLayoutPanel.Controls.Add(this.listView, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.textBoxDescription, 3, 0);
-            this.tableLayoutPanel.Controls.Add(this.buttonInstall, 3, 2);
-            this.tableLayoutPanel.Controls.Add(this.buttonMoreInfo, 3, 1);
-            this.tableLayoutPanel.Controls.Add(this.label3, 1, 2);
+            this.tableLayoutPanel.Controls.Add(this.label3, 2, 3);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
-            this.tableLayoutPanel.RowCount = 3;
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.90909F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+            this.tableLayoutPanel.RowCount = 4;
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.36144F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.638555F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(1065, 591);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(1027, 603);
             this.tableLayoutPanel.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.Gray;
-            this.label1.Location = new System.Drawing.Point(3, 556);
+            this.label1.Location = new System.Drawing.Point(3, 563);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(339, 26);
+            this.label1.Size = new System.Drawing.Size(384, 39);
             this.label1.TabIndex = 6;
-            this.label1.Text = "All installed mods are marked in an bold green font.\r\nOnly the mods compatible wi" +
-    "th the found Beat Saber version are listed.\r\n";
+            this.label1.Text = resources.GetString("label1.Text");
+            // 
+            // buttonInstall
+            // 
+            this.buttonInstall.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonInstall.Location = new System.Drawing.Point(810, 566);
+            this.buttonInstall.Name = "buttonInstall";
+            this.buttonInstall.Size = new System.Drawing.Size(214, 34);
+            this.buttonInstall.TabIndex = 1;
+            this.buttonInstall.Text = "Install Checked &Mods";
+            this.buttonInstall.UseVisualStyleBackColor = true;
+            this.buttonInstall.Click += new System.EventHandler(this.buttonInstall_Click);
+            // 
+            // buttonMoreInfo
+            // 
+            this.buttonMoreInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonMoreInfo.Enabled = false;
+            this.buttonMoreInfo.Location = new System.Drawing.Point(810, 516);
+            this.buttonMoreInfo.Name = "buttonMoreInfo";
+            this.buttonMoreInfo.Size = new System.Drawing.Size(214, 44);
+            this.buttonMoreInfo.TabIndex = 4;
+            this.buttonMoreInfo.Text = "More info...\r\n";
+            this.buttonMoreInfo.UseVisualStyleBackColor = true;
+            this.buttonMoreInfo.Click += new System.EventHandler(this.buttonMoreInfo_Click);
             // 
             // listView
             // 
@@ -243,9 +251,10 @@
             this.listView.HideSelection = false;
             this.listView.Location = new System.Drawing.Point(3, 3);
             this.listView.Name = "listView";
-            this.tableLayoutPanel.SetRowSpan(this.listView, 2);
+            this.tableLayoutPanel.SetRowSpan(this.listView, 3);
             this.listView.ShowItemToolTips = true;
-            this.listView.Size = new System.Drawing.Size(862, 550);
+            this.listView.Size = new System.Drawing.Size(801, 557);
+            this.listView.SmallImageList = this.imageListListIcons;
             this.listView.TabIndex = 0;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
@@ -273,46 +282,40 @@
             this.columnHeaderInfo.Text = "Description";
             this.columnHeaderInfo.Width = 500;
             // 
+            // imageListListIcons
+            // 
+            this.imageListListIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListListIcons.ImageStream")));
+            this.imageListListIcons.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListListIcons.Images.SetKeyName(0, "Uncategorized.ico");
+            this.imageListListIcons.Images.SetKeyName(1, "UIEnhancements.ico");
+            this.imageListListIcons.Images.SetKeyName(2, "Core.ico");
+            this.imageListListIcons.Images.SetKeyName(3, "Cosmetic.ico");
+            this.imageListListIcons.Images.SetKeyName(4, "Gameplay.ico");
+            this.imageListListIcons.Images.SetKeyName(5, "Installed.ico");
+            this.imageListListIcons.Images.SetKeyName(6, "Libraries.ico");
+            this.imageListListIcons.Images.SetKeyName(7, "Lighting.ico");
+            this.imageListListIcons.Images.SetKeyName(8, "Other.png");
+            this.imageListListIcons.Images.SetKeyName(9, "PracticeOrTraining.ico");
+            this.imageListListIcons.Images.SetKeyName(10, "StreamingTools.ico");
+            this.imageListListIcons.Images.SetKeyName(11, "Tools.ico");
+            // 
             // textBoxDescription
             // 
             this.textBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxDescription.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxDescription.Location = new System.Drawing.Point(871, 3);
+            this.textBoxDescription.Location = new System.Drawing.Point(810, 3);
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
-            this.textBoxDescription.Size = new System.Drawing.Size(191, 500);
+            this.tableLayoutPanel.SetRowSpan(this.textBoxDescription, 2);
+            this.textBoxDescription.Size = new System.Drawing.Size(214, 507);
             this.textBoxDescription.TabIndex = 3;
             this.textBoxDescription.Text = "Press any mod to display information.";
-            // 
-            // buttonInstall
-            // 
-            this.buttonInstall.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonInstall.Location = new System.Drawing.Point(871, 559);
-            this.buttonInstall.Name = "buttonInstall";
-            this.buttonInstall.Size = new System.Drawing.Size(191, 29);
-            this.buttonInstall.TabIndex = 1;
-            this.buttonInstall.Text = "Install Checked &Mods";
-            this.buttonInstall.UseVisualStyleBackColor = true;
-            this.buttonInstall.Click += new System.EventHandler(this.buttonInstall_Click);
-            // 
-            // buttonMoreInfo
-            // 
-            this.buttonMoreInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonMoreInfo.Enabled = false;
-            this.buttonMoreInfo.Location = new System.Drawing.Point(871, 509);
-            this.buttonMoreInfo.Name = "buttonMoreInfo";
-            this.buttonMoreInfo.Size = new System.Drawing.Size(191, 44);
-            this.buttonMoreInfo.TabIndex = 4;
-            this.buttonMoreInfo.Text = "More info...\r\n";
-            this.buttonMoreInfo.UseVisualStyleBackColor = true;
-            this.buttonMoreInfo.Click += new System.EventHandler(this.buttonMoreInfo_Click);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.tableLayoutPanel.SetColumnSpan(this.label3, 2);
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(552, 556);
+            this.label3.Location = new System.Drawing.Point(469, 563);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(290, 26);
             this.label3.TabIndex = 5;
@@ -328,7 +331,7 @@
             this.tabPageSettings.Location = new System.Drawing.Point(4, 22);
             this.tabPageSettings.Name = "tabPageSettings";
             this.tabPageSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSettings.Size = new System.Drawing.Size(1071, 597);
+            this.tabPageSettings.Size = new System.Drawing.Size(1033, 609);
             this.tabPageSettings.TabIndex = 1;
             this.tabPageSettings.Text = "Settings";
             // 
@@ -351,9 +354,9 @@
             this.checkBoxAutoUpdate.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxAutoUpdate.Location = new System.Drawing.Point(14, 46);
             this.checkBoxAutoUpdate.Name = "checkBoxAutoUpdate";
-            this.checkBoxAutoUpdate.Size = new System.Drawing.Size(122, 17);
+            this.checkBoxAutoUpdate.Size = new System.Drawing.Size(150, 17);
             this.checkBoxAutoUpdate.TabIndex = 5;
-            this.checkBoxAutoUpdate.Text = "Auto-update on start\r\n";
+            this.checkBoxAutoUpdate.Text = "Auto-update mods on start\r\n";
             this.checkBoxAutoUpdate.UseVisualStyleBackColor = true;
             this.checkBoxAutoUpdate.CheckedChanged += new System.EventHandler(this.checkBoxAutoUpdate_CheckedChanged);
             // 
@@ -505,7 +508,7 @@
             this.tabPageAbout.Controls.Add(this.tableLayoutPanel1);
             this.tabPageAbout.Location = new System.Drawing.Point(4, 22);
             this.tabPageAbout.Name = "tabPageAbout";
-            this.tabPageAbout.Size = new System.Drawing.Size(1071, 597);
+            this.tabPageAbout.Size = new System.Drawing.Size(1033, 609);
             this.tabPageAbout.TabIndex = 2;
             this.tabPageAbout.Text = "About";
             // 
@@ -529,16 +532,16 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1071, 597);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1033, 609);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // labelVersion
             // 
             this.labelVersion.AutoSize = true;
             this.labelVersion.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelVersion.Location = new System.Drawing.Point(323, 416);
+            this.labelVersion.Location = new System.Drawing.Point(311, 425);
             this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(422, 89);
+            this.labelVersion.Size = new System.Drawing.Size(407, 91);
             this.labelVersion.TabIndex = 3;
             this.labelVersion.Text = "Version 1.0";
             this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -547,9 +550,9 @@
             // 
             this.linkLabelDiscord.AutoSize = true;
             this.linkLabelDiscord.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.linkLabelDiscord.Location = new System.Drawing.Point(323, 505);
+            this.linkLabelDiscord.Location = new System.Drawing.Point(311, 516);
             this.linkLabelDiscord.Name = "linkLabelDiscord";
-            this.linkLabelDiscord.Size = new System.Drawing.Size(422, 92);
+            this.linkLabelDiscord.Size = new System.Drawing.Size(407, 93);
             this.linkLabelDiscord.TabIndex = 4;
             this.linkLabelDiscord.TabStop = true;
             this.linkLabelDiscord.Text = "Join Beat Saber modding server on discord";
@@ -561,9 +564,9 @@
             this.tableLayoutPanel1.SetColumnSpan(this.panelAbout, 3);
             this.panelAbout.Controls.Add(this.linkLabelAbout);
             this.panelAbout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelAbout.Location = new System.Drawing.Point(163, 181);
+            this.panelAbout.Location = new System.Drawing.Point(157, 185);
             this.panelAbout.Name = "panelAbout";
-            this.panelAbout.Size = new System.Drawing.Size(742, 232);
+            this.panelAbout.Size = new System.Drawing.Size(715, 237);
             this.panelAbout.TabIndex = 2;
             // 
             // linkLabelAbout
@@ -572,7 +575,7 @@
             this.linkLabelAbout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.linkLabelAbout.Location = new System.Drawing.Point(0, 0);
             this.linkLabelAbout.Name = "linkLabelAbout";
-            this.linkLabelAbout.Size = new System.Drawing.Size(742, 232);
+            this.linkLabelAbout.Size = new System.Drawing.Size(715, 237);
             this.linkLabelAbout.TabIndex = 0;
             this.linkLabelAbout.TabStop = true;
             this.linkLabelAbout.Text = "Beat Modder\r\nby CodeStix\r\n\r\npowered by beatmods.com\r\nby vanZeben";
@@ -585,7 +588,7 @@
             this.itemNameToolStripMenuItem,
             this.toolStripSeparator1,
             this.viewInformationToolStripMenuItem,
-            this.installToolStripMenuItem,
+            this.installOrUpdateToolStripMenuItem,
             this.uninstallToolStripMenuItem});
             this.contextMenu.Name = "contextMenu";
             this.contextMenu.Size = new System.Drawing.Size(166, 98);
@@ -609,12 +612,12 @@
             this.viewInformationToolStripMenuItem.Text = "View Information";
             this.viewInformationToolStripMenuItem.Click += new System.EventHandler(this.viewInformationToolStripMenuItem_Click);
             // 
-            // installToolStripMenuItem
+            // installOrUpdateToolStripMenuItem
             // 
-            this.installToolStripMenuItem.Name = "installToolStripMenuItem";
-            this.installToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.installToolStripMenuItem.Text = "Install";
-            this.installToolStripMenuItem.Click += new System.EventHandler(this.installToolStripMenuItem_Click);
+            this.installOrUpdateToolStripMenuItem.Name = "installOrUpdateToolStripMenuItem";
+            this.installOrUpdateToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.installOrUpdateToolStripMenuItem.Text = "Install/Update";
+            this.installOrUpdateToolStripMenuItem.Click += new System.EventHandler(this.installOrUpdateToolStripMenuItem_Click);
             // 
             // uninstallToolStripMenuItem
             // 
@@ -634,7 +637,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1079, 645);
+            this.ClientSize = new System.Drawing.Size(1041, 657);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.statusStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -681,22 +684,18 @@
         private System.Windows.Forms.ColumnHeader columnHeaderVersion;
         private System.Windows.Forms.ColumnHeader columnHeaderInfo;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
-        private System.Windows.Forms.Button buttonInstall;
         private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ToolStripMenuItem viewInformationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem installToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem installOrUpdateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem uninstallToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem itemNameToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.TextBox textBoxDescription;
-        private System.Windows.Forms.Button buttonMoreInfo;
         private System.Windows.Forms.GroupBox groupBoxBeatSaber;
         private System.Windows.Forms.Label labelBeatSaberType;
         private System.Windows.Forms.Button buttonChangeBeatSaberType;
         private System.Windows.Forms.Button buttonChangeBeatSaberLocation;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxBeatSaberLocation;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBoxDangerZone;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
@@ -713,9 +712,14 @@
         private System.Windows.Forms.CheckBox checkBoxAutoUpdate;
         private System.Windows.Forms.CheckBox checkBoxAllowNonApproved;
         private System.Windows.Forms.ToolStripDropDownButton buttonCheckForUpdatesNow;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripStatusLabel labelBeatSaberVersion;
         private System.Windows.Forms.ToolStripDropDownButton buttonPlayAndExit;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBoxDescription;
+        private System.Windows.Forms.Button buttonInstall;
+        private System.Windows.Forms.Button buttonMoreInfo;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ImageList imageListListIcons;
     }
 }
 

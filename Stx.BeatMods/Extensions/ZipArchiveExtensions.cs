@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Stx.BeatModder
+namespace Stx.BeatModsAPI
 {
     public static class ZipArchiveExtensions
     {
-        public static List<string> ExtractToDirectory(this ZipArchive archive, string destinationDirectoryName, bool overwrite)
+        public static List<string> ExtractToDirectory(this ZipArchive archive, string destinationDirectoryName, bool overwrite, bool returnAbsolutePaths = true, IProgress<float> progress = null)
         {
             List<string> affectedFiles = new List<string>();
 
@@ -23,8 +23,10 @@ namespace Stx.BeatModder
             DirectoryInfo di = Directory.CreateDirectory(destinationDirectoryName);
             string destinationDirectoryFullPath = di.FullName;
 
-            foreach (ZipArchiveEntry file in archive.Entries)
+            for(int i = 0; i < archive.Entries.Count; i++)
             {
+                ZipArchiveEntry file = archive.Entries[i];
+
                 string completeFileName = Path.GetFullPath(Path.Combine(destinationDirectoryFullPath, file.FullName));
 
                 if (!completeFileName.StartsWith(destinationDirectoryFullPath, StringComparison.OrdinalIgnoreCase))
@@ -41,9 +43,11 @@ namespace Stx.BeatModder
 
                 new FileInfo(completeFileName).Directory.Create();
 
-                affectedFiles.Add(completeFileName);
+                affectedFiles.Add(returnAbsolutePaths ? completeFileName : file.FullName);
 
                 file.ExtractToFile(completeFileName, true);
+
+                progress?.Report((i + 1f) / archive.Entries.Count);
             }
 
             return affectedFiles;

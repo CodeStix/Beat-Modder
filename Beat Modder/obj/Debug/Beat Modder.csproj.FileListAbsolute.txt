@@ -1,0 +1,35 @@
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\BeatModder.exe.config
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\BeatModder.exe
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\BeatModder.pdb
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Dynamitey.dll
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Flurl.dll
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Flurl.Http.dll
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\HtmlAgilityPack.dll
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\ImpromptuInterface.dll
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Newtonsoft.Json.dll
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Ookii.Dialogs.WinForms.dll
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Ookii.Dialogs.Wpf.dll
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Stx.BeatModsAPI.dll
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Stx.BeatModsAPI.pdb
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Flurl.xml
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Flurl.Http.xml
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\HtmlAgilityPack.pdb
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\HtmlAgilityPack.xml
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Newtonsoft.Json.pdb
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Newtonsoft.Json.xml
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Ookii.Dialogs.WinForms.pdb
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Ookii.Dialogs.WinForms.xml
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Ookii.Dialogs.Wpf.xml
+H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Beat Modder.csprojAssemblyReference.cache
+H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Stx.BeatModder.FormFindFile.resources
+H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Stx.BeatModder.FormListSelect.resources
+H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Stx.BeatModder.FormMain.resources
+H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Stx.BeatModder.FormModInfo.resources
+H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Stx.BeatModder.Properties.Resources.resources
+H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Beat Modder.csproj.GenerateResource.cache
+H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Beat Modder.csproj.CoreCompileInputs.cache
+H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\Beat Modder.csproj.CopyComplete
+H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\BeatModder.exe
+H:\Documents\GitHub\Beat-Modder\Beat Modder\obj\Debug\BeatModder.pdb
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Semver.dll
+H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Debug\Semver.xml

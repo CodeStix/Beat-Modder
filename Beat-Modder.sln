@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.539
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beat-Modder", "Beat Modder\Beat-Modder.csproj", "{285EBB79-D472-4928-8B97-E9007CD9965A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beat Modder", "Beat Modder\Beat Modder.csproj", "{285EBB79-D472-4928-8B97-E9007CD9965A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeatMap Installer", "BeatMap Installer\BeatMap Installer.csproj", "{78E8810C-AD5D-448B-BE67-A7784FB24CF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stx.BeatModsAPI", "Stx.BeatMods\Stx.BeatModsAPI.csproj", "{C68AA990-E1D3-4864-8933-2A31C4E91CB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{285EBB79-D472-4928-8B97-E9007CD9965A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{285EBB79-D472-4928-8B97-E9007CD9965A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{285EBB79-D472-4928-8B97-E9007CD9965A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78E8810C-AD5D-448B-BE67-A7784FB24CF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78E8810C-AD5D-448B-BE67-A7784FB24CF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78E8810C-AD5D-448B-BE67-A7784FB24CF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78E8810C-AD5D-448B-BE67-A7784FB24CF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C68AA990-E1D3-4864-8933-2A31C4E91CB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C68AA990-E1D3-4864-8933-2A31C4E91CB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C68AA990-E1D3-4864-8933-2A31C4E91CB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C68AA990-E1D3-4864-8933-2A31C4E91CB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

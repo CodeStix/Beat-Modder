@@ -1,0 +1,11 @@
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Debug\Stx.BeatMods.dll
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Debug\Stx.BeatMods.pdb
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Debug\Flurl.dll
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Debug\Newtonsoft.Json.dll
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Debug\Flurl.xml
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Debug\Newtonsoft.Json.pdb
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\bin\Debug\Newtonsoft.Json.xml
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\obj\Debug\Stx.BeatMods.csproj.CoreCompileInputs.cache
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\obj\Debug\Stx.BeatMods.csproj.CopyComplete
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\obj\Debug\Stx.BeatMods.dll
+H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\obj\Debug\Stx.BeatMods.pdb

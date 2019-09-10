@@ -39,47 +39,6 @@ namespace Stx.BeatModder
             SearchForFileAsync(cancellationTokenSource.Token);
         }
 
-        public static IEnumerable<string> FindFile(string rootDir, string name)
-        {
-            rootDir = rootDir.Trim();
-
-            IEnumerable<string> files;
-
-            try
-            {
-                files = Directory.EnumerateFiles(rootDir);
-            }
-            catch
-            {
-                yield break;
-            }
-
-            foreach (string file in files)
-            {
-                FileInfo fi = new FileInfo(file);
-
-                if (string.Compare(fi.Name, name, StringComparison.OrdinalIgnoreCase) == 0)
-                    yield return file;
-            }
-
-            IEnumerable<string> dirs;
-
-            try
-            {
-                dirs = Directory.EnumerateDirectories(rootDir);
-            }
-            catch
-            {
-                yield break;
-            }
-
-            foreach (string dir in dirs)
-            {
-                foreach (string file in FindFile(dir, name))
-                    yield return file;
-            }
-        }
-
         public Task SearchForFileAsync(CancellationToken token)
         {
             return Task.Run(() =>
@@ -97,7 +56,7 @@ namespace Stx.BeatModder
 
                 ParallelLoopResult plr = Parallel.ForEach(searchLocations, (loc) =>
                 {
-                    foreach (string file in FindFile(loc, fileToFind))
+                    foreach (string file in FileUtil.FindFile(loc, fileToFind))
                     {
                         BeginInvoke(new MethodInvoker(() =>
                         {
