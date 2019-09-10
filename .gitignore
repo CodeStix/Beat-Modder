@@ -1,3 +1,5 @@
 *.zip
 *.exe
 .vs/*
+*.cache
+*.pdb
