@@ -58,7 +58,6 @@ namespace Stx.BeatModder
             if (progress == 1f || progressBarDoneDelayTask.IsCompleted)
             {
                 statusLabel.Text = "Status: " + status;
-                SetUI(true);
             }
 
             if (progress <= 0.25f)
@@ -631,7 +630,7 @@ namespace Stx.BeatModder
 
                 if (mostRecentMod == null || !mod.IsCompatibleWith(beatSaber.BeatSaberVersion)) // This mod requires an update
                 {
-                    lvi.SubItems[0].Text += " (Incompatible)";
+                    lvi.SubItems[0].Text += " (Waiting for update)";
                     lvi.ForeColor = Color.DarkOrange;
                     lvi.Font = new Font(FontFamily.GenericSansSerif, 8.5f, fontStyle);
                 }
@@ -735,6 +734,11 @@ namespace Stx.BeatModder
                     ProgressChange($"Removed { archives.Length } archives.", 1f);
                 }
             }
+        }
+
+        private void FormMain_Resize(object sender, EventArgs e)
+        {
+            listView.Columns[listView.Columns.Count - 1].Width = 460 + Width - 1057;
         }
     }
 

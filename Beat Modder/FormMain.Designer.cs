@@ -281,7 +281,7 @@
             // columnHeaderInfo
             // 
             this.columnHeaderInfo.Text = "Description";
-            this.columnHeaderInfo.Width = 1000;
+            this.columnHeaderInfo.Width = 491;
             // 
             // imageListListIcons
             // 
@@ -670,6 +670,7 @@
             this.Text = "Beat Modder - A Beat Saber mod installer and remover";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.Load += new System.EventHandler(this.FormMain_Load);
+            this.Resize += new System.EventHandler(this.FormMain_Resize);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.tabControl.ResumeLayout(false);
