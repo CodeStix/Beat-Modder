@@ -43,7 +43,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.86469F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.13531F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 85F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 87F));
             this.tableLayoutPanel1.Controls.Add(this.listBox, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.buttonOk, 3, 2);
@@ -53,10 +53,10 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.33333F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 86.66666F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 26.44628F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 73.55372F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(426, 260);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(338, 189);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // listBox
@@ -66,9 +66,9 @@
             this.listBox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox.FormattingEnabled = true;
             this.listBox.ItemHeight = 15;
-            this.listBox.Location = new System.Drawing.Point(3, 32);
+            this.listBox.Location = new System.Drawing.Point(3, 43);
             this.listBox.Name = "listBox";
-            this.listBox.Size = new System.Drawing.Size(420, 189);
+            this.listBox.Size = new System.Drawing.Size(332, 107);
             this.listBox.TabIndex = 0;
             this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
             // 
@@ -88,9 +88,9 @@
             // 
             this.buttonOk.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonOk.Enabled = false;
-            this.buttonOk.Location = new System.Drawing.Point(343, 227);
+            this.buttonOk.Location = new System.Drawing.Point(253, 156);
             this.buttonOk.Name = "buttonOk";
-            this.buttonOk.Size = new System.Drawing.Size(80, 30);
+            this.buttonOk.Size = new System.Drawing.Size(82, 30);
             this.buttonOk.TabIndex = 2;
             this.buttonOk.Text = "Ok";
             this.buttonOk.UseVisualStyleBackColor = true;
@@ -99,7 +99,7 @@
             // buttonCancel
             // 
             this.buttonCancel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonCancel.Location = new System.Drawing.Point(252, 227);
+            this.buttonCancel.Location = new System.Drawing.Point(162, 156);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(85, 30);
             this.buttonCancel.TabIndex = 4;
@@ -111,9 +111,9 @@
             // 
             this.label2.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.label2, 2);
-            this.label2.Location = new System.Drawing.Point(3, 224);
+            this.label2.Location = new System.Drawing.Point(3, 153);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(187, 13);
+            this.label2.Size = new System.Drawing.Size(142, 26);
             this.label2.TabIndex = 5;
             this.label2.Text = "Select an item in the list and press Ok.";
             // 
@@ -121,9 +121,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(426, 260);
+            this.ClientSize = new System.Drawing.Size(338, 189);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MinimumSize = new System.Drawing.Size(354, 228);
             this.Name = "FormListSelect";
             this.Text = "Select an item...";
             this.Load += new System.EventHandler(this.FormListSelect_Load);

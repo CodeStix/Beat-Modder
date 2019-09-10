@@ -29,8 +29,6 @@ namespace Stx.BeatModsAPI
         internal BeatMods()
         { }
 
-        public static string[] CoreMods => new[] { "BSIPA", "SongCore", "ScoreSaber" };
-
         public static Task<BeatMods> CreateSession(bool useCachedOldMods = true, bool onlyDownloadApproved = true)
         {
             return Task.Run(async () =>

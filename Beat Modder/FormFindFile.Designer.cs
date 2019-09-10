@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormFindFile));
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.buttonRefresh = new System.Windows.Forms.ToolStripDropDownButton();
+            this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.listBox = new System.Windows.Forms.ListBox();
             this.labelInfo = new System.Windows.Forms.Label();
@@ -55,19 +55,11 @@
             this.buttonRefresh,
             this.statusLabel,
             this.progressBar});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 253);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 187);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(746, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(625, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
-            // 
-            // progressBar
-            // 
-            this.progressBar.MarqueeAnimationSpeed = 10;
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(100, 16);
-            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.progressBar.Visible = false;
             // 
             // buttonRefresh
             // 
@@ -78,6 +70,14 @@
             this.buttonRefresh.ShowDropDownArrow = false;
             this.buttonRefresh.Size = new System.Drawing.Size(20, 20);
             this.buttonRefresh.Click += new System.EventHandler(this.ButtonRefresh_Click);
+            // 
+            // progressBar
+            // 
+            this.progressBar.MarqueeAnimationSpeed = 10;
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(100, 16);
+            this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBar.Visible = false;
             // 
             // tableLayoutPanel1
             // 
@@ -97,7 +97,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(746, 253);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(625, 187);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // listBox
@@ -109,7 +109,7 @@
             this.listBox.ItemHeight = 15;
             this.listBox.Location = new System.Drawing.Point(3, 43);
             this.listBox.Name = "listBox";
-            this.listBox.Size = new System.Drawing.Size(740, 175);
+            this.listBox.Size = new System.Drawing.Size(619, 109);
             this.listBox.TabIndex = 0;
             this.listBox.SelectedValueChanged += new System.EventHandler(this.ListBox_SelectedValueChanged);
             // 
@@ -121,7 +121,7 @@
             this.labelInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelInfo.Location = new System.Drawing.Point(3, 0);
             this.labelInfo.Name = "labelInfo";
-            this.labelInfo.Size = new System.Drawing.Size(740, 40);
+            this.labelInfo.Size = new System.Drawing.Size(619, 40);
             this.labelInfo.TabIndex = 1;
             this.labelInfo.Text = "Here is some text";
             this.labelInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -130,7 +130,7 @@
             // 
             this.buttonChoose.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonChoose.Enabled = false;
-            this.buttonChoose.Location = new System.Drawing.Point(612, 224);
+            this.buttonChoose.Location = new System.Drawing.Point(491, 158);
             this.buttonChoose.Name = "buttonChoose";
             this.buttonChoose.Size = new System.Drawing.Size(131, 26);
             this.buttonChoose.TabIndex = 3;
@@ -141,7 +141,7 @@
             // buttonCancel
             // 
             this.buttonCancel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonCancel.Location = new System.Drawing.Point(3, 224);
+            this.buttonCancel.Location = new System.Drawing.Point(3, 158);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(114, 26);
             this.buttonCancel.TabIndex = 2;
@@ -152,7 +152,7 @@
             // buttonBrowse
             // 
             this.buttonBrowse.Dock = System.Windows.Forms.DockStyle.Right;
-            this.buttonBrowse.Location = new System.Drawing.Point(534, 224);
+            this.buttonBrowse.Location = new System.Drawing.Point(413, 158);
             this.buttonBrowse.Name = "buttonBrowse";
             this.buttonBrowse.Size = new System.Drawing.Size(72, 26);
             this.buttonBrowse.TabIndex = 4;
@@ -164,10 +164,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(746, 275);
+            this.ClientSize = new System.Drawing.Size(625, 209);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(396, 226);
             this.Name = "FormFindFile";
             this.Text = "Finding your file...";
             this.Load += new System.EventHandler(this.FormFindFile_Load);

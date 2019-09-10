@@ -27,7 +27,9 @@ namespace Stx.BeatModsAPI
         public string updatedDate;
         public string uploadDate;
         public string gameVersion;
-        
+
+        [JsonIgnore]
+        public static readonly string BSIPA = "BSIPA";
 
         public static explicit operator Mod(string modId)
         {
@@ -119,7 +121,7 @@ namespace Stx.BeatModsAPI
 
         public Download.File GetPluginBinaryFile(ModDownloadType type)
         {
-            if (Name.Equals("BSIPA", StringComparison.OrdinalIgnoreCase))
+            if (Name.Equals(Mod.BSIPA, StringComparison.OrdinalIgnoreCase))
                 return GetBestDownloadFor(type).archiveFiles.FirstOrDefault((e) => e.file.Equals("IPA.exe", StringComparison.OrdinalIgnoreCase));
 
             return GetBestDownloadFor(type).archiveFiles

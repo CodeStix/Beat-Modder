@@ -34,6 +34,7 @@ namespace Stx.BeatModsAPI
             set
             {
                 config.beatSaberType = value;
+                SaveConfig();
             }
         }
 
@@ -46,7 +47,7 @@ namespace Stx.BeatModsAPI
         {
             get
             {
-                return InstalledMods.Any((e) => string.Compare(e.Name, "BSIPA", StringComparison.OrdinalIgnoreCase) == 0);
+                return InstalledMods.Any((e) => string.Compare(e.Name, Mod.BSIPA, StringComparison.OrdinalIgnoreCase) == 0);
             }
         }
         public bool RemoveModArchivesAfterInstall { get; set; } = true;
@@ -262,6 +263,7 @@ namespace Stx.BeatModsAPI
             SaveConfig();
         }
 
+        [Obsolete("Just install any mod using InstallMod(), BSIPA will be added as dependency")]
         public Task<bool> InstallIPA(IProgress<ProgressReport> progress = null)
         {
             return Task.Run(async () => 
@@ -270,7 +272,7 @@ namespace Stx.BeatModsAPI
                 {
                     progress?.Report(new ProgressReport($"Patch install: Finding best download for BSIPA...", 0.05f));
 
-                    Mod bsipa = beatMods.GetModsWithName("BSIPA").OnlyKeepCompatibleWith(BeatSaberVersion).First();
+                    Mod bsipa = beatMods.GetModsWithName(Mod.BSIPA).OnlyKeepCompatibleWith(BeatSaberVersion).First();
 
                     if (await InstallMod(bsipa, progress) == null)
                     {
@@ -342,10 +344,11 @@ namespace Stx.BeatModsAPI
                     return GetInstalledModIgnoreVersion(mod);
                 }
 
-                // Every mod should required BSIPA
-                if (mod.Name != "BSIPA" && !mod.dependencies.Any((e) => string.Compare(e.Name, "BSIPA", StringComparison.OrdinalIgnoreCase) == 0))
+                // Every mod should require BSIPA
+                if (string.Compare(mod.Name, Mod.BSIPA, StringComparison.OrdinalIgnoreCase) != 0 && 
+                    !mod.dependencies.Any((e) => string.Compare(e.Name, Mod.BSIPA, StringComparison.OrdinalIgnoreCase) == 0))
                 {
-                    mod.dependencies.Add(beatMods.GetMostRecentModWithName("BSIPA", BeatSaberVersion));
+                    mod.dependencies.Add(beatMods.GetMostRecentModWithName(Mod.BSIPA, BeatSaberVersion));
                 }
 
                 Mod.Download md = mod.GetBestDownloadFor(config.beatSaberType);
@@ -432,6 +435,13 @@ namespace Stx.BeatModsAPI
                     progress?.Report(new ProgressReport($"Removing archive...", 0.95f));
 
                     File.Delete(zipDownloadLocation);
+                }
+
+                if (string.Compare(mod.Name, Mod.BSIPA, StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    progress?.Report(new ProgressReport($"Patching Beat Saber...", 1f));
+
+                    await RunIPA();
                 }
 
                 progress?.Report(new ProgressReport($"Mod { mod.ToString() } was installed successfully.", 1f));

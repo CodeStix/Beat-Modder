@@ -158,7 +158,7 @@ namespace Stx.BeatModder
 
                 UpdateModList();
 
-                if (!beatSaber.IsIPAInstalled)
+                /*if (!beatSaber.IsIPAInstalled)
                 {
                     ProgressChange("Getting ready...", 0.8f);
 
@@ -169,7 +169,7 @@ namespace Stx.BeatModder
                         ProgressChange("Patching Beat Saber...", 0.8f);
                         await beatSaber.InstallIPA(progress);
                     }
-                }
+                }*/
 
                 ProgressChange("List of mods has been refreshed.", 1f);
 
@@ -402,7 +402,7 @@ namespace Stx.BeatModder
 
         private void buttonChangeBeatSaberType_Click(object sender, EventArgs e)
         {
-            FormListSelect fls = new FormListSelect("Please select where you got Beat Saber from:", "Change type...", "Steam", "Oculus Store", "I don't know?");
+            FormListSelect fls = new FormListSelect("Please select where you got Beat Saber from:", "Change type...", "Steam", "Oculus Store");
 
             if (fls.ShowDialog() == DialogResult.OK)
             {
