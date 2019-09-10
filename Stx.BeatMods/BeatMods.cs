@@ -135,7 +135,7 @@ namespace Stx.BeatModsAPI
 
         public Mod GetModFromLocal(LocalMod localMod)
         {
-            return AllMods.FirstOrDefault((e) => e.Version == localMod.Version && e.Name == localMod.Name);
+            return AllMods.FirstOrDefault((e) => e.Version == localMod.Version && string.Compare(e.Name, localMod.Name, StringComparison.OrdinalIgnoreCase) == 0);
         }
 
         public Task<List<Mod>> GetModsOnline(BeatModsQuery query)

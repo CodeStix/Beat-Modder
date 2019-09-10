@@ -164,6 +164,10 @@ namespace Stx.BeatModsAPI
             {
                 Mod newestVersion = beatMods.GetMostRecentModWithName(mod.Name, BeatSaberVersion);
 
+                // A new compatible version does not yet exist
+                if (newestVersion == null)
+                    continue;
+
                 if (newestVersion > mod)
                 {
                     yield return new KeyValuePair<LocalMod, Mod>(mod, newestVersion);

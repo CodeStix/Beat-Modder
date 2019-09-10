@@ -613,22 +613,23 @@ namespace Stx.BeatModder
 
             foreach(LocalMod localMod in beatSaber.InstalledMods.OrderBy((e) => e.usedBy.Count))
             {
-                Mod mod = beatMods.GetMostRecentModWithName(localMod.Name, beatSaber.BeatSaberVersion);
+                Mod mostRecentMod = beatMods.GetMostRecentModWithName(localMod.Name, beatSaber.BeatSaberVersion);
+                Mod mod = beatMods.GetModFromLocal(localMod);
 
-                ListViewItem lvi = new ListViewItem(new string[] { localMod.Name, mod.author.username, localMod.Version, mod.description });
+                ListViewItem lvi = new ListViewItem(new string[] { mod.Name, mod.author.username, mod.Version, mod.description });
                 lvi.Group = listView.GetOrCreateGroup("Installed");
                 lvi.Tag = localMod;
                 lvi.ImageKey = mod.Category.ToString() + ".ico";
 
                 FontStyle fontStyle = localMod.usedBy.Count > 0 ? FontStyle.Regular : FontStyle.Bold;
 
-                if (!mod.IsCompatibleWith(beatSaber.BeatSaberVersion)) // This mod requires an update
+                if (mostRecentMod == null || !mod.IsCompatibleWith(beatSaber.BeatSaberVersion)) // This mod requires an update
                 {
                     lvi.SubItems[0].Text += " (Incompatible)";
                     lvi.ForeColor = Color.DarkOrange;
                     lvi.Font = new Font(FontFamily.GenericSansSerif, 8.5f, fontStyle);
                 }
-                else if (mod.Version == localMod.Version) // This mod is up-to-date
+                else if (mostRecentMod.Version == localMod.Version) // This mod is up-to-date
                 {
                     lvi.ForeColor = Color.ForestGreen;
                     lvi.Font = new Font(FontFamily.GenericSansSerif, 8.5f, fontStyle);
