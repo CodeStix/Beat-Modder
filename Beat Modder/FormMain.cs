@@ -341,8 +341,8 @@ namespace Stx.BeatModder
             }
 
             List<Mod> mods = new List<Mod>();
-            foreach (Mod m in listView.CheckedItems)
-                mods.Add(m);
+            foreach (ListViewItem m in listView.CheckedItems)
+                mods.Add((Mod)m.Tag);
 
             int installedCount = await InstallMultipleMods(mods);
             if (installedCount > 0)
