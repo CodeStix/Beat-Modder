@@ -9,11 +9,12 @@ Until now, Beat Modder consists of the following features:
 * Flawless dependency installation required by mods.
 * Detection of an official Beat Saber update and repatching.
 * Clean your Beat Saber folder by removing all mods when needed.
-* View information about mods.
+* View advanced and bassic information about mods.
+* OneClick support: use the OneClick button on https://beatsaver.com to install a beat map instantly.
 
 ## Screenshot
 
-![Screenshot](https://github.com/CodeStix/Beat-Modder/raw/master/Installer/screenshot.PNG)
+![Screenshot](https://github.com/CodeStix/Beat-Modder/blob/master/Installer/screenshot2.0.png)
 
 ## How to install
 Download the latest Beat Modder installer from the releases page: [here](https://github.com/CodeStix/Beat-Modder/releases).
