@@ -53,6 +53,14 @@ namespace Stx.BeatModsAPI
         public bool RemoveModArchivesAfterInstall { get; set; } = true;
         public string ModArchivesDownloadLocation { get; set; } = "Downloaded mods";
         public string ConfigFileName { get; private set; }
+        public bool IsBeatSaberRunning
+        {
+            get
+            {
+                return Process.GetProcessesByName("Beat Saber.exe").Length > 0;
+            }
+        }
+        
 
         private Config config;
         private BeatMods beatMods;
@@ -334,6 +342,18 @@ namespace Stx.BeatModsAPI
                     return null;
                 }
             });
+        }
+
+        public bool KillBeatSaberProcess()
+        {
+            Process p = Process.GetProcessesByName("Beat Saber.exe").FirstOrDefault();
+
+            if (p == null)
+                return false;
+
+            p.Kill();
+
+            return true;
         }
 
         public Task<LocalMod> InstallMod(Mod mod, IProgress<ProgressReport> progress = null)
