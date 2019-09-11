@@ -11,9 +11,24 @@ using System.Threading.Tasks;
 
 namespace Stx.BeatModder.BeatMapInstaller
 {
+    public static class StringExtensions
+    {
+        const string ILLEGAL_PATH_CHARS = ".<>:\"/\\|?*";
+
+        public static string RemoveIllegalPathChars(this string str)
+        {
+            foreach (char c in ILLEGAL_PATH_CHARS)
+                str = str.Replace(c.ToString(), "");
+
+            return str;
+        }
+    }
+
     class Program
     {
         const string BEAT_SAVER_KEY_DOWNLOAD = "https://beatsaver.com/api/download/key/";
+       
+
 
         static void Main(string[] args)
         {
@@ -85,7 +100,9 @@ namespace Stx.BeatModder.BeatMapInstaller
 
                     Console.Write($" Song name: { bmi.songName }");
 
-                    string newLocation = Path.Combine(new DirectoryInfo(extractLocation).Parent.FullName, bmi.songName);
+                    string folderName = bmi.songName.RemoveIllegalPathChars();
+
+                    string newLocation = Path.Combine(new DirectoryInfo(extractLocation).Parent.FullName, folderName);
 
                     if (Directory.Exists(newLocation))
                         Directory.Delete(newLocation, true);
