@@ -160,6 +160,21 @@ namespace Stx.BeatModder
 
             Task.Run(new Action(async () =>
             {
+                ProgressChange("Checking for Beat Saber process...", 0.4f);
+
+                if (BeatSaberInstallation.IsBeatSaberRunning)
+                {
+                    if (MessageBox.Show("It looks like Beat Saber is still running, to install or uninstall " +
+                        "mods, Beat Saber must be closed.\nDo you want to close Beat Saber right now?\n" +
+                        "You can press the play button in the bottom right corner to restart Beat Saber.",
+                        "Beat Saber is running", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.No)
+                    {
+                        SelfDestruct();
+                    }
+
+                    BeatSaberInstallation.KillBeatSaberProcess();
+                }
+
                 ProgressChange("Communicating with beatmods...", 0.5f);
                 beatMods = await BeatMods.CreateSession(true);
 
@@ -697,7 +712,16 @@ namespace Stx.BeatModder
 
         private async void RunBeatSaberAndExit()
         {
-            await beatSaber.RunIPA(revert: false, launch: true, wait: config.showConsole, shown: config.showConsole);
+            ProgressChange("Starting Beat Saber in patched state...", 0.4f);
+
+            if (!await beatSaber.RunIPA(revert: false, launch: true, wait: config.showConsole, shown: config.showConsole))
+            {
+                ProgressChange("Starting Beat Saber in normal state...", 0.6f);
+
+                Process.Start(beatSaber.BeatSaberDotExe);
+            }
+
+            ProgressChange("Beat Saber is running.", 1f);
 
             SelfDestruct();
         }
