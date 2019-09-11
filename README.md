@@ -16,6 +16,19 @@ Until now, Beat Modder consists of the following features:
 
 ![Screenshot](https://github.com/CodeStix/Beat-Modder/blob/master/Installer/screenshot2.0.png)
 
+#### Meaning of the colors and font styles:
+
+Color | Normal | Bold
+--- | --- | --- 
+![](https://placehold.it/15/000000/000000?text=+) Black | Not installed | /
+![](https://placehold.it/15/00bb00/000000?text=+) Green | Installed and is used by other mods, can't be uninstalled | Installed, can be uninstalled
+![](https://placehold.it/15/ff9900/000000?text=+) Orange | Installed and outdated, waiting for update to match game version | Installed and outdated, waiting for update to match game version, can be uninstalled
+![](https://placehold.it/15/aa0000/000000?text=+) Red | Installed and outdated, update is available | Installed and outdated, update is available, can be uninstalled
+
+#### To update mod when an update is available:
+- When 'Auto-update mods on start' in the settings tab is enabled: just open the program, it will update all the mods on startup.
+- Right click on a red colored mod -> Install/Update
+
 ## How to install
 Download the latest Beat Modder installer from the releases page: [here](https://github.com/CodeStix/Beat-Modder/releases).
 
