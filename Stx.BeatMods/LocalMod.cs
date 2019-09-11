@@ -21,42 +21,50 @@ namespace Stx.BeatModsAPI
         public List<string> affectedFiles;
         public List<string> usedBy;
         public List<string> uses;
+        public Mod.Download.File binaryFile;
         public bool preventRemoval = false;
 
         public LocalMod()
         { }
 
-        public LocalMod(string id, string name, string version, bool preventRemoval = false)
+        [Obsolete]
+        public LocalMod(string id, string name, string version, Mod.Download.File binaryFile, bool preventRemoval = false)
         {
-            this.Id = id;
-            this.Name = name;
-            this.Version = version;
+            Id = id;
+            Name = name;
+            Version = version;
+            this.binaryFile = binaryFile;
             this.preventRemoval = preventRemoval;
             affectedFiles = new List<string>();
             usedBy = new List<string>();
             uses = new List<string>();
         }
 
-        public LocalMod(Mod mod)
+        public LocalMod(Mod mod, ModDownloadType type)
         {
             Id = mod.Id;
             Name = mod.Name;
             Version = mod.Version;
+            binaryFile = mod.GetPluginBinaryFile(type);
             preventRemoval = mod.required;
-            affectedFiles = mod.downloads[0].archiveFiles.Select((e) => e.file).ToList();
+            affectedFiles = mod.GetBestDownloadFor(type).archiveFiles.Select((e) => e.file).ToList();
             usedBy = new List<string>();
             uses = new List<string>();
         }
 
-        public bool EqualsModIgnoreVersion(Mod mod)
+        public bool EqualsModIgnoreVersion(Mod mod, ModDownloadType type)
         {
-            return string.Compare(Name, mod.Name, StringComparison.OrdinalIgnoreCase) == 0;
+            return string.Compare(mod.GetPluginBinaryFile(type).file, binaryFile.file) == 0;
+
+            //return string.Compare(Name, mod.Name, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
-        public bool EqualsModExactVersion(Mod mod)
+        public bool EqualsModExactVersion(Mod mod, ModDownloadType type)
         {
-            return string.Compare(Name, mod.Name, StringComparison.OrdinalIgnoreCase) == 0 &&
-                string.Compare(Version, mod.Version, StringComparison.OrdinalIgnoreCase) == 0;
+            return mod.GetPluginBinaryFile(type) == binaryFile;
+
+            /*return string.Compare(Name, mod.Name, StringComparison.OrdinalIgnoreCase) == 0 &&
+                string.Compare(Version, mod.Version, StringComparison.OrdinalIgnoreCase) == 0;*/
         }
 
         public static bool operator >(LocalMod left, IMod right)

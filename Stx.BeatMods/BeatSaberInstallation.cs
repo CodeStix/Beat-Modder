@@ -130,8 +130,6 @@ namespace Stx.BeatModsAPI
             DidBeatSaberUpdate = SemVersion.Parse(BeatSaberVersion) > (config.lastBeatSaberVersion ?? "0.0");
             config.lastBeatSaberVersion = BeatSaberVersion;
 
-            DetectModInstallOrUninstall();
-
             SaveConfig();
         }
 
@@ -143,22 +141,22 @@ namespace Stx.BeatModsAPI
 
         public bool IsInstalledExactVersion(Mod mod)
         {
-            return InstalledMods.Any((e) => e.EqualsModExactVersion(mod));
+            return InstalledMods.Any((e) => e.EqualsModExactVersion(mod, BeatSaberType));
         }
 
         public bool IsInstalledAnyVersion(Mod mod)
         {
-            return InstalledMods.Any((e) => e.EqualsModIgnoreVersion(mod));
+            return InstalledMods.Any((e) => e.EqualsModIgnoreVersion(mod, BeatSaberType));
         }
 
         public LocalMod GetInstalledModIgnoreVersion(Mod mod)
         {
-            return InstalledMods.FirstOrDefault((e) => e.EqualsModIgnoreVersion(mod));
+            return InstalledMods.FirstOrDefault((e) => string.Compare(mod.GetPluginBinaryFile(BeatSaberType).file, e.binaryFile.file) == 0);
         }
 
         public LocalMod GetInstalledModExactVersion(Mod mod)
         {
-            return InstalledMods.FirstOrDefault((e) => e.EqualsModExactVersion(mod));
+            return InstalledMods.FirstOrDefault((e) => mod.GetPluginBinaryFile(BeatSaberType) == e.binaryFile);
         }
 
         public LocalMod GetInstalledMod(string name)
@@ -228,9 +226,12 @@ namespace Stx.BeatModsAPI
             config.installedMods.Clear();
         }
 
-        private void DetectModInstallOrUninstall()
+        public void DetectManualModInstallOrUninstall(out List<Mod> wasManuallyInstalled, out List<LocalMod> wasManuallyUninstalled)
         {
-            foreach(Mod m in beatMods.AllMods.OnlyKeepMostRecentMods())
+            wasManuallyInstalled = new List<Mod>();
+            wasManuallyUninstalled = new List<LocalMod>();
+
+            foreach (Mod m in beatMods.AllMods.OnlyKeepMostRecentMods())
             {
                 Mod.Download.File pluginDll = m.GetPluginBinaryFile(BeatSaberType);
 
@@ -246,7 +247,7 @@ namespace Stx.BeatModsAPI
 
                     Console.WriteLine($"Plugin was uninstalled from outside this application (md5: { pluginDll.hash }): { pluginDllPath }");
 
-                    InstalledMods.RemoveAll((e) => e.EqualsModIgnoreVersion(m));
+                    wasManuallyUninstalled.Add(GetInstalledModIgnoreVersion(m));
                 }
                 else if (!IsInstalledAnyVersion(m) && onDisk)
                 {
@@ -257,18 +258,18 @@ namespace Stx.BeatModsAPI
                     Mod installedVersion = beatMods.GetModsWithName(m.Name).FirstOrDefault((e) => 
                         string.Compare(e.GetPluginBinaryFile(BeatSaberType).hash, diskDllHash, StringComparison.OrdinalIgnoreCase) == 0);
 
-                    if (installedVersion != null)
+                    if (installedVersion == null)
                     {
-                        Console.WriteLine($"Plugin was installed from outside this application (md5: { pluginDll.hash }): { installedVersion }");
+                        installedVersion = beatMods.GetModsWithName(m.Name).Last();
 
-                        InstalledMods.Add(new LocalMod(installedVersion));
+                        Console.WriteLine($"Plugin was installed from outside this application, but the version could not be found for { m.Name }, using oldest version");
                     }
                     else
                     {
-                        Console.WriteLine($"Plugin was installed from outside this application, but the version could not be found for { m.Name }, using oldest version");
-
-                        InstalledMods.Add(new LocalMod(beatMods.GetModsWithName(m.Name).Last()));
+                        Console.WriteLine($"Plugin was installed from outside this application (md5: { pluginDll.hash }): { installedVersion }");
                     }
+
+                    wasManuallyInstalled.Add(installedVersion);
                 }
             }
 
@@ -398,7 +399,7 @@ namespace Stx.BeatModsAPI
                     }
                 }
 
-                LocalMod localMod = new LocalMod(mod);
+                LocalMod localMod = new LocalMod(mod, BeatSaberType);
 
                 try
                 {
@@ -549,6 +550,46 @@ namespace Stx.BeatModsAPI
 
                 return true;
             });
+        }
+
+        public async Task<int> InstallMultipleMods(List<Mod> mods, IProgress<ProgressReport> progress = null)
+        {
+            int installedCount = 0;
+
+            progress?.Report(new ProgressReport($"Installing { mods.Count } mods...", 0f));
+
+            for (int i = 0; i < mods.Count; i++)
+            {
+                Mod m = mods[i];
+
+                if (await InstallMod(m, ProgressReport.Partial(progress, i * (1f / mods.Count), 1f / mods.Count)) != null)
+                    installedCount++;
+            }
+
+            progress?.Report(new ProgressReport($"{ mods.Count } of { installedCount } mods were installed successfully.", 0f));
+
+            return installedCount;
+        }
+
+        public async Task<int> UninstallMultipleMods(List<LocalMod> mods, bool skipPreventRemoveCheck = true, IProgress<ProgressReport> progress = null)
+        {
+            int uninstalledCount = 0;
+
+            mods = mods.OrderBy((e) => e.usedBy.Count).ToList();
+
+            progress?.Report(new ProgressReport($"Uninstalling { mods.Count } mods...", 0f));
+
+            for (int i = 0; i < mods.Count; i++)
+            {
+                LocalMod m = mods[i];
+
+                if (await UninstallMod(m, skipPreventRemoveCheck, ProgressReport.Partial(progress, i * (1f / mods.Count), 1f / mods.Count)))
+                    uninstalledCount++;
+            }
+
+            progress?.Report(new ProgressReport($"{ mods.Count } of { uninstalledCount } mods were uninstalled successfully.", 0f));
+
+            return uninstalledCount;
         }
 
         private void SaveConfig()

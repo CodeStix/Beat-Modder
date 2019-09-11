@@ -121,12 +121,16 @@ namespace Stx.BeatModsAPI
 
         public Download.File GetPluginBinaryFile(ModDownloadType type)
         {
+            if (downloads.Length == 0)
+                return default;
+
             if (Name.Equals(Mod.BSIPA, StringComparison.OrdinalIgnoreCase))
                 return GetBestDownloadFor(type).archiveFiles.FirstOrDefault((e) => e.file.Equals("IPA.exe", StringComparison.OrdinalIgnoreCase));
 
             return GetBestDownloadFor(type).archiveFiles
-                .Where((e) => e.file.EndsWith(".dll"))
+                .Where((e) => e.file.EndsWith(".dll") || e.file.EndsWith(".exe"))
                 .OrderByDescending((e) => e.file.Contains("Plugins/"))
+                .ThenByDescending((e) => e.file.EndsWith(".dll"))
                 .FirstOrDefault();
         }
 
@@ -209,10 +213,21 @@ namespace Stx.BeatModsAPI
                 }
             }
 
+            [Serializable]
             public struct File
             {
                 public string hash;
                 public string file;
+
+                public static bool operator ==(File left, File right)
+                {
+                    return left.hash == right.hash && string.Compare(left.file, right.file, StringComparison.OrdinalIgnoreCase) == 0;
+                }
+
+                public static bool operator !=(File left, File right)
+                {
+                    return left.hash != right.hash || string.Compare(left.file, right.file, StringComparison.OrdinalIgnoreCase) != 0;
+                }
             }
         }
     }

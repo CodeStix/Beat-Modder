@@ -18,6 +18,7 @@ namespace Stx.BeatModsAPI
         public DateTime LastDidRefreshMods { get; private set; }
 
         private const string CACHE_FILE = "cachedMods.json";
+        private const string CACHE_FILE_UNAPPROVED = "cachedModsUnapproved.json";
 
         [Serializable]
         private class CacheConfig
@@ -59,18 +60,20 @@ namespace Stx.BeatModsAPI
 
                     BeatModsQuery query = onlyDownloadApproved ? BeatModsQuery.AllApproved : BeatModsQuery.All;
 
+
                     // If mod cache is enabled, only download mod info about the most recent mods
+                    string cacheFile = onlyDownloadApproved ? CACHE_FILE : CACHE_FILE_UNAPPROVED;
                     CacheConfig cache = null;
-                    if (useCachedOldMods && File.Exists(CACHE_FILE))
+                    if (useCachedOldMods && File.Exists(cacheFile))
                     {
-                        cache = JsonConvert.DeserializeObject<CacheConfig>(File.ReadAllText(CACHE_FILE));
+                        cache = JsonConvert.DeserializeObject<CacheConfig>(File.ReadAllText(cacheFile));
 
                         if (cache.cacheMaxGameVersion == mostRecentGameVersion)
                         {
-                            Console.WriteLine($"Loading { cache.cachedMods.Count } mods from cache until game version { cache.cacheMaxGameVersion }.");
+                            Console.WriteLine($"Loading { cache.cachedMods.Count } mods from cache '{ cacheFile }' until game version { cache.cacheMaxGameVersion }.");
 
                             query.forGameVersion = cache.cacheMaxGameVersion;
-                            AllMods.AddRange(cache.cachedMods);
+                            AllMods.AddRange(cache.cachedMods); //.Where((e) => SemVersion.Parse(e.gameVersion.TrimOddVersion()) < cache.cacheMaxGameVersion)
                         }
                     }
 
@@ -88,9 +91,9 @@ namespace Stx.BeatModsAPI
                                 cacheMaxGameVersion = mostRecentGameVersion
                             };
 
-                            File.WriteAllText(CACHE_FILE, JsonConvert.SerializeObject(cache));
+                            File.WriteAllText(cacheFile, JsonConvert.SerializeObject(cache));
 
-                            Console.WriteLine($"Created new cache file for { cache.cachedMods.Count } mods with max game version { cache.cacheMaxGameVersion }.");
+                            Console.WriteLine($"Created new cache file '{ cacheFile }' for { cache.cachedMods.Count } mods with max game version { cache.cacheMaxGameVersion }.");
                         }
                     }
                 }
@@ -109,7 +112,12 @@ namespace Stx.BeatModsAPI
 
         public Mod GetMostRecentModFromId(string anyModVersionId, string compatibleGameVersion = null)
         {
-            return GetMostRecentModWithName(GetModFromId(anyModVersionId).Name, compatibleGameVersion);
+            Mod mod = GetModFromId(anyModVersionId);
+
+            if (mod == null)
+                return null;
+
+            return GetMostRecentModWithName(mod.Name, compatibleGameVersion);
         }
 
         public IEnumerable<Mod> GetModsWithName(string modName)
@@ -163,6 +171,31 @@ namespace Stx.BeatModsAPI
         public IOrderedEnumerable<Mod> GetModsSortedBy(BeatModsSort sort, bool descending = true)
         {
             return sort.SortModList(AllMods, descending);
+        }
+
+        public IEnumerable<Mod> EnumerateAllDependencies(Mod mod)
+        {
+            /*if (string.Compare(mod.Name, Mod.BSIPA, StringComparison.OrdinalIgnoreCase) != 0 &&
+                    !mod.dependencies.Any((e) => string.Compare(e.Name, Mod.BSIPA, StringComparison.OrdinalIgnoreCase) == 0))
+            {
+                mod.dependencies.Add(GetMostRecentModWithName(Mod.BSIPA, mod.gameVersion));
+            }*/
+
+            foreach (Mod dep in mod.dependencies)
+            {
+                Mod dependency = dep;
+
+                if (!dependency.IsInformationKnown)
+                    dependency = GetMostRecentModFromId(dependency.Id);
+
+                if (dependency == null)
+                    continue;
+
+                yield return dependency;
+
+                foreach (Mod subDep in EnumerateAllDependencies(dependency))
+                    yield return subDep;
+            }
         }
     }
 }

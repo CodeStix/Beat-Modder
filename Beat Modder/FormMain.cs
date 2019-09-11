@@ -105,13 +105,15 @@ namespace Stx.BeatModder
             linkLabelAbout.Links.Add(16, 8, @"https://github.com/CodeStix");
             linkLabelAbout.Links.Add(39, 13, @"https://beatmods.com");
 
-            labelVersion.Text = $"Version: { StringUtil.GetCurrentVersion(2) }";
+            labelVersion.Text = $"Version: { StringUtil.GetCurrentVersion(3) }";
 
             checkBoxAllowNonApproved.Enabled = Properties.Settings.Default.AllowUnApproved;
 
-            ProgressChange("Loading files...", 0.2f);
+            ProgressChange("Loading files...", 0.1f);
 
             LoadConfig();
+            config.allowNonApproved &= Properties.Settings.Default.AllowUnApproved;
+
             checkBoxConsole.Checked = config.showConsole;
             checkBoxAllowNonApproved.Checked = config.allowNonApproved;
             checkBoxAutoUpdate.Checked = config.autoUpdate;
@@ -143,7 +145,7 @@ namespace Stx.BeatModder
 
             Task.Run(async () =>
             {
-                bool updateAvailable = await updateCheck.CheckForUpdate(StringUtil.GetCurrentVersion(2));
+                bool updateAvailable = await updateCheck.CheckForUpdate(StringUtil.GetCurrentVersion(3));
 
                 if (updateAvailable)
                 {
@@ -160,7 +162,7 @@ namespace Stx.BeatModder
 
             Task.Run(new Action(async () =>
             {
-                ProgressChange("Checking for Beat Saber process...", 0.4f);
+                ProgressChange("Checking for Beat Saber process...", 0.15f);
 
                 if (BeatSaberInstallation.IsBeatSaberRunning)
                 {
@@ -175,15 +177,21 @@ namespace Stx.BeatModder
                     BeatSaberInstallation.KillBeatSaberProcess();
                 }
 
-                ProgressChange("Communicating with beatmods...", 0.5f);
-                beatMods = await BeatMods.CreateSession(true);
+                ProgressChange("Communicating with beatmods...", 0.2f);
+                beatMods = await BeatMods.CreateSession(true, !config.allowNonApproved);
 
-                ProgressChange("Gathering game information...", 0.8f);
+                ProgressChange("Gathering game information...", 0.3f);
                 beatSaber = new BeatSaberInstallation(config.beatSaberLocation, beatMods);
+
+                ProgressChange("Checking for manual installs/uninstalls...", 0.35f);
+
+                beatSaber.DetectManualModInstallOrUninstall(out List<Mod> wasManuallyInstalled, out List<LocalMod> wasManuallyUninstalled);
+                await beatSaber.InstallMultipleMods(wasManuallyInstalled, ProgressReport.Partial(progress, 0.35f, 0.1f));
+                await beatSaber.UninstallMultipleMods(wasManuallyUninstalled, true, ProgressReport.Partial(progress, 0.45f, 0.1f));
 
                 UpdateModList();
 
-                ProgressChange("List of mods has been refreshed.", 1f);
+                ProgressChange("List of mods has been refreshed.", 0.55f);
 
                 if (beatSaber.DidBeatSaberUpdate)
                 {
@@ -193,15 +201,15 @@ namespace Stx.BeatModder
                         $"If the update was released recently, be aware that some mods could be broken.\n\n" +
                         $"At any moment you can open this program to automatically repatch, check for and install mod updates!", "Oh snap!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    ProgressChange("Patching Beat Saber...", 0.5f);
+                    ProgressChange("Patching Beat Saber...", 0.55f);
 
                     await beatSaber.RunIPA(revert: false, wait: config.showConsole, shown: config.showConsole);
 
-                    ProgressChange("Patched Beat Saber!", 1f);
+                    ProgressChange("Patched Beat Saber!", 0.6f);
                 }
 
                 if (config.autoUpdate)
-                    await CheckForAndInstallModUpdates();
+                    await CheckForAndInstallModUpdates(ProgressReport.Partial(progress, 0.6f, 0.4f));
                 else
                     ProgressChange($"Mod updates on startup are disabled in settings.", 1f);
 
@@ -221,11 +229,11 @@ namespace Stx.BeatModder
             ));
         }
 
-        private Task<int> CheckForAndInstallModUpdates()
+        private Task<int> CheckForAndInstallModUpdates(IProgress<ProgressReport> progress = null)
         {
             return Task.Run(async () =>
             {
-                ProgressChange($"Checking for mod updates...", 0f);
+                progress?.Report(new ProgressReport($"Checking for mod updates...", 0f));
 
                 List<KeyValuePair<LocalMod, Mod>> outDatedMods = beatSaber.EnumerateOutdatedMods().ToList();
                 int updatedCount = 0;
@@ -240,11 +248,11 @@ namespace Stx.BeatModder
                 }
 
                 if (updatedCount > 0)
-                    ProgressChange($"{ updatedCount } mods were updated succesfully!", 1f);
+                    progress?.Report(new ProgressReport($"{ updatedCount } mods were updated succesfully!", 1f));
                 else if (outDatedMods.Count == 0)
-                    ProgressChange($"All mods are up-to-date!", 1f);
+                    progress?.Report(new ProgressReport($"All mods are up-to-date!", 1f));
                 else
-                    ProgressChange($"There was a problem updating 1 mod.", 1f);
+                    progress?.Report(new ProgressReport($"There was a problem updating mods.", 1f));
 
                 return updatedCount;
             });
@@ -356,28 +364,11 @@ namespace Stx.BeatModder
             foreach (ListViewItem m in listView.CheckedItems)
                 mods.Add((Mod)m.Tag);
 
-            int installedCount = await InstallMultipleMods(mods);
-            if (installedCount > 0)
-            {
-                UpdateModList();
-                ShowNotification($"{ installedCount } mods were installed into Beat Saber successfully.");
-            }
+            await beatSaber.InstallMultipleMods(mods, progress);
+            UpdateModList();
         }
 
-        private async Task<int> InstallMultipleMods(List<Mod> mods)
-        {
-            int installedCount = 0;
 
-            for (int i = 0; i < mods.Count; i++)
-            {
-                Mod m = mods[i];
-
-                if (await beatSaber.InstallMod(m, ProgressReport.Partial(progress, i * (1f / listView.CheckedItems.Count), 1f / listView.CheckedItems.Count)) != null)
-                    installedCount++;
-            }
-
-            return installedCount;
-        }
 
         private void buttonMoreInfo_Click(object sender, EventArgs e)
         {
@@ -523,12 +514,18 @@ namespace Stx.BeatModder
 
         private void checkBoxConsole_CheckedChanged(object sender, EventArgs e)
         {
+            if (beatSaber == null)
+                return;
+
             config.showConsole = checkBoxConsole.Checked;
             SaveConfig();
         }
 
         private async void checkBoxAllowNonApproved_CheckedChanged(object sender, EventArgs e)
         {
+            if (beatMods == null)
+                return;
+
             config.allowNonApproved = checkBoxAllowNonApproved.Checked;
             config.autoUpdate = false;
             SaveConfig();
@@ -569,7 +566,7 @@ namespace Stx.BeatModder
             }
 
             await beatMods.RefreshMods(true, !config.allowNonApproved);
-            await CheckForAndInstallModUpdates();
+            await CheckForAndInstallModUpdates(progress);
         }
 
         private void SelfDestruct()
@@ -640,8 +637,15 @@ namespace Stx.BeatModder
                 lvi.Group = listView.GetOrCreateGroup("Installed");
                 lvi.Tag = localMod;
                 lvi.ImageKey = mod?.Category.ToString() ?? ModCategory.Other.ToString();
+                lvi.ForeColor = Color.ForestGreen;
 
                 FontStyle fontStyle = localMod.usedBy.Count > 0 ? FontStyle.Regular : FontStyle.Bold;
+
+                if (mod.Status != ModStatus.Approved)
+                {
+                    lvi.SubItems[0].Text += $" ({ mod.Status.ToString() })";
+                    lvi.ForeColor = Color.Purple;
+                }
 
                 if (mostRecentMod == null || !mod.IsCompatibleWith(beatSaber.BeatSaberVersion)) // This mod requires an update
                 {
@@ -651,15 +655,16 @@ namespace Stx.BeatModder
                 }
                 else if (mostRecentMod.Version == localMod.Version) // This mod is up-to-date
                 {
-                    lvi.ForeColor = Color.ForestGreen;
                     lvi.Font = new Font(FontFamily.GenericSansSerif, 8.5f, fontStyle);
                 }
                 else // This mod is out of date
                 {
-                    lvi.SubItems[0].Text += " (Outdated)";
+                    lvi.SubItems[0].Text += " (Update available)";
                     lvi.ForeColor = Color.DarkRed;
                     lvi.Font = new Font(FontFamily.GenericSansSerif, 8.5f, fontStyle);
                 }
+
+
 
                 listView.Items.Add(lvi);
             }
@@ -674,6 +679,12 @@ namespace Stx.BeatModder
                 lvi.Group = listView.GetOrCreateGroup(m.Category.ToString());
                 lvi.Tag = m;
                 lvi.ImageKey = m.Category.ToString();
+
+                if (m.Status != ModStatus.Approved)
+                {
+                    lvi.SubItems[0].Text += $" ({ m.Status.ToString() })";
+                    lvi.ForeColor = Color.Purple;
+                }
 
                 if (m.required)
                     lvi.BackColor = Color.WhiteSmoke;
@@ -738,6 +749,9 @@ namespace Stx.BeatModder
 
         private void CheckBoxKeepModDownloads_CheckedChanged(object sender, EventArgs e)
         {
+            if (beatSaber == null)
+                return;
+
             config.keepModArchives = checkBoxKeepModDownloads.Checked;
             SaveConfig();
 

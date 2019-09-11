@@ -13,4 +13,3 @@ H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\obj\Debug\Stx.BeatModsAPI.csproj.Co
 H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\obj\Debug\Stx.BeatModsAPI.csproj.CopyComplete
 H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\obj\Debug\Stx.BeatModsAPI.dll
 H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\obj\Debug\Stx.BeatModsAPI.pdb
-H:\Documents\GitHub\Beat-Modder\Stx.BeatMods\obj\Debug\Stx.BeatModsAPI.csprojAssemblyReference.cache

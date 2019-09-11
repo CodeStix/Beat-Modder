@@ -28,8 +28,6 @@ namespace Stx.BeatModder.BeatMapInstaller
     {
         const string BEAT_SAVER_KEY_DOWNLOAD = "https://beatsaver.com/api/download/key/";
        
-
-
         static void Main(string[] args)
         {
             if (args.Length == 0 || args[0] == "!bsr")
