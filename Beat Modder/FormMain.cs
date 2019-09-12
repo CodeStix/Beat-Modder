@@ -479,7 +479,7 @@ namespace Stx.BeatModder
             IMod selectedMod = (IMod)e.Item.Tag;
             Mod mod = selectedMod is Mod ? (Mod)selectedMod : beatMods.GetModFromLocal((LocalMod)selectedMod);
 
-            textBoxDescription.Text = $"{ mod.Name }\r\n\tby { mod.author.username }\r\n\r\n{ mod.description }\r\n\r\nCategory: { mod.Category.ToString() }";
+            textBoxDescription.Text = $"{ selectedMod.Name }\r\n\tby { mod?.author.username }\r\n\r\n{ mod?.description }\r\n\r\nCategory: { mod?.Category.ToString() }";
         }
 
         private void listView_ItemChecked(object sender, ItemCheckedEventArgs e)
@@ -641,7 +641,7 @@ namespace Stx.BeatModder
 
                 FontStyle fontStyle = localMod.usedBy.Count > 0 ? FontStyle.Regular : FontStyle.Bold;
 
-                if (mod.Status != ModStatus.Approved)
+                if (mod != null && mod.Status != ModStatus.Approved)
                 {
                     lvi.SubItems[0].Text += $" ({ mod.Status.ToString() })";
                     lvi.ForeColor = Color.Purple;
