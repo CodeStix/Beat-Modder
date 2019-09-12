@@ -554,6 +554,9 @@ namespace Stx.BeatModsAPI
 
         public async Task<int> InstallMultipleMods(List<Mod> mods, IProgress<ProgressReport> progress = null)
         {
+            if (mods.Count == 0)
+                return 0;
+
             int installedCount = 0;
 
             progress?.Report(new ProgressReport($"Installing { mods.Count } mods...", 0f));
@@ -573,6 +576,9 @@ namespace Stx.BeatModsAPI
 
         public async Task<int> UninstallMultipleMods(List<LocalMod> mods, bool skipPreventRemoveCheck = true, IProgress<ProgressReport> progress = null)
         {
+            if (mods.Count == 0)
+                return 0;
+
             int uninstalledCount = 0;
 
             mods = mods.OrderBy((e) => e.usedBy.Count).ToList();
