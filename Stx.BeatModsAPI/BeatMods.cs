@@ -16,8 +16,11 @@ namespace Stx.BeatModsAPI
     {
         public List<string> AllGameVersions { get; private set; }
         public List<Mod> AllMods { get; private set; }
+        public List<Mod> OfflineMods { get; private set; }
         public DateTime LastDidRefreshMods { get; private set; }
+        public bool IsOffline { get; private set; }
 
+        private const string OFFLINE_FILE = "offlineMods.json";
         private const string CACHE_FILE = "cachedMods.json";
         private const string CACHE_FILE_UNAPPROVED = "cachedModsUnapproved.json";
 
@@ -30,6 +33,12 @@ namespace Stx.BeatModsAPI
 
         internal BeatMods()
         { }
+
+        ~BeatMods()
+        {
+            Console.WriteLine($"Saving { OfflineMods.Count } offline available mods.");
+            File.WriteAllText(OFFLINE_FILE, JsonConvert.SerializeObject(OfflineMods));
+        }
 
         public static Task<BeatMods> CreateSession(bool useCachedOldMods = true, bool onlyDownloadApproved = true)
         {
@@ -48,6 +57,7 @@ namespace Stx.BeatModsAPI
         public Task RefreshMods(bool useCachedOldMods = false, bool onlyDownloadApproved = true)
         {
             AllMods = new List<Mod>();
+            OfflineMods = new List<Mod>();
             LastDidRefreshMods = DateTime.Now;
 
             return Task.Run(() =>
@@ -61,7 +71,6 @@ namespace Stx.BeatModsAPI
 
                     BeatModsQuery query = onlyDownloadApproved ? BeatModsQuery.AllApproved : BeatModsQuery.All;
 
-
                     // If mod cache is enabled, only download mod info about the most recent mods
                     string cacheFile = onlyDownloadApproved ? CACHE_FILE : CACHE_FILE_UNAPPROVED;
                     CacheConfig cache = null;
@@ -74,14 +83,32 @@ namespace Stx.BeatModsAPI
                             Console.WriteLine($"Loading { cache.cachedMods.Count } mods from cache '{ cacheFile }' until game version { cache.cacheMaxGameVersion }.");
 
                             query.forGameVersion = cache.cacheMaxGameVersion;
-                            AllMods.AddRange(cache.cachedMods); //.Where((e) => SemVersion.Parse(e.gameVersion.TrimOddVersion()) < cache.cacheMaxGameVersion)
+                            AllMods.AddRange(cache.cachedMods);
                         }
                     }
 
-                    string modsJson = wc.DownloadString(query.CreateRequestUrl());
-                    AllMods.AddRange(JsonConvert.DeserializeObject<List<Mod>>(modsJson));
+                    // Load offline available mods
+                    if (File.Exists(OFFLINE_FILE))
+                    {
+                        OfflineMods.AddRange(JsonConvert.DeserializeObject<List<Mod>>(File.ReadAllText(OFFLINE_FILE)));
+                        Console.WriteLine($"Loaded { OfflineMods.Count } offline available mods.");
+                    }
 
-                    if (useCachedOldMods)
+                    try
+                    {
+                        IsOffline = false;
+                        string modsJson = wc.DownloadString(query.CreateRequestUrl());
+                        AllMods.AddRange(JsonConvert.DeserializeObject<List<Mod>>(modsJson));
+                    }
+                    catch
+                    {
+                        IsOffline = true;
+                        AllMods.Clear(); // Remove the loaded cached mods, because they cannot get installed offline.
+                    }
+
+                    AllMods = AllMods.Union(OfflineMods).ToList();
+
+                    if (!IsOffline && useCachedOldMods)
                     {
                         // Cache file does not exist, create it and cache all mods but the recent version
                         if (cache == null || cache.cacheMaxGameVersion != mostRecentGameVersion)
@@ -142,7 +169,7 @@ namespace Stx.BeatModsAPI
             return mostRecent > currentVersion;
         }
 
-        public Mod GetModFromLocal(LocalMod mod)
+        public Mod GetModFromLocal(InstalledMod mod)
         {
             return AllMods.FirstOrDefault((e) => e.Version == mod.Version && string.Compare(e.Name, mod.Name, StringComparison.OrdinalIgnoreCase) == 0);
         }
@@ -176,12 +203,6 @@ namespace Stx.BeatModsAPI
 
         public IEnumerable<Mod> EnumerateAllDependencies(Mod mod)
         {
-            /*if (string.Compare(mod.Name, Mod.BSIPA, StringComparison.OrdinalIgnoreCase) != 0 &&
-                    !mod.dependencies.Any((e) => string.Compare(e.Name, Mod.BSIPA, StringComparison.OrdinalIgnoreCase) == 0))
-            {
-                mod.dependencies.Add(GetMostRecentModWithName(Mod.BSIPA, mod.gameVersion));
-            }*/
-
             foreach (Mod dep in mod.dependencies)
             {
                 Mod dependency = dep;
@@ -197,6 +218,11 @@ namespace Stx.BeatModsAPI
                 foreach (Mod subDep in EnumerateAllDependencies(dependency))
                     yield return subDep;
             }
+        }
+
+        public static IEnumerable<OfflineMod> EnumerateOfflineMods()
+        {
+
         }
     }
 }

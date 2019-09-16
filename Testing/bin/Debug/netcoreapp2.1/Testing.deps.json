@@ -1,0 +1,108 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.1",
+    "signature": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.1": {
+      "Testing/1.0.0": {
+        "dependencies": {
+          "BeatMapInstaller": "1.0.0",
+          "BeatModder": "1.0.0",
+          "Stx.BeatModsAPI": "1.0.0"
+        },
+        "runtime": {
+          "Testing.dll": {}
+        }
+      },
+      "BeatMapInstaller/1.0.0": {
+        "dependencies": {
+          "Stx.BeatModsAPI": "1.0.0",
+          "Newtonsoft.Json": "12.0.0.0"
+        },
+        "runtime": {
+          "BeatMapInstaller.exe": {}
+        }
+      },
+      "BeatModder/1.0.0": {
+        "dependencies": {
+          "Stx.BeatModsAPI": "1.0.0",
+          "Semver": "2.0.4.0"
+        },
+        "runtime": {
+          "BeatModder.exe": {}
+        }
+      },
+      "Stx.BeatModsAPI/1.0.0": {
+        "dependencies": {
+          "Flurl": "2.8.2.0"
+        },
+        "runtime": {
+          "Stx.BeatModsAPI.dll": {}
+        }
+      },
+      "Newtonsoft.Json.Reference/12.0.0.0": {
+        "runtime": {
+          "Newtonsoft.Json.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.0.1.22727"
+          }
+        }
+      },
+      "Semver.Reference/2.0.4.0": {
+        "runtime": {
+          "Semver.dll": {
+            "assemblyVersion": "2.0.4.0",
+            "fileVersion": "2.0.4.0"
+          }
+        }
+      },
+      "Flurl.Reference/2.8.2.0": {
+        "runtime": {
+          "Flurl.dll": {
+            "assemblyVersion": "2.8.2.0",
+            "fileVersion": "2.8.2.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Testing/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BeatMapInstaller/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "BeatModder/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Stx.BeatModsAPI/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Newtonsoft.Json.Reference/12.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Semver.Reference/2.0.4.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Flurl.Reference/2.8.2.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

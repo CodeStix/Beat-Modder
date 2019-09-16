@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Stx.BeatModsAPI;
+using System;
 
 namespace Testing
 {
@@ -6,7 +7,8 @@ namespace Testing
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.Write("Is BeatMods available? ");
+            Console.WriteLine(BeatModsUrlBuilder.IsBeatModsAvailable() ? "yes" : "no"); 
         }
     }
 }

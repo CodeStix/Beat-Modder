@@ -18,11 +18,11 @@ namespace Stx.BeatModder
     public partial class FormModInfo : Form
     {
         private Mod mod;
-        private LocalMod localMod;
+        private InstalledMod localMod;
 
         private static bool showAdvanced = false;
 
-        public FormModInfo(Mod mod, LocalMod localMod = null)
+        public FormModInfo(Mod mod, InstalledMod localMod = null)
         {
             this.localMod = localMod;
             this.mod = mod;

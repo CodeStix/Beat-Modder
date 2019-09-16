@@ -207,6 +207,39 @@
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
+      },
+      "BeatMapInstaller/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "Stx.BeatModsAPI": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/BeatMapInstaller.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BeatMapInstaller.dll": {}
+        }
+      },
+      "BeatModder/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "Stx.BeatModsAPI": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/BeatModder.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BeatModder.dll": {}
+        }
+      },
+      "Stx.BeatModsAPI/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Stx.BeatModsAPI.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Stx.BeatModsAPI.dll": {}
+        }
       }
     }
   },
@@ -680,11 +713,29 @@
         "netstandard.library.2.0.3.nupkg.sha512",
         "netstandard.library.nuspec"
       ]
+    },
+    "BeatMapInstaller/1.0.0": {
+      "type": "project",
+      "path": "../BeatMapInstaller/BeatMapInstaller.csproj",
+      "msbuildProject": "../BeatMapInstaller/BeatMapInstaller.csproj"
+    },
+    "BeatModder/1.0.0": {
+      "type": "project",
+      "path": "../BeatModder/BeatModder.csproj",
+      "msbuildProject": "../BeatModder/BeatModder.csproj"
+    },
+    "Stx.BeatModsAPI/1.0.0": {
+      "type": "project",
+      "path": "../Stx.BeatModsAPI/Stx.BeatModsAPI.csproj",
+      "msbuildProject": "../Stx.BeatModsAPI/Stx.BeatModsAPI.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "Microsoft.NETCore.App >= 2.1.0"
+      "BeatMapInstaller >= 1.0.0",
+      "BeatModder >= 1.0.0",
+      "Microsoft.NETCore.App >= 2.1.0",
+      "Stx.BeatModsAPI >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -716,7 +767,17 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "H:\\Documents\\GitHub\\Beat-Modder\\BeatMapInstaller\\BeatMapInstaller.csproj": {
+              "projectPath": "H:\\Documents\\GitHub\\Beat-Modder\\BeatMapInstaller\\BeatMapInstaller.csproj"
+            },
+            "H:\\Documents\\GitHub\\Beat-Modder\\BeatModder\\BeatModder.csproj": {
+              "projectPath": "H:\\Documents\\GitHub\\Beat-Modder\\BeatModder\\BeatModder.csproj"
+            },
+            "H:\\Documents\\GitHub\\Beat-Modder\\Stx.BeatModsAPI\\Stx.BeatModsAPI.csproj": {
+              "projectPath": "H:\\Documents\\GitHub\\Beat-Modder\\Stx.BeatModsAPI\\Stx.BeatModsAPI.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

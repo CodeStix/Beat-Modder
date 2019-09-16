@@ -10,7 +10,8 @@ namespace Stx.BeatModsAPI
 {
     public static class BeatModsUrlBuilder
     {
-        public static string BeatModsUrl => "https://beatmods.com";
+        public static string BeatModsHost => "beatmods.com";
+        public static string BeatModsUrl => "https://" + BeatModsHost;
 
         public static string AllModsUrl => BeatModsUrl.AppendPathSegments("api", "v1", "mod");
         public static string AllGameVersionsUrl => BeatModsUrl.AppendPathSegments("api", "v1", "version");
@@ -27,7 +28,7 @@ namespace Stx.BeatModsAPI
 
         public static bool IsBeatModsAvailable()
         {
-            return new Ping().Send(BeatModsUrl).Status == IPStatus.Success
+            return new Ping().Send(BeatModsHost).Status == IPStatus.Success;
         }
     }
 }

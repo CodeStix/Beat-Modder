@@ -15,3 +15,20 @@ H:\Documents\GitHub\Beat-Modder\BeatMap Installer\obj\Debug\BeatMapInstaller.csp
 H:\Documents\GitHub\Beat-Modder\BeatMap Installer\obj\Debug\BeatMapInstaller.csproj.CopyComplete
 H:\Documents\GitHub\Beat-Modder\BeatMap Installer\obj\Debug\BeatMapInstaller.exe
 H:\Documents\GitHub\Beat-Modder\BeatMap Installer\obj\Debug\BeatMapInstaller.pdb
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Debug\BeatMapInstaller.exe.config
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Debug\BeatMapInstaller.exe
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Debug\BeatMapInstaller.pdb
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Debug\Newtonsoft.Json.dll
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Debug\Stx.BeatModsAPI.dll
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Debug\Semver.dll
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Debug\Flurl.dll
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Debug\Stx.BeatModsAPI.pdb
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Debug\Newtonsoft.Json.pdb
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Debug\Newtonsoft.Json.xml
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Debug\Semver.xml
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Debug\Flurl.xml
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\obj\Debug\BeatMapInstaller.csprojAssemblyReference.cache
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\obj\Debug\BeatMapInstaller.csproj.CoreCompileInputs.cache
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\obj\Debug\BeatMapInstaller.csproj.CopyComplete
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\obj\Debug\BeatMapInstaller.exe
+H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\obj\Debug\BeatMapInstaller.pdb

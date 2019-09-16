@@ -63,7 +63,7 @@
     <Compile Include="Extensions\ZipArchiveExtensions.cs" />
     <Compile Include="Hashing.cs" />
     <Compile Include="IMod.cs" />
-    <Compile Include="LocalMod.cs" />
+    <Compile Include="InstalledMod.cs" />
     <Compile Include="ProgressReport.cs" />
     <Compile Include="BeatModsQuery.cs" />
     <Compile Include="BeatSaberInstallation.cs" />

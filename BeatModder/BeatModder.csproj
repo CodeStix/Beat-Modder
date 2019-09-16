@@ -158,7 +158,6 @@
     <Content Include="Resources\refresh.ico" />
     <Content Include="Resources\saber.ico" />
     <Content Include="Resources\saber2.ico" />
-    <Content Include="saber.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Stx.BeatModsAPI\Stx.BeatModsAPI.csproj">

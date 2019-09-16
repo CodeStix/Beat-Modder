@@ -4,6 +4,57 @@
     "H:\\Documents\\GitHub\\Beat-Modder\\Testing\\Testing.csproj": {}
   },
   "projects": {
+    "H:\\Documents\\GitHub\\Beat-Modder\\BeatMapInstaller\\BeatMapInstaller.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "H:\\Documents\\GitHub\\Beat-Modder\\BeatMapInstaller\\BeatMapInstaller.csproj",
+        "projectName": "BeatMapInstaller",
+        "projectPath": "H:\\Documents\\GitHub\\Beat-Modder\\BeatMapInstaller\\BeatMapInstaller.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "H:\\Documents\\GitHub\\Beat-Modder\\Stx.BeatModsAPI\\Stx.BeatModsAPI.csproj": {
+                "projectPath": "H:\\Documents\\GitHub\\Beat-Modder\\Stx.BeatModsAPI\\Stx.BeatModsAPI.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "H:\\Documents\\GitHub\\Beat-Modder\\BeatModder\\BeatModder.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "H:\\Documents\\GitHub\\Beat-Modder\\BeatModder\\BeatModder.csproj",
+        "projectName": "BeatModder",
+        "projectPath": "H:\\Documents\\GitHub\\Beat-Modder\\BeatModder\\BeatModder.csproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "H:\\Documents\\GitHub\\Beat-Modder\\Stx.BeatModsAPI\\Stx.BeatModsAPI.csproj": {
+                "projectPath": "H:\\Documents\\GitHub\\Beat-Modder\\Stx.BeatModsAPI\\Stx.BeatModsAPI.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "H:\\Documents\\GitHub\\Beat-Modder\\Stx.BeatModsAPI\\Stx.BeatModsAPI.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "H:\\Documents\\GitHub\\Beat-Modder\\Stx.BeatModsAPI\\Stx.BeatModsAPI.csproj",
+        "projectName": "Stx.BeatModsAPI",
+        "projectPath": "H:\\Documents\\GitHub\\Beat-Modder\\Stx.BeatModsAPI\\Stx.BeatModsAPI.csproj"
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
     "H:\\Documents\\GitHub\\Beat-Modder\\Testing\\Testing.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -29,7 +80,17 @@
         },
         "frameworks": {
           "netcoreapp2.1": {
-            "projectReferences": {}
+            "projectReferences": {
+              "H:\\Documents\\GitHub\\Beat-Modder\\BeatMapInstaller\\BeatMapInstaller.csproj": {
+                "projectPath": "H:\\Documents\\GitHub\\Beat-Modder\\BeatMapInstaller\\BeatMapInstaller.csproj"
+              },
+              "H:\\Documents\\GitHub\\Beat-Modder\\BeatModder\\BeatModder.csproj": {
+                "projectPath": "H:\\Documents\\GitHub\\Beat-Modder\\BeatModder\\BeatModder.csproj"
+              },
+              "H:\\Documents\\GitHub\\Beat-Modder\\Stx.BeatModsAPI\\Stx.BeatModsAPI.csproj": {
+                "projectPath": "H:\\Documents\\GitHub\\Beat-Modder\\Stx.BeatModsAPI\\Stx.BeatModsAPI.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

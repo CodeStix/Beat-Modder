@@ -185,7 +185,7 @@ namespace Stx.BeatModder
 
                 ProgressChange("Checking for manual installs/uninstalls...", 0.35f);
 
-                beatSaber.DetectManualModInstallOrUninstall(out List<Mod> wasManuallyInstalled, out List<LocalMod> wasManuallyUninstalled);
+                beatSaber.DetectManualModInstallOrUninstall(out List<Mod> wasManuallyInstalled, out List<InstalledMod> wasManuallyUninstalled);
                 await beatSaber.InstallMultipleMods(wasManuallyInstalled, ProgressReport.Partial(progress, 0.35f, 0.1f));
                 await beatSaber.UninstallMultipleMods(wasManuallyUninstalled, true, ProgressReport.Partial(progress, 0.45f, 0.1f));
 
@@ -235,12 +235,12 @@ namespace Stx.BeatModder
             {
                 progress?.Report(new ProgressReport($"Checking for mod updates...", 0f));
 
-                List<KeyValuePair<LocalMod, Mod>> outDatedMods = beatSaber.EnumerateOutdatedMods().ToList();
+                List<KeyValuePair<InstalledMod, Mod>> outDatedMods = beatSaber.EnumerateOutdatedMods().ToList();
                 int updatedCount = 0;
 
                 for (int i = 0; i < outDatedMods.Count; i++)
                 {
-                    LocalMod oldVersion = outDatedMods[i].Key;
+                    InstalledMod oldVersion = outDatedMods[i].Key;
                     Mod newVersion = outDatedMods[i].Value;
 
                     if (null != await beatSaber.UpdateMod(oldVersion, newVersion, ProgressReport.Partial(progress, (float)i / outDatedMods.Count * (1f / outDatedMods.Count), 1f / outDatedMods.Count)))
@@ -272,8 +272,8 @@ namespace Stx.BeatModder
                 contextMenu.Show(listView, e.Location);
                 contextMenu.Items[0].Text = selected.SubItems[0].Text;
 
-                bool installed = selected.Tag is LocalMod;
-                contextMenu.Items[3].Enabled = !installed || (installed && beatMods.IsOutdated((LocalMod)selected.Tag, beatSaber.BeatSaberVersion));
+                bool installed = selected.Tag is InstalledMod;
+                contextMenu.Items[3].Enabled = !installed || (installed && beatMods.IsOutdated((InstalledMod)selected.Tag, beatSaber.BeatSaberVersion));
                 contextMenu.Items[4].Enabled = installed;
             }
         }
@@ -283,7 +283,7 @@ namespace Stx.BeatModder
             Mod m = (Mod)selected.Tag;
             ProgressChange($"Installing mod { m.ToString() }...", 0f);
 
-            LocalMod installedMod = beatSaber.GetInstalledModIgnoreVersion(m);
+            InstalledMod installedMod = beatSaber.GetInstalledModIgnoreVersion(m);
 
             if (installedMod != null)
             {
@@ -302,7 +302,7 @@ namespace Stx.BeatModder
 
         private async void uninstallToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LocalMod mod = (LocalMod)selected.Tag;
+            InstalledMod mod = (InstalledMod)selected.Tag;
 
             if (mod.preventRemoval)
             {
@@ -339,12 +339,12 @@ namespace Stx.BeatModder
         {
             Mod m;
 
-            if (selected.Tag is LocalMod)
-                m = beatMods.GetModFromLocal((LocalMod)selected.Tag);
+            if (selected.Tag is InstalledMod)
+                m = beatMods.GetModFromLocal((InstalledMod)selected.Tag);
             else
                 m = (Mod)selected.Tag;
 
-            FormModInfo fmi = new FormModInfo(m, selected.Tag as LocalMod);
+            FormModInfo fmi = new FormModInfo(m, selected.Tag as InstalledMod);
 
             fmi.Show(this);
         }
@@ -375,7 +375,7 @@ namespace Stx.BeatModder
             if (selected == null)
                 return;
 
-            FormModInfo fmi = new FormModInfo(selected.Tag as Mod, selected.Tag as LocalMod);
+            FormModInfo fmi = new FormModInfo(selected.Tag as Mod, selected.Tag as InstalledMod);
 
             fmi.Show(this);
         }
@@ -477,7 +477,7 @@ namespace Stx.BeatModder
                 return;
 
             IMod selectedMod = (IMod)e.Item.Tag;
-            Mod mod = selectedMod is Mod ? (Mod)selectedMod : beatMods.GetModFromLocal((LocalMod)selectedMod);
+            Mod mod = selectedMod is Mod ? (Mod)selectedMod : beatMods.GetModFromLocal((InstalledMod)selectedMod);
 
             textBoxDescription.Text = $"{ selectedMod.Name }\r\n\tby { mod?.author.username }\r\n\r\n{ mod?.description }\r\n\r\nCategory: { mod?.Category.ToString() }";
         }
@@ -621,7 +621,7 @@ namespace Stx.BeatModder
             listView.Items.Clear();
             Point p = listView.AutoScrollOffset;
 
-            foreach(LocalMod localMod in beatSaber.InstalledMods.OrderBy((e) => e.usedBy.Count))
+            foreach(InstalledMod localMod in beatSaber.InstalledMods.OrderBy((e) => e.usedBy.Count))
             {
                 Mod mostRecentMod = beatMods.GetMostRecentModWithName(localMod.Name, beatSaber.BeatSaberVersion);
                 Mod mod = beatMods.GetModFromLocal(localMod);

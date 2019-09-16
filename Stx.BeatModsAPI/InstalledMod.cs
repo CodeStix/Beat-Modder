@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Stx.BeatModsAPI
 {
     [Serializable]
-    public class LocalMod : IMod
+    public class InstalledMod : IMod
     {
         [JsonProperty("id")]
         public string Id { get; set; }
@@ -25,7 +25,7 @@ namespace Stx.BeatModsAPI
         public Mod.Download.File binaryFile;
         public bool preventRemoval = false;
 
-        public LocalMod()
+        public InstalledMod()
         { }
 
         /*[Obsolete]
@@ -41,7 +41,7 @@ namespace Stx.BeatModsAPI
             uses = new List<string>();
         }*/
 
-        public LocalMod(Mod mod, ModDownloadType type)
+        public InstalledMod(Mod mod, ModDownloadType type)
         {
             Id = mod.Id;
             Name = mod.Name;
@@ -69,22 +69,22 @@ namespace Stx.BeatModsAPI
                 string.Compare(Version, mod.Version, StringComparison.OrdinalIgnoreCase) == 0;*/
         }
 
-        public static bool operator >(LocalMod left, IMod right)
+        public static bool operator >(InstalledMod left, IMod right)
         {
             return SemVersion.Parse(left.Version) > right.Version;
         }
 
-        public static bool operator <(LocalMod left, IMod right)
+        public static bool operator <(InstalledMod left, IMod right)
         {
             return SemVersion.Parse(left.Version) < right.Version;
         }
 
-        public static bool operator >=(LocalMod left, IMod right)
+        public static bool operator >=(InstalledMod left, IMod right)
         {
             return SemVersion.Parse(left.Version) >= right.Version;
         }
 
-        public static bool operator <=(LocalMod left, IMod right)
+        public static bool operator <=(InstalledMod left, IMod right)
         {
             return SemVersion.Parse(left.Version) <= right.Version;
         }

@@ -61,7 +61,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Stx.BeatMods\Stx.BeatModsAPI.csproj">
+    <ProjectReference Include="..\Stx.BeatModsAPI\Stx.BeatModsAPI.csproj">
       <Project>{c68aa990-e1d3-4864-8933-2a31c4e91cb4}</Project>
       <Name>Stx.BeatModsAPI</Name>
     </ProjectReference>
