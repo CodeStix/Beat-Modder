@@ -81,6 +81,7 @@
             this.installOrUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uninstallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.columnHeaderGameVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPageMods.SuspendLayout();
@@ -245,6 +246,7 @@
             this.columnHeaderName,
             this.columnHeaderAuthor,
             this.columnHeaderVersion,
+            this.columnHeaderGameVersion,
             this.columnHeaderInfo});
             this.tableLayoutPanel.SetColumnSpan(this.listView, 3);
             this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -277,6 +279,7 @@
             // columnHeaderVersion
             // 
             this.columnHeaderVersion.Text = "Version";
+            this.columnHeaderVersion.Width = 50;
             // 
             // columnHeaderInfo
             // 
@@ -657,6 +660,11 @@
             this.notifyIcon.Text = "Beat Modder Notification";
             this.notifyIcon.Visible = true;
             // 
+            // columnHeaderGameVersion
+            // 
+            this.columnHeaderGameVersion.Text = "Game";
+            this.columnHeaderGameVersion.Width = 50;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -747,6 +755,7 @@
         private System.Windows.Forms.ImageList imageListListIcons;
         private System.Windows.Forms.CheckBox checkBoxKeepModDownloads;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ColumnHeader columnHeaderGameVersion;
     }
 }
 

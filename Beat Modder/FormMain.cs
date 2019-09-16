@@ -344,7 +344,7 @@ namespace Stx.BeatModder
             else
                 m = (Mod)selected.Tag;
 
-            FormModInfo fmi = new FormModInfo(m);
+            FormModInfo fmi = new FormModInfo(m, selected.Tag as LocalMod);
 
             fmi.Show(this);
         }
@@ -375,7 +375,7 @@ namespace Stx.BeatModder
             if (selected == null)
                 return;
 
-            FormModInfo fmi = new FormModInfo((Mod)selected.Tag);
+            FormModInfo fmi = new FormModInfo(selected.Tag as Mod, selected.Tag as LocalMod);
 
             fmi.Show(this);
         }
@@ -626,11 +626,12 @@ namespace Stx.BeatModder
                 Mod mostRecentMod = beatMods.GetMostRecentModWithName(localMod.Name, beatSaber.BeatSaberVersion);
                 Mod mod = beatMods.GetModFromLocal(localMod);
 
-                ListViewItem lvi = new ListViewItem(new string[] 
+                ListViewItem lvi = new ListViewItem(new string[]
                 {
                     localMod.Name,
                     mod?.author.username,
                     localMod.Version,
+                    localMod.gameVersion,
                     mod?.description
                 });
 
@@ -675,7 +676,14 @@ namespace Stx.BeatModder
                 .OnlyKeepCompatibleWith(beatSaber.BeatSaberVersion)
                 .Where((e) => !beatSaber.IsInstalledExactVersion(e)))
             {
-                ListViewItem lvi = new ListViewItem(new string[] { m.Name, m.author.username, m.Version, m.description });
+                ListViewItem lvi = new ListViewItem(new string[] 
+                {
+                    m.Name,
+                    m.author.username,
+                    m.Version,
+                    m.gameVersion,
+                    m.description
+                });
                 lvi.Group = listView.GetOrCreateGroup(m.Category.ToString());
                 lvi.Tag = m;
                 lvi.ImageKey = m.Category.ToString();

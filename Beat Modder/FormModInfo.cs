@@ -18,17 +18,39 @@ namespace Stx.BeatModder
     public partial class FormModInfo : Form
     {
         private Mod mod;
+        private LocalMod localMod;
 
         private static bool showAdvanced = false;
 
-        public FormModInfo(Mod mod)
+        public FormModInfo(Mod mod, LocalMod localMod = null)
         {
+            this.localMod = localMod;
+            this.mod = mod;
+
             InitializeComponent();
 
-            this.mod = mod;
-            textBoxName.Text = mod.Name + Environment.NewLine + "\tby " + mod.author.username;
-            textBoxDescription.Text = mod.description + Environment.NewLine + Environment.NewLine + "Category: " + mod.category;
-            labelVersion.Text = mod.Version;
+            if (mod != null)
+            {
+                textBoxName.Text = mod.Name + Environment.NewLine + "\tby " + mod.author.username;
+                textBoxDescription.Text = mod.description + Environment.NewLine + Environment.NewLine + "Category: " + mod.category;
+                labelVersion.Text = mod.Version;
+                labelGameVersion.Text = "game " + mod.gameVersion;
+            }
+
+            if (localMod != null)
+            {
+                textBoxBinaryFile.Text = $"Binary file: { localMod.binaryFile.file }";
+
+                if(mod == null)
+                {
+                    textBoxName.Text = localMod.Name;
+                    linkLabel.Visible = false;
+                    buttonDirectDownload.Enabled = false;
+                    textBoxDescription.Text = "No description.";
+                    labelVersion.Text = localMod.Version;
+                    labelGameVersion.Text = "game " + localMod.gameVersion;
+                }
+            }
 
             CreateTree();
         }
@@ -37,35 +59,56 @@ namespace Stx.BeatModder
         {
             treeViewAdvanced.Nodes.Clear();
 
-            JObject root = JObject.Parse(JsonConvert.SerializeObject(mod));
+            if (localMod != null)
+            {
+                JObject rootMod = JObject.Parse(JsonConvert.SerializeObject(localMod));
+                TreeNode rootNodeMod = treeViewAdvanced.Nodes.Add("Local mod");
+                rootNodeMod.ForeColor = Color.ForestGreen;
+                Node(rootNodeMod, rootMod);
+            }
 
-            TreeNode rootNode = treeViewAdvanced.Nodes.Add("Properties");
-
-            Node(rootNode, root);
+            if (mod != null)
+            {
+                JObject rootMod = JObject.Parse(JsonConvert.SerializeObject(mod));
+                TreeNode rootNodeMod = treeViewAdvanced.Nodes.Add("Mod");
+                rootNodeMod.ForeColor = Color.DarkGray;
+                Node(rootNodeMod, rootMod);
+            }
         }
 
         private void Node(TreeNode parent, JToken further)
         {
-            foreach(JToken token in further.Children())
+            if (further is JArray)
             {
-                if (token is JObject)
+                foreach (JToken b in (JArray)further)
                 {
-                    TreeNode node = parent.Nodes.Add(token.Type.ToString());
-
-                    Node(node, token);
+                    parent.Nodes.Add(b.ToString());
                 }
-                else if (token is JProperty)
+            }
+            else
+            {
+                foreach (JToken token in further.Children())
                 {
-                    JProperty prop = (JProperty)token;
 
-                    TreeNode node;
-                    if (prop.Value is JValue)
-                        node = parent.Nodes.Add(prop.Name + ": " + prop.Value.ToString());
-                    else
-                        node = parent.Nodes.Add(prop.Name);
+                    if (token is JObject)
+                    {
+                        TreeNode node = parent.Nodes.Add(token.Type.ToString());
 
-                    if (prop.Value is JObject || prop.Value is JArray)
-                        Node(node, prop.Value);
+                        Node(node, token);
+                    }
+                    else if (token is JProperty)
+                    {
+                        JProperty prop = (JProperty)token;
+
+                        TreeNode node;
+                        if (prop.Value is JValue)
+                            node = parent.Nodes.Add(prop.Name + ": " + prop.Value.ToString());
+                        else
+                            node = parent.Nodes.Add(prop.Name);
+
+                        if (prop.Value is JObject || prop.Value is JArray)
+                            Node(node, prop.Value);
+                    }
                 }
             }
         }

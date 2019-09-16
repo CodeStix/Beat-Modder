@@ -18,6 +18,7 @@ namespace Stx.BeatModsAPI
         public string Name { get; set; }
         [JsonProperty("version")]
         public string Version { get; set; }
+        public string gameVersion;
         public List<string> affectedFiles;
         public List<string> usedBy;
         public List<string> uses;
@@ -27,7 +28,7 @@ namespace Stx.BeatModsAPI
         public LocalMod()
         { }
 
-        [Obsolete]
+        /*[Obsolete]
         public LocalMod(string id, string name, string version, Mod.Download.File binaryFile, bool preventRemoval = false)
         {
             Id = id;
@@ -38,13 +39,14 @@ namespace Stx.BeatModsAPI
             affectedFiles = new List<string>();
             usedBy = new List<string>();
             uses = new List<string>();
-        }
+        }*/
 
         public LocalMod(Mod mod, ModDownloadType type)
         {
             Id = mod.Id;
             Name = mod.Name;
             Version = mod.Version;
+            gameVersion = mod.gameVersion;
             binaryFile = mod.GetPluginBinaryFile(type);
             preventRemoval = mod.required;
             affectedFiles = mod.GetBestDownloadFor(type).archiveFiles.Select((e) => e.file).ToList();

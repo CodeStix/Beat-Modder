@@ -39,6 +39,8 @@
             this.textBoxAdvancedSelected = new System.Windows.Forms.TextBox();
             this.buttonDirectDownload = new System.Windows.Forms.Button();
             this.groupBox = new System.Windows.Forms.GroupBox();
+            this.textBoxBinaryFile = new System.Windows.Forms.TextBox();
+            this.labelGameVersion = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonOk
@@ -54,7 +56,7 @@
             // linkLabel
             // 
             this.linkLabel.AutoSize = true;
-            this.linkLabel.Location = new System.Drawing.Point(9, 178);
+            this.linkLabel.Location = new System.Drawing.Point(9, 186);
             this.linkLabel.Name = "linkLabel";
             this.linkLabel.Size = new System.Drawing.Size(109, 13);
             this.linkLabel.TabIndex = 3;
@@ -80,7 +82,7 @@
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.ReadOnly = true;
-            this.textBoxDescription.Size = new System.Drawing.Size(373, 108);
+            this.textBoxDescription.Size = new System.Drawing.Size(373, 90);
             this.textBoxDescription.TabIndex = 5;
             this.textBoxDescription.Text = "Description";
             // 
@@ -153,11 +155,35 @@
             this.groupBox.TabIndex = 12;
             this.groupBox.TabStop = false;
             // 
+            // textBoxBinaryFile
+            // 
+            this.textBoxBinaryFile.BackColor = System.Drawing.SystemColors.Menu;
+            this.textBoxBinaryFile.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxBinaryFile.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxBinaryFile.Location = new System.Drawing.Point(12, 160);
+            this.textBoxBinaryFile.Multiline = true;
+            this.textBoxBinaryFile.Name = "textBoxBinaryFile";
+            this.textBoxBinaryFile.ReadOnly = true;
+            this.textBoxBinaryFile.Size = new System.Drawing.Size(370, 17);
+            this.textBoxBinaryFile.TabIndex = 13;
+            // 
+            // labelGameVersion
+            // 
+            this.labelGameVersion.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelGameVersion.Location = new System.Drawing.Point(312, 29);
+            this.labelGameVersion.Name = "labelGameVersion";
+            this.labelGameVersion.Size = new System.Drawing.Size(73, 23);
+            this.labelGameVersion.TabIndex = 14;
+            this.labelGameVersion.Text = "game v1.0 ";
+            this.labelGameVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // FormModInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(394, 522);
+            this.Controls.Add(this.labelGameVersion);
+            this.Controls.Add(this.textBoxBinaryFile);
             this.Controls.Add(this.groupBox);
             this.Controls.Add(this.buttonDirectDownload);
             this.Controls.Add(this.textBoxAdvancedSelected);
@@ -190,5 +216,7 @@
         private System.Windows.Forms.TextBox textBoxAdvancedSelected;
         private System.Windows.Forms.Button buttonDirectDownload;
         private System.Windows.Forms.GroupBox groupBox;
+        private System.Windows.Forms.TextBox textBoxBinaryFile;
+        private System.Windows.Forms.Label labelGameVersion;
     }
 }
