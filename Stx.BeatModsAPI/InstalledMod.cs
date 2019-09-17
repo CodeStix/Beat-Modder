@@ -41,7 +41,7 @@ namespace Stx.BeatModsAPI
             uses = new List<string>();
         }*/
 
-        public InstalledMod(Mod mod, ModDownloadType type)
+        public InstalledMod(Mod mod, BeatSaberInstalledType type)
         {
             Id = mod.Id;
             Name = mod.Name;
@@ -54,14 +54,14 @@ namespace Stx.BeatModsAPI
             uses = new List<string>();
         }
 
-        public bool EqualsModIgnoreVersion(Mod mod, ModDownloadType type)
+        public bool EqualsModIgnoreVersion(Mod mod, BeatSaberInstalledType type)
         {
             return string.Compare(mod.GetPluginBinaryFile(type).file, binaryFile.file) == 0;
 
             //return string.Compare(Name, mod.Name, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
-        public bool EqualsModExactVersion(Mod mod, ModDownloadType type)
+        public bool EqualsModExactVersion(Mod mod, BeatSaberInstalledType type)
         {
             return mod.GetPluginBinaryFile(type) == binaryFile;
 

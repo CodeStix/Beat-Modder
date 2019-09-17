@@ -153,7 +153,7 @@ namespace Stx.BeatModder
 
         private void buttonDirectDownload_Click(object sender, EventArgs e)
         {
-            Process.Start(mod.GetBestDownloadFor(ModDownloadType.Steam).DownloadUrl);
+            Process.Start(mod.GetBestDownloadFor(BeatSaberInstalledType.Steam).DownloadUrl);
         }
     }
 }

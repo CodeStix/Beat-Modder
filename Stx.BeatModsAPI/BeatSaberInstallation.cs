@@ -25,7 +25,7 @@ namespace Stx.BeatModsAPI
             }
         }
 
-        public ModDownloadType BeatSaberType
+        public BeatSaberInstalledType BeatSaberType
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Stx.BeatModsAPI
                 config = new Config
                 {
                     ogFiles = new List<string>(OriginalBeatSaberFiles.Select((e) => Path.Combine(BeatSaberDirectory, e))),
-                    beatSaberType = BeatSaberDirectory.ToLower().Contains("steam") ? ModDownloadType.Steam : ModDownloadType.Oculus,
+                    beatSaberType = BeatSaberDirectory.ToLower().Contains("steam") ? BeatSaberInstalledType.Steam : BeatSaberInstalledType.Oculus,
                     installedMods = new List<InstalledMod>()
                 };
             }
@@ -400,15 +400,7 @@ namespace Stx.BeatModsAPI
                 {
                     if (beatMods.IsOffline)
                     {
-                        if (mod is OfflineMod offlineMod)
-                        {
-                            beatMods.OfflineMods.Remove(offlineMod);
-                            progress?.Report(new ProgressReport($"Install failed: offline mod { mod } is not available anymore.", 1f));
-                        }
-                        else
-                        {
-                            progress?.Report(new ProgressReport($"Install failed: mod { mod } is not offline available.", 1f));
-                        }
+                        progress?.Report(new ProgressReport($"Install failed: mod { mod } is not offline available.", 1f));
                         return null;
                     }
 
@@ -644,7 +636,7 @@ namespace Stx.BeatModsAPI
         internal class Config
         {
             public string lastBeatSaberVersion;
-            public ModDownloadType beatSaberType;
+            public BeatSaberInstalledType beatSaberType;
             public List<string> ogFiles;
             public List<InstalledMod> installedMods;
         }

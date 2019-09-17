@@ -111,15 +111,15 @@ namespace Stx.BeatModsAPI
             }
         }
 
-        public Download GetBestDownloadFor(ModDownloadType type)
+        public Download GetBestDownloadFor(BeatSaberInstalledType type)
         {
-            if (!downloads.Any((m) => type == m.Type) && (type != ModDownloadType.Universal))
-                return downloads.FirstOrDefault((m) => ModDownloadType.Universal == m.Type);
+            if (!downloads.Any((m) => type == m.Type) && (type != BeatSaberInstalledType.Universal))
+                return downloads.FirstOrDefault((m) => BeatSaberInstalledType.Universal == m.Type);
             else
                 return downloads.FirstOrDefault((m) => type == m.Type);
         }
 
-        public Download.File GetPluginBinaryFile(ModDownloadType type)
+        public Download.File GetPluginBinaryFile(BeatSaberInstalledType type)
         {
             if (downloads.Length == 0)
                 return default;
@@ -194,21 +194,21 @@ namespace Stx.BeatModsAPI
             }
 
             [JsonIgnore]
-            public ModDownloadType Type
+            public BeatSaberInstalledType Type
             {
                 get
                 {
                     switch (type.Trim().ToLower())
                     {
                         case "steam":
-                            return ModDownloadType.Steam;
+                            return BeatSaberInstalledType.Steam;
 
                         case "oculus":
-                            return ModDownloadType.Oculus;
+                            return BeatSaberInstalledType.Oculus;
 
                         case "universal":
                         default:
-                            return ModDownloadType.Universal;
+                            return BeatSaberInstalledType.Universal;
                     }
                 }
             }

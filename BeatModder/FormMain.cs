@@ -146,7 +146,6 @@ namespace Stx.BeatModder
             Task.Run(async () =>
             {
                 bool updateAvailable = await updateCheck.CheckForUpdate(StringUtil.GetCurrentVersion(3));
-
                 if (updateAvailable)
                 {
                     if (MessageBox.Show("There is an update available for Beat Modder, please download the newest version " +
@@ -157,7 +156,6 @@ namespace Stx.BeatModder
                         SelfDestruct();
                     }
                 }
-
             });
 
             Task.Run(new Action(async () =>
@@ -181,7 +179,10 @@ namespace Stx.BeatModder
                 beatMods = await BeatMods.CreateSession(true, !config.allowNonApproved);
 
                 ProgressChange("Gathering game information...", 0.3f);
-                beatSaber = new BeatSaberInstallation(config.beatSaberLocation, beatMods);
+                beatSaber = new BeatSaberInstallation(config.beatSaberLocation, beatMods)
+                {
+                    RemoveModArchivesAfterInstall = !config.keepModArchives
+                };
 
                 ProgressChange("Checking for manual installs/uninstalls...", 0.35f);
 
@@ -225,6 +226,23 @@ namespace Stx.BeatModder
 
                 config.firstTime = false;
                 SaveConfig();
+
+                while (beatMods.IsOffline)
+                {
+                    await Task.Delay(3000);
+
+                    Console.WriteLine("Checking if BeatMods is reachable...");
+                    if (BeatModsUrlBuilder.IsReachable)
+                    {
+                        Console.WriteLine("BeatMods is available, creating new session...");
+
+                        beatMods.Dispose();
+                        beatMods = await BeatMods.CreateSession(true, !config.allowNonApproved);
+
+                        UpdateModList();
+                        ProgressChange("BeatMods went available, list was refreshed.", 1f);
+                    }
+                }
             }
             ));
         }
@@ -399,8 +417,7 @@ namespace Stx.BeatModder
             config.beatSaberLocation = fff.SelectedDirectory;
             SaveConfig();
 
-            Process.Start(Application.ExecutablePath);
-            SelfDestruct();
+            RestartAndSelfDestruct();
         }
 
         private void buttonChangeBeatSaberType_Click(object sender, EventArgs e)
@@ -411,17 +428,17 @@ namespace Stx.BeatModder
             {
                 if ((string)fls.Result == "Steam")
                 {
-                    beatSaber.BeatSaberType = ModDownloadType.Steam;
+                    beatSaber.BeatSaberType = BeatSaberInstalledType.Steam;
                     SaveConfig();
                 }
                 else if ((string)fls.Result == "Oculus Store")
                 {
-                    beatSaber.BeatSaberType = ModDownloadType.Oculus;
+                    beatSaber.BeatSaberType = BeatSaberInstalledType.Oculus;
                     SaveConfig();
                 }
                 else
                 {
-                    beatSaber.BeatSaberType = ModDownloadType.Universal;
+                    beatSaber.BeatSaberType = BeatSaberInstalledType.Universal;
                     SaveConfig();
                 }
 
@@ -569,6 +586,12 @@ namespace Stx.BeatModder
             await CheckForAndInstallModUpdates(progress);
         }
 
+        private void RestartAndSelfDestruct()
+        {
+            Process.Start(Application.ExecutablePath);
+            SelfDestruct();
+        }
+
         private void SelfDestruct()
         {
             Environment.Exit(0);
@@ -587,11 +610,9 @@ namespace Stx.BeatModder
             }));
         }
 
-        [Obsolete("Use HandleProgressChange() instead.")]
+        /*[Obsolete("Use HandleProgressChange() instead.")]
         public void SetStatus(string status, bool done)
         {
-            
-
             BeginInvoke(new Action(() =>
             {
                 statusLabel.Text = "Status: " + status;
@@ -608,7 +629,7 @@ namespace Stx.BeatModder
                 groupBoxBeatSaber.Enabled = done;
                 groupBoxDangerZone.Enabled = done;
             }));
-        }
+        }*/
 
         private void UpdateModList()
         {
@@ -623,7 +644,6 @@ namespace Stx.BeatModder
 
             foreach(InstalledMod localMod in beatSaber.InstalledMods.OrderBy((e) => e.usedBy.Count))
             {
-                Mod mostRecentMod = beatMods.GetMostRecentModWithName(localMod.Name, beatSaber.BeatSaberVersion);
                 Mod mod = beatMods.GetModFromLocal(localMod);
 
                 ListViewItem lvi = new ListViewItem(new string[]
@@ -639,33 +659,30 @@ namespace Stx.BeatModder
                 lvi.Tag = localMod;
                 lvi.ImageKey = mod?.Category.ToString() ?? ModCategory.Other.ToString();
                 lvi.ForeColor = Color.ForestGreen;
-
+              
                 FontStyle fontStyle = localMod.usedBy.Count > 0 ? FontStyle.Regular : FontStyle.Bold;
+                lvi.Font = new Font(FontFamily.GenericSansSerif, 8.5f, fontStyle);
+
+                if (!beatMods.IsOffline) // Update information is unavailable offline
+                {
+                    Mod mostRecentMod = beatMods.GetMostRecentModWithName(localMod.Name, beatSaber.BeatSaberVersion);
+                    if (mostRecentMod == null || !mod.IsCompatibleWith(beatSaber.BeatSaberVersion)) // This mod requires an update
+                    {
+                        lvi.SubItems[0].Text += " (Waiting for update)";
+                        lvi.ForeColor = Color.DarkOrange;
+                    }
+                    else if (mostRecentMod.Version != localMod.Version) // This mod is out of date
+                    {
+                        lvi.SubItems[0].Text += " (Update available)";
+                        lvi.ForeColor = Color.DarkRed;
+                    }
+                }
 
                 if (mod != null && mod.Status != ModStatus.Approved)
                 {
                     lvi.SubItems[0].Text += $" ({ mod.Status.ToString() })";
                     lvi.ForeColor = Color.Purple;
                 }
-
-                if (mostRecentMod == null || !mod.IsCompatibleWith(beatSaber.BeatSaberVersion)) // This mod requires an update
-                {
-                    lvi.SubItems[0].Text += " (Waiting for update)";
-                    lvi.ForeColor = Color.DarkOrange;
-                    lvi.Font = new Font(FontFamily.GenericSansSerif, 8.5f, fontStyle);
-                }
-                else if (mostRecentMod.Version == localMod.Version) // This mod is up-to-date
-                {
-                    lvi.Font = new Font(FontFamily.GenericSansSerif, 8.5f, fontStyle);
-                }
-                else // This mod is out of date
-                {
-                    lvi.SubItems[0].Text += " (Update available)";
-                    lvi.ForeColor = Color.DarkRed;
-                    lvi.Font = new Font(FontFamily.GenericSansSerif, 8.5f, fontStyle);
-                }
-
-
 
                 listView.Items.Add(lvi);
             }
@@ -797,6 +814,6 @@ namespace Stx.BeatModder
         public bool allowNonApproved = false;
         public bool autoUpdate = true;
         public bool firstTime = true;
-        public bool keepModArchives = false;
+        public bool keepModArchives = true;
     }
 }

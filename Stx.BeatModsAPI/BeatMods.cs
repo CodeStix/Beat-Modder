@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Stx.BeatModsAPI
 {
-    public class BeatMods
+    public class BeatMods : IDisposable
     {
         public List<string> AllGameVersions { get; private set; }
         public List<Mod> AllMods { get; private set; }
@@ -34,10 +34,12 @@ namespace Stx.BeatModsAPI
         internal BeatMods()
         { }
 
-        ~BeatMods()
+        public void Dispose()
         {
             Console.WriteLine($"Saving { OfflineMods.Count } offline available mods.");
             File.WriteAllText(OFFLINE_FILE, JsonConvert.SerializeObject(OfflineMods));
+            OfflineMods.Clear();
+            AllMods.Clear();
         }
 
         public static Task<BeatMods> CreateSession(bool useCachedOldMods = true, bool onlyDownloadApproved = true)
@@ -218,11 +220,6 @@ namespace Stx.BeatModsAPI
                 foreach (Mod subDep in EnumerateAllDependencies(dependency))
                     yield return subDep;
             }
-        }
-
-        public static IEnumerable<OfflineMod> EnumerateOfflineMods()
-        {
-
         }
     }
 }

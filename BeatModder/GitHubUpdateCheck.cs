@@ -43,7 +43,7 @@ namespace Stx.BeatModder
             }
             catch
             {
-                return true;
+                return false;
             }
 
             return false;

@@ -16,6 +16,14 @@ namespace Stx.BeatModsAPI
         public static string AllModsUrl => BeatModsUrl.AppendPathSegments("api", "v1", "mod");
         public static string AllGameVersionsUrl => BeatModsUrl.AppendPathSegments("api", "v1", "version");
 
+        public static bool IsReachable
+        {
+            get
+            {
+                return new Ping().Send(BeatModsHost).Status == IPStatus.Success;
+            }
+        }
+
         public static string CreateRequestUrl(this BeatModsQuery query)
         {
             return AllModsUrl
@@ -24,11 +32,6 @@ namespace Stx.BeatModsAPI
                 .SetQueryParam("status", query.status.GetStatusName())
                 .SetQueryParam("search", query.search)
                 .SetQueryParam("sortDirection", query.sortDescending ? -1 : 1);
-        }
-
-        public static bool IsBeatModsAvailable()
-        {
-            return new Ping().Send(BeatModsHost).Status == IPStatus.Success;
         }
     }
 }

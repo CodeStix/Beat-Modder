@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Stx.BeatModsAPI
 {
-    public enum ModDownloadType
+    public enum BeatSaberInstalledType
     {
         Universal,
         Steam,

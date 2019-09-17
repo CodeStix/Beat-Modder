@@ -46,6 +46,7 @@
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderAuthor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderGameVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderInfo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.imageListListIcons = new System.Windows.Forms.ImageList(this.components);
             this.textBoxDescription = new System.Windows.Forms.TextBox();
@@ -81,7 +82,7 @@
             this.installOrUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uninstallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.columnHeaderGameVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.statusStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPageMods.SuspendLayout();
@@ -281,6 +282,11 @@
             this.columnHeaderVersion.Text = "Version";
             this.columnHeaderVersion.Width = 50;
             // 
+            // columnHeaderGameVersion
+            // 
+            this.columnHeaderGameVersion.Text = "Game";
+            this.columnHeaderGameVersion.Width = 50;
+            // 
             // columnHeaderInfo
             // 
             this.columnHeaderInfo.Text = "Description";
@@ -341,25 +347,28 @@
             // 
             // groupBoxAdvanced
             // 
+            this.groupBoxAdvanced.Controls.Add(this.groupBox1);
             this.groupBoxAdvanced.Controls.Add(this.checkBoxKeepModDownloads);
             this.groupBoxAdvanced.Controls.Add(this.checkBoxAutoUpdate);
             this.groupBoxAdvanced.Controls.Add(this.checkBoxAllowNonApproved);
             this.groupBoxAdvanced.Controls.Add(this.checkBoxConsole);
-            this.groupBoxAdvanced.Location = new System.Drawing.Point(17, 128);
+            this.groupBoxAdvanced.Location = new System.Drawing.Point(17, 127);
             this.groupBoxAdvanced.Name = "groupBoxAdvanced";
-            this.groupBoxAdvanced.Size = new System.Drawing.Size(245, 149);
+            this.groupBoxAdvanced.Size = new System.Drawing.Size(245, 157);
             this.groupBoxAdvanced.TabIndex = 4;
             this.groupBoxAdvanced.TabStop = false;
-            this.groupBoxAdvanced.Text = "Advanced";
+            this.groupBoxAdvanced.Text = "Settings";
             // 
             // checkBoxKeepModDownloads
             // 
             this.checkBoxKeepModDownloads.AutoSize = true;
-            this.checkBoxKeepModDownloads.Location = new System.Drawing.Point(14, 105);
+            this.checkBoxKeepModDownloads.Checked = true;
+            this.checkBoxKeepModDownloads.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxKeepModDownloads.Location = new System.Drawing.Point(14, 19);
             this.checkBoxKeepModDownloads.Name = "checkBoxKeepModDownloads";
-            this.checkBoxKeepModDownloads.Size = new System.Drawing.Size(178, 30);
+            this.checkBoxKeepModDownloads.Size = new System.Drawing.Size(151, 30);
             this.checkBoxKeepModDownloads.TabIndex = 6;
-            this.checkBoxKeepModDownloads.Text = "Keep mod archives after install.\r\n(install mods while offline is WIP)";
+            this.checkBoxKeepModDownloads.Text = "Enable offline mode\r\n(mod archives will be kept)";
             this.checkBoxKeepModDownloads.UseVisualStyleBackColor = true;
             this.checkBoxKeepModDownloads.CheckedChanged += new System.EventHandler(this.CheckBoxKeepModDownloads_CheckedChanged);
             // 
@@ -368,7 +377,7 @@
             this.checkBoxAutoUpdate.AutoSize = true;
             this.checkBoxAutoUpdate.Checked = true;
             this.checkBoxAutoUpdate.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxAutoUpdate.Location = new System.Drawing.Point(14, 46);
+            this.checkBoxAutoUpdate.Location = new System.Drawing.Point(14, 55);
             this.checkBoxAutoUpdate.Name = "checkBoxAutoUpdate";
             this.checkBoxAutoUpdate.Size = new System.Drawing.Size(150, 17);
             this.checkBoxAutoUpdate.TabIndex = 5;
@@ -380,7 +389,7 @@
             // 
             this.checkBoxAllowNonApproved.AutoSize = true;
             this.checkBoxAllowNonApproved.Enabled = false;
-            this.checkBoxAllowNonApproved.Location = new System.Drawing.Point(14, 69);
+            this.checkBoxAllowNonApproved.Location = new System.Drawing.Point(14, 120);
             this.checkBoxAllowNonApproved.Name = "checkBoxAllowNonApproved";
             this.checkBoxAllowNonApproved.Size = new System.Drawing.Size(175, 30);
             this.checkBoxAllowNonApproved.TabIndex = 4;
@@ -391,7 +400,7 @@
             // checkBoxConsole
             // 
             this.checkBoxConsole.AutoSize = true;
-            this.checkBoxConsole.Location = new System.Drawing.Point(14, 19);
+            this.checkBoxConsole.Location = new System.Drawing.Point(14, 97);
             this.checkBoxConsole.Name = "checkBoxConsole";
             this.checkBoxConsole.Size = new System.Drawing.Size(137, 17);
             this.checkBoxConsole.TabIndex = 3;
@@ -406,12 +415,12 @@
             this.groupBoxDangerZone.Controls.Add(this.buttonRemoveModsAndData);
             this.groupBoxDangerZone.Controls.Add(this.buttonRemoveMods);
             this.groupBoxDangerZone.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.groupBoxDangerZone.Location = new System.Drawing.Point(282, 128);
+            this.groupBoxDangerZone.Location = new System.Drawing.Point(283, 127);
             this.groupBoxDangerZone.Name = "groupBoxDangerZone";
             this.groupBoxDangerZone.Size = new System.Drawing.Size(199, 138);
             this.groupBoxDangerZone.TabIndex = 2;
             this.groupBoxDangerZone.TabStop = false;
-            this.groupBoxDangerZone.Text = "Danger Zone";
+            this.groupBoxDangerZone.Text = "Danger zone";
             // 
             // label6
             // 
@@ -660,10 +669,13 @@
             this.notifyIcon.Text = "Beat Modder Notification";
             this.notifyIcon.Visible = true;
             // 
-            // columnHeaderGameVersion
+            // groupBox1
             // 
-            this.columnHeaderGameVersion.Text = "Game";
-            this.columnHeaderGameVersion.Width = 50;
+            this.groupBox1.Location = new System.Drawing.Point(14, 78);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(214, 10);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
             // 
             // FormMain
             // 
@@ -756,6 +768,7 @@
         private System.Windows.Forms.CheckBox checkBoxKeepModDownloads;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ColumnHeader columnHeaderGameVersion;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

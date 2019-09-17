@@ -70,7 +70,7 @@
     <Compile Include="Enums\BeatModsSort.cs" />
     <Compile Include="BeatModsUrlBuilder.cs" />
     <Compile Include="Enums\ModCategory.cs" />
-    <Compile Include="Enums\ModDownloadType.cs" />
+    <Compile Include="Enums\BeatSaberInstalledType.cs" />
     <Compile Include="Enums\ModInstallStatus.cs" />
     <Compile Include="Extensions\BeatModsSortExtensions.cs" />
     <Compile Include="Extensions\ModStatusExtensions.cs" />

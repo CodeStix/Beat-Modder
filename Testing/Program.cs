@@ -7,8 +7,9 @@ namespace Testing
     {
         static void Main(string[] args)
         {
+            
             Console.Write("Is BeatMods available? ");
-            Console.WriteLine(BeatModsUrlBuilder.IsBeatModsAvailable() ? "yes" : "no"); 
+            Console.WriteLine(BeatModsUrlBuilder.IsReachable ? "yes" : "no"); 
         }
     }
 }
