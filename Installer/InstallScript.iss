@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Beat Modder"
-#define MyAppVersion "2.0"
+#define MyAppVersion "2.1"
 #define MyAppPublisher "CodeStix; Stijn Rogiest"
 #define MyAppURL "https://github.com/CodeStix/Beat-Modder"
 #define MyAppExeName "BeatModder.exe"
@@ -24,8 +24,8 @@ LicenseFile=H:\Documents\GitHub\Beat-Modder\Installer\license.txt
 InfoBeforeFile=H:\Documents\GitHub\Beat-Modder\Installer\installInfo.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 PrivilegesRequired=admin
-OutputBaseFilename=BeatModder-2.0-install
-SetupIconFile=H:\Documents\GitHub\Beat-Modder\Beat Modder\saber.ico
+OutputBaseFilename=BeatModder-{#MyAppVersion}-install
+SetupIconFile=saber.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -37,17 +37,17 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\BeatModder.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\BeatModder.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Flurl.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Flurl.Http.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\HtmlAgilityPack.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Ookii.Dialogs.WinForms.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Ookii.Dialogs.Wpf.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Semver.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "H:\Documents\GitHub\Beat-Modder\Beat Modder\bin\Release\Stx.BeatModsAPI.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "H:\Documents\GitHub\Beat-Modder\BeatMap Installer\bin\Release\BeatMapInstaller.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "H:\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\BeatModder.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "H:\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\BeatModder.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "H:\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Flurl.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "H:\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Flurl.Http.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "H:\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\HtmlAgilityPack.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "H:\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "H:\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Ookii.Dialogs.WinForms.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "H:\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Ookii.Dialogs.Wpf.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "H:\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Semver.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "H:\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Stx.BeatModsAPI.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Release\BeatMapInstaller.exe"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
