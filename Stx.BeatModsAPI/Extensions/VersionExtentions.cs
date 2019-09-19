@@ -26,21 +26,28 @@ namespace Stx.BeatModsAPI
             return j;
         }
 
-        public static string TrimOddVersion(this string oddVersionString)
+        public static string FixOddVersion(this string oddVersionString)
         {
             string abc = "abcdefghijlkmnopqrstuvwxyz";
-
-            for(int i = 0; i < abc.Length; i++)
+            for (int i = 0; i < abc.Length; i++)
             {
                 int j = oddVersionString.IndexOf(abc[i]);
-
                 if (j >= 0)
-                {
                     oddVersionString = oddVersionString.Substring(0, j);
+            }
+            return oddVersionString;
+            /*string f = oddVersionString.Replace("p", ".").Replace("pl", ".");
+            string allowed = "0123456789.";
+
+            for(int i = 0; i < f.Length; i++)
+            {
+                if (!allowed.Contains(f[i]))
+                {
+                    f = f.Remove(i--, 1);
                 }
             }
 
-            return oddVersionString;
+            return f;*/
         }
     }
 }

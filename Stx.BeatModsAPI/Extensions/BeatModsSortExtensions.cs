@@ -9,9 +9,9 @@ namespace Stx.BeatModsAPI
 {
     public static class BeatModsSortExtensions
     {
-        public static IEnumerable<Mod> OnlyKeepCompatibleWith(this IEnumerable<Mod> mods, string gameVersion)
+        public static IEnumerable<Mod> OnlyKeepCompatibleWith(this IEnumerable<Mod> mods, SemVersion gameVersion)
         {
-            if (string.IsNullOrEmpty(gameVersion))
+            if (gameVersion == null)
                 return mods;
 
             return mods.Where((e) => e.IsCompatibleWith(gameVersion));

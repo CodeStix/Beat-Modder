@@ -134,10 +134,20 @@ namespace Stx.BeatModsAPI
                 .FirstOrDefault();
         }
 
+        public bool IsCompatibleWith(SemVersion gameVersion) // Only the mods with equal major and minor will be compatible with the game.
+        {
+            if (gameVersion == null)
+                return false;
+
+            SemVersion modVersion = SemVersion.Parse(this.gameVersion.FixOddVersion());
+            return modVersion.Major == gameVersion.Major && modVersion.Minor == gameVersion.Minor;
+        }
+
+        [Obsolete("Use IsCompatibleWith(SemVersion gameVersion) instead.")]
         public bool IsCompatibleWith(string gameVersion)
         {
-            SemVersion modVersion = SemVersion.Parse(this.gameVersion.TrimOddVersion());
-            SemVersion version = SemVersion.Parse(gameVersion.TrimOddVersion());
+            SemVersion modVersion = SemVersion.Parse(this.gameVersion.FixOddVersion());
+            SemVersion version = SemVersion.Parse(gameVersion.FixOddVersion());
 
             return modVersion.Major == version.Major && modVersion.Minor == version.Minor;
         }

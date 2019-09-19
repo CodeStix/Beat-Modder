@@ -197,7 +197,7 @@ namespace Stx.BeatModder
                 if (beatSaber.DidBeatSaberUpdate)
                 {
                     MessageBox.Show($"Good news!" +
-                        $"\nThere was a Beat Saber update: { beatSaber.BeatSaberVersion }\n" +
+                        $"\nThere was a Beat Saber update: { beatSaber.BeatSaberVersionString }\n" +
                         $"This means that some of the mods have to get updated too.\n" +
                         $"If the update was released recently, be aware that some mods could be broken.\n\n" +
                         $"At any moment you can open this program to automatically repatch, check for and install mod updates!", "Oh snap!", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -221,7 +221,7 @@ namespace Stx.BeatModder
                     labelBeatSaberType.Text = "Beat Saber type: " + beatSaber.BeatSaberType;
                     textBoxBeatSaberLocation.Text = config.beatSaberLocation;
                     labelBeatSaberVersion.ForeColor = Color.Green;
-                    labelBeatSaberVersion.Text = $"Beat Saber version: { beatSaber.BeatSaberVersion }";
+                    labelBeatSaberVersion.Text = $"Beat Saber version: { beatSaber.BeatSaberVersionString }";
                 }));
 
                 config.firstTime = false;

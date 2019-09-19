@@ -117,7 +117,7 @@ namespace Stx.BeatModsAPI
                         {
                             cache = new CacheConfig()
                             {
-                                cachedMods = AllMods.Where((e) => SemVersion.Parse(e.gameVersion.TrimOddVersion()) < mostRecentGameVersion).ToList(),
+                                cachedMods = AllMods.Where((e) => SemVersion.Parse(e.gameVersion.FixOddVersion()) < mostRecentGameVersion).ToList(),
                                 cacheMaxGameVersion = mostRecentGameVersion
                             };
 
@@ -156,12 +156,12 @@ namespace Stx.BeatModsAPI
                     .OrderByDescending((e) => SemVersionExtenions.AsNumber(e.Version));
         }
 
-        public Mod GetMostRecentModWithName(string modName, string compatibleGameVersion = null)
+        public Mod GetMostRecentModWithName(string modName, SemVersion compatibleGameVersion = null)
         {
             return GetModsWithName(modName).OnlyKeepCompatibleWith(compatibleGameVersion).FirstOrDefault();
         }
 
-        public bool IsOutdated(IMod currentVersion, string compatibleGameVersion = null)
+        public bool IsOutdated(IMod currentVersion, SemVersion compatibleGameVersion = null)
         {
             Mod mostRecent = GetMostRecentModWithName(currentVersion.Name, compatibleGameVersion);
 
