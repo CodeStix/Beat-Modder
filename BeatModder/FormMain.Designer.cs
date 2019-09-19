@@ -53,6 +53,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tabPageSettings = new System.Windows.Forms.TabPage();
             this.groupBoxAdvanced = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.checkBoxKeepModDownloads = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoUpdate = new System.Windows.Forms.CheckBox();
             this.checkBoxAllowNonApproved = new System.Windows.Forms.CheckBox();
@@ -82,7 +83,6 @@
             this.installOrUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uninstallToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.statusStrip.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPageMods.SuspendLayout();
@@ -285,7 +285,7 @@
             // columnHeaderGameVersion
             // 
             this.columnHeaderGameVersion.Text = "Game";
-            this.columnHeaderGameVersion.Width = 50;
+            this.columnHeaderGameVersion.Width = 0;
             // 
             // columnHeaderInfo
             // 
@@ -358,6 +358,14 @@
             this.groupBoxAdvanced.TabIndex = 4;
             this.groupBoxAdvanced.TabStop = false;
             this.groupBoxAdvanced.Text = "Settings";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Location = new System.Drawing.Point(14, 78);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(214, 10);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
             // 
             // checkBoxKeepModDownloads
             // 
@@ -668,14 +676,6 @@
             this.notifyIcon.BalloonTipTitle = "Beat Modder Notification";
             this.notifyIcon.Text = "Beat Modder Notification";
             this.notifyIcon.Visible = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Location = new System.Drawing.Point(14, 78);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(214, 10);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
             // 
             // FormMain
             // 
