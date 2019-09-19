@@ -54,6 +54,18 @@ namespace Stx.BeatModsAPI
             uses = new List<string>();
         }
 
+        public string GetPluginBinaryFile()
+        {
+            if (Name.Equals(Mod.BSIPA, StringComparison.OrdinalIgnoreCase))
+                return affectedFiles.FirstOrDefault((e) => e.Contains("IPA.exe"));
+            else
+                return affectedFiles
+                    .Where((e) => e.EndsWith(".dll") || e.EndsWith(".exe"))
+                    .OrderByDescending((e) => e.Contains("Plugins/"))
+                    .ThenByDescending((e) => e.EndsWith(".dll"))
+                    .FirstOrDefault();
+        }
+
         public bool EqualsModIgnoreVersion(Mod mod, BeatSaberInstalledType type)
         {
             return string.Compare(mod.GetPluginBinaryFile(type).file, binaryFile.file) == 0;

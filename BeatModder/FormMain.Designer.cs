@@ -270,7 +270,7 @@
             // columnHeaderName
             // 
             this.columnHeaderName.Text = "Name";
-            this.columnHeaderName.Width = 180;
+            this.columnHeaderName.Width = 200;
             // 
             // columnHeaderAuthor
             // 
@@ -285,7 +285,7 @@
             // columnHeaderGameVersion
             // 
             this.columnHeaderGameVersion.Text = "Game";
-            this.columnHeaderGameVersion.Width = 0;
+            this.columnHeaderGameVersion.Width = 2;
             // 
             // columnHeaderInfo
             // 

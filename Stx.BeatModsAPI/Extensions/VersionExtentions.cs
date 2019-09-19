@@ -36,9 +36,9 @@ namespace Stx.BeatModsAPI
                     oddVersionString = oddVersionString.Substring(0, j);
             }
             return oddVersionString;
+
             /*string f = oddVersionString.Replace("p", ".").Replace("pl", ".");
             string allowed = "0123456789.";
-
             for(int i = 0; i < f.Length; i++)
             {
                 if (!allowed.Contains(f[i]))
@@ -46,7 +46,6 @@ namespace Stx.BeatModsAPI
                     f = f.Remove(i--, 1);
                 }
             }
-
             return f;*/
         }
     }

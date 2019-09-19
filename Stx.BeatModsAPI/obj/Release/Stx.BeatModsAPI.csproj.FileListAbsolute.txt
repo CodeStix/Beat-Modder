@@ -24,7 +24,6 @@ H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Release\Flurl.xml
 H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Release\Newtonsoft.Json.pdb
 H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Release\Newtonsoft.Json.xml
 H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Release\Semver.xml
-H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\obj\Release\Stx.BeatModsAPI.csprojAssemblyReference.cache
 H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\obj\Release\Stx.BeatModsAPI.csproj.CoreCompileInputs.cache
 H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\obj\Release\Stx.BeatModsAPI.csproj.CopyComplete
 H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\obj\Release\Stx.BeatModsAPI.dll

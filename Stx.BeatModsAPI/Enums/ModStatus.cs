@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Stx.BeatModsAPI
 {
+    [Flags]
     public enum ModStatus
     {
-        All,
-        Approved,
-        Inactive,
-        Declined
+        Approved = 1,
+        Inactive = 2,
+        Declined = 4,
+        Pending = 8,
+        All = 15
     }
 }

@@ -61,6 +61,9 @@ namespace Stx.BeatModsAPI
                     case "declined":
                         return ModStatus.Declined;
 
+                    case "pending":
+                        return ModStatus.Pending;
+
                     case "approved":
                     default:
                         return ModStatus.Approved;

@@ -21,8 +21,7 @@ namespace Stx.BeatModsAPI
         public bool IsOffline { get; private set; }
 
         private const string OFFLINE_FILE = "offlineMods.json";
-        private const string CACHE_FILE = "cachedMods.json";
-        private const string CACHE_FILE_UNAPPROVED = "cachedModsUnapproved.json";
+        private const string ALL_MODS_FILE = "allMods.json";
 
         [Serializable]
         private class CacheConfig
@@ -42,12 +41,12 @@ namespace Stx.BeatModsAPI
             AllMods.Clear();
         }
 
-        public static Task<BeatMods> CreateSession(bool useCachedOldMods = true, bool onlyDownloadApproved = true)
+        public static Task<BeatMods> CreateSession(bool useCachedOldMods = true)
         {
             return Task.Run(async () =>
             {
                 BeatMods session = new BeatMods();
-                await session.RefreshMods(useCachedOldMods, onlyDownloadApproved);
+                await session.RefreshMods(useCachedOldMods);
                 return session;
             });
         }
@@ -56,7 +55,7 @@ namespace Stx.BeatModsAPI
         /// Refreshes the <see cref="AllMods"/> list with freshly new downloaded mod informations. 
         /// Keeps the information about mods up-to-date.
         /// </summary>
-        public Task RefreshMods(bool useCachedOldMods = false, bool onlyDownloadApproved = true)
+        public Task RefreshMods(bool useCachedOldMods = false)
         {
             AllMods = new List<Mod>();
             OfflineMods = new List<Mod>();
@@ -64,6 +63,12 @@ namespace Stx.BeatModsAPI
 
             return Task.Run(() =>
             {
+                // Delete old files...
+                if (File.Exists("cachedMods.json"))
+                    File.Delete("cachedMods.json");
+                if (File.Exists("cachedModsUnapproved.json"))
+                    File.Delete("cachedModsUnapproved.json");
+
                 using (WebClient wc = new WebClient())
                 {
                     string allGameVersionsJson = wc.DownloadString(BeatModsUrlBuilder.AllGameVersionsUrl);
@@ -71,12 +76,12 @@ namespace Stx.BeatModsAPI
                         .OrderByDescending((e) => SemVersionExtenions.AsNumber(e)).ToList();
                     string mostRecentGameVersion = AllGameVersions.First();
 
-                    BeatModsQuery query = onlyDownloadApproved ? BeatModsQuery.AllApproved : BeatModsQuery.All;
+                    BeatModsQuery query = BeatModsQuery.All;
 
                     // If mod cache is enabled, only download mod info about the most recent mods
-                    string cacheFile = onlyDownloadApproved ? CACHE_FILE : CACHE_FILE_UNAPPROVED;
+                    string cacheFile = ALL_MODS_FILE;
                     CacheConfig cache = null;
-                    if (useCachedOldMods && File.Exists(cacheFile))
+                    if (useCachedOldMods && File.Exists(ALL_MODS_FILE))
                     {
                         cache = JsonConvert.DeserializeObject<CacheConfig>(File.ReadAllText(cacheFile));
 
@@ -126,6 +131,8 @@ namespace Stx.BeatModsAPI
                             Console.WriteLine($"Created new cache file '{ cacheFile }' for { cache.cachedMods.Count } mods with max game version { cache.cacheMaxGameVersion }.");
                         }
                     }
+
+                    Console.WriteLine($"Loaded in total { OfflineMods.Count } mods.");
                 }
             });
         }

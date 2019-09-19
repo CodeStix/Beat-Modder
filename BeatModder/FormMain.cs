@@ -176,13 +176,16 @@ namespace Stx.BeatModder
                 }
 
                 ProgressChange("Communicating with beatmods...", 0.2f);
-                beatMods = await BeatMods.CreateSession(true, !config.allowNonApproved);
+                beatMods = await BeatMods.CreateSession(true);
 
                 ProgressChange("Gathering game information...", 0.3f);
                 beatSaber = new BeatSaberInstallation(config.beatSaberLocation, beatMods)
                 {
                     RemoveModArchivesAfterInstall = !config.keepModArchives
                 };
+
+                ProgressChange("Fixing stuff...", 0.32f);
+                FixBinaryFiles();
 
                 ProgressChange("Checking for manual installs/uninstalls...", 0.35f);
 
@@ -237,7 +240,7 @@ namespace Stx.BeatModder
                         Console.WriteLine("BeatMods is available, creating new session...");
 
                         beatMods.Dispose();
-                        beatMods = await BeatMods.CreateSession(true, !config.allowNonApproved);
+                        beatMods = await BeatMods.CreateSession(true);
 
                         UpdateModList();
                         ProgressChange("BeatMods went available, list was refreshed.", 1f);
@@ -298,22 +301,22 @@ namespace Stx.BeatModder
 
         private async void installOrUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Mod m = (Mod)selected.Tag;
-            ProgressChange($"Installing mod { m.ToString() }...", 0f);
-
-            InstalledMod installedMod = beatSaber.GetInstalledModIgnoreVersion(m);
-
-            if (installedMod != null)
+            if (selected.Tag is InstalledMod installedMod)
             {
-                if (SemVersion.Parse(installedMod.Version) < m.Version)
+                Mod newest = beatMods.GetMostRecentModWithName(installedMod.Name);
+                if (newest != null && SemVersion.Parse(installedMod.Version) < newest.Version)
                 {
-                    if (await beatSaber.UpdateMod(installedMod, m, progress) != null)
+                    ProgressChange($"Updating mod { installedMod }...", 0f);
+
+                    if (await beatSaber.UpdateMod(installedMod, newest, progress) != null)
                         UpdateModList();
                 }
             }
-            else
+            else if (selected.Tag is Mod mod)
             {
-                if (await beatSaber.InstallMod(m, progress) != null)
+                ProgressChange($"Installing mod { mod.ToString() }...", 0f);
+
+                if (await beatSaber.InstallMod(mod, progress) != null)
                     UpdateModList();
             }
         }
@@ -547,7 +550,7 @@ namespace Stx.BeatModder
             config.autoUpdate = false;
             SaveConfig();
 
-            await beatMods.RefreshMods(true, !checkBoxAllowNonApproved.Checked);
+            await beatMods.RefreshMods(true);
 
             UpdateModList();
             BeginInvoke(new Action(() => checkBoxAutoUpdate.Checked = false));
@@ -582,8 +585,10 @@ namespace Stx.BeatModder
                 }
             }
 
-            await beatMods.RefreshMods(true, !config.allowNonApproved);
+            await beatMods.RefreshMods(true);
             await CheckForAndInstallModUpdates(progress);
+
+            UpdateModList();
         }
 
         private void RestartAndSelfDestruct()
@@ -663,10 +668,16 @@ namespace Stx.BeatModder
                 FontStyle fontStyle = localMod.usedBy.Count > 0 ? FontStyle.Regular : FontStyle.Bold;
                 lvi.Font = new Font(FontFamily.GenericSansSerif, 8.5f, fontStyle);
 
+                if (mod != null && mod.Status != ModStatus.Approved)
+                {
+                    lvi.SubItems[0].Text += $" ({ mod.Status.ToString() })";
+                    lvi.ForeColor = Color.Purple;
+                }
+
                 if (!beatMods.IsOffline) // Update information is unavailable offline
                 {
                     Mod mostRecentMod = beatMods.GetMostRecentModWithName(localMod.Name, beatSaber.BeatSaberVersion);
-                    if (mostRecentMod == null || !mod.IsCompatibleWith(beatSaber.BeatSaberVersion)) // This mod requires an update
+                    if (mostRecentMod == null && !mod.IsCompatibleWith(beatSaber.BeatSaberVersion)) // This mod requires an update
                     {
                         lvi.SubItems[0].Text += " (Waiting for update)";
                         lvi.ForeColor = Color.DarkOrange;
@@ -678,17 +689,14 @@ namespace Stx.BeatModder
                     }
                 }
 
-                if (mod != null && mod.Status != ModStatus.Approved)
-                {
-                    lvi.SubItems[0].Text += $" ({ mod.Status.ToString() })";
-                    lvi.ForeColor = Color.Purple;
-                }
+
 
                 listView.Items.Add(lvi);
             }
 
             foreach (Mod m in beatMods
                 .GetModsSortedBy(BeatModsSort.None)
+                .OnlyKeepStatus(checkBoxAllowNonApproved.Checked ? ModStatus.All : ModStatus.Approved)
                 .OnlyKeepMostRecentMods()
                 .OnlyKeepCompatibleWith(beatSaber.BeatSaberVersion)
                 .Where((e) => !beatSaber.IsInstalledExactVersion(e)))
@@ -802,6 +810,28 @@ namespace Stx.BeatModder
         private void FormMain_Resize(object sender, EventArgs e)
         {
             listView.Columns[listView.Columns.Count - 1].Width = 460 + Width - 1057;
+        }
+
+        public void FixBinaryFiles()
+        {
+            foreach(InstalledMod m in beatSaber.InstalledMods)
+            {
+                if (m.binaryFile == default)
+                    continue;
+
+                string pluginFile = m.GetPluginBinaryFile();
+
+                if (string.IsNullOrEmpty(pluginFile))
+                    continue;
+
+                Console.WriteLine($"Fixed plugin binary file for { m }: { pluginFile }");
+
+                m.binaryFile = new Mod.Download.File()
+                {
+                    file = pluginFile,
+                    hash = Hashing.CalculateMD5(Path.Combine(beatSaber.BeatSaberDirectory, pluginFile))
+                };
+            }
         }
     }
 

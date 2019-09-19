@@ -228,7 +228,7 @@ namespace Stx.BeatModsAPI
             config.installedMods.Clear();
         }
 
-        public void DetectManualModInstallOrUninstall(out List<Mod> wasManuallyInstalled, out List<InstalledMod> wasManuallyUninstalled)
+        public void DetectManualModInstallOrUninstall(out List<Mod> wasManuallyInstalled, out List<InstalledMod> wasManuallyUninstalled, bool onlyDetectApproved = true)
         {
             wasManuallyInstalled = new List<Mod>();
             wasManuallyUninstalled = new List<InstalledMod>();
@@ -247,9 +247,8 @@ namespace Stx.BeatModsAPI
                 {
                     // Plugin was uninstalled from outside this application.
 
-                    Console.WriteLine($"Plugin was uninstalled from outside this application (md5: { pluginDll.hash }): { pluginDllPath }");
-
                     wasManuallyUninstalled.Add(GetInstalledModIgnoreVersion(m));
+                    Console.WriteLine($"Plugin was uninstalled from outside this application (md5: { pluginDll.hash }): { pluginDllPath }");
                 }
                 else if (!IsInstalledAnyVersion(m) && onDisk)
                 {
@@ -260,10 +259,15 @@ namespace Stx.BeatModsAPI
                     Mod installedVersion = beatMods.GetModsWithName(m.Name).FirstOrDefault((e) => 
                         string.Compare(e.GetPluginBinaryFile(BeatSaberType).hash, diskDllHash, StringComparison.OrdinalIgnoreCase) == 0);
 
+                    if (onlyDetectApproved && m.Status != ModStatus.Approved)
+                    {
+                        Console.WriteLine($"Plugin was installed from outside this application, but it was not returned because it is unapproved: { installedVersion }");
+                        continue;
+                    }
+
                     if (installedVersion == null)
                     {
                         installedVersion = beatMods.GetModsWithName(m.Name).Last();
-
                         Console.WriteLine($"Plugin was installed from outside this application, but the version could not be found for { m.Name }, using oldest version");
                     }
                     else

@@ -52,7 +52,7 @@ namespace Stx.BeatModsAPI
                     return false;
             }
 
-            if (status != mod.Status)
+            if ((status & mod.Status) != mod.Status)
                 return false;
 
             if (!string.IsNullOrEmpty(forGameVersion) && forGameVersion == mod.gameVersion)

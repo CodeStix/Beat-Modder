@@ -17,6 +17,11 @@ namespace Stx.BeatModsAPI
             return mods.Where((e) => e.IsCompatibleWith(gameVersion));
         }
 
+        public static IEnumerable<Mod> OnlyKeepStatus(this IEnumerable<Mod> mods, ModStatus status)
+        {
+            return mods.Where((e) => (status & e.Status) == e.Status);
+        }
+
         public static IEnumerable<Mod> OnlyKeepMostRecentMods(this IEnumerable<Mod> mods)
         {
             return mods.GroupBy(x => x.Name.ToUpper()).Select(x => x.OrderByDescending(e => SemVersionExtenions.AsNumber(e.Version)).First());
