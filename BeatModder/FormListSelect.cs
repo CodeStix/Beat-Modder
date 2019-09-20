@@ -24,6 +24,16 @@ namespace Stx.BeatModder
             }
         }
 
+        public bool ReadOnly
+        {
+            set
+            {
+                label2.Visible = !value;
+                buttonCancel.Visible = !value;
+                buttonOk.Enabled = true;
+            }
+        }
+
         public FormListSelect(string mainInstruction, string title = "Select an item...", params object[] items)
         {
             InitializeComponent();

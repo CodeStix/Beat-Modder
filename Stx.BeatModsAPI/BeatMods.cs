@@ -36,7 +36,7 @@ namespace Stx.BeatModsAPI
         public void Dispose()
         {
             Console.WriteLine($"Saving { OfflineMods.Count } offline available mods.");
-            File.WriteAllText(OFFLINE_FILE, JsonConvert.SerializeObject(OfflineMods));
+            SaveOfflineModCache();
             OfflineMods.Clear();
             AllMods.Clear();
         }
@@ -71,9 +71,17 @@ namespace Stx.BeatModsAPI
 
                 using (WebClient wc = new WebClient())
                 {
-                    string allGameVersionsJson = wc.DownloadString(BeatModsUrlBuilder.AllGameVersionsUrl);
-                    AllGameVersions = JsonConvert.DeserializeObject<List<string>>(allGameVersionsJson)
-                        .OrderByDescending((e) => SemVersionExtenions.AsNumber(e)).ToList();
+                    try
+                    {
+                        string allGameVersionsJson = wc.DownloadString(BeatModsUrlBuilder.AllGameVersionsUrl);
+                        AllGameVersions = JsonConvert.DeserializeObject<List<string>>(allGameVersionsJson)
+                            .OrderByDescending((e) => SemVersionExtenions.AsNumber(e)).ToList();
+                    }
+                    catch
+                    {
+                        // TODO
+                    }
+                  
                     string mostRecentGameVersion = AllGameVersions.First();
 
                     BeatModsQuery query = BeatModsQuery.All;
@@ -147,30 +155,34 @@ namespace Stx.BeatModsAPI
             return AllMods.FirstOrDefault((e) => string.Compare(e.Id, id, StringComparison.OrdinalIgnoreCase) == 0);
         }
 
-        public Mod GetMostRecentModFromId(string anyModVersionId, string compatibleGameVersion = null)
+        [Obsolete]
+        public Mod GetMostRecentModFromId(string anyModVersionId, SemVersion compatibleGameVersion = null, bool onlyApproved = true)
         {
             Mod mod = GetModFromId(anyModVersionId);
 
             if (mod == null)
                 return null;
 
-            return GetMostRecentModWithName(mod.Name, compatibleGameVersion);
+            return GetMostRecentModWithName(mod.Name, compatibleGameVersion, onlyApproved);
         }
 
-        public IEnumerable<Mod> GetModsWithName(string modName)
+        public IEnumerable<Mod> GetModsWithName(string modName, bool onlyApproved = true)
         {
             return AllMods.Where((e) => string.Compare(e.Name, modName, StringComparison.OrdinalIgnoreCase) == 0)
-                    .OrderByDescending((e) => SemVersionExtenions.AsNumber(e.Version));
+                  .OnlyKeepStatus(onlyApproved ? ModStatus.Approved : ModStatus.All)
+                  .OrderByDescending((e) => SemVersionExtenions.AsNumber(e.Version));
         }
 
-        public Mod GetMostRecentModWithName(string modName, SemVersion compatibleGameVersion = null)
+        public Mod GetMostRecentModWithName(string modName, SemVersion compatibleGameVersion = null, bool onlyApproved = true)
         {
-            return GetModsWithName(modName).OnlyKeepCompatibleWith(compatibleGameVersion).FirstOrDefault();
+            return GetModsWithName(modName, onlyApproved)
+                .OnlyKeepCompatibleWith(compatibleGameVersion)
+                .FirstOrDefault();
         }
 
-        public bool IsOutdated(IMod currentVersion, SemVersion compatibleGameVersion = null)
+        public bool IsOutdated(IMod currentVersion, SemVersion compatibleGameVersion = null, bool onlyCompareApproved = true)
         {
-            Mod mostRecent = GetMostRecentModWithName(currentVersion.Name, compatibleGameVersion);
+            Mod mostRecent = GetMostRecentModWithName(currentVersion.Name, compatibleGameVersion, onlyCompareApproved);
 
             if (mostRecent == null)
                 return false;
@@ -217,7 +229,7 @@ namespace Stx.BeatModsAPI
                 Mod dependency = dep;
 
                 if (!dependency.IsInformationKnown)
-                    dependency = GetMostRecentModFromId(dependency.Id);
+                    dependency = GetModFromId(dependency.Id);
 
                 if (dependency == null)
                     continue;
@@ -227,6 +239,11 @@ namespace Stx.BeatModsAPI
                 foreach (Mod subDep in EnumerateAllDependencies(dependency))
                     yield return subDep;
             }
+        }
+
+        public void SaveOfflineModCache()
+        {
+            File.WriteAllText(OFFLINE_FILE, JsonConvert.SerializeObject(OfflineMods));
         }
     }
 }

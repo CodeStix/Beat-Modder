@@ -53,6 +53,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tabPageSettings = new System.Windows.Forms.TabPage();
             this.groupBoxAdvanced = new System.Windows.Forms.GroupBox();
+            this.buttonListOfflineMods = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.checkBoxKeepModDownloads = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoUpdate = new System.Windows.Forms.CheckBox();
@@ -347,6 +348,7 @@
             // 
             // groupBoxAdvanced
             // 
+            this.groupBoxAdvanced.Controls.Add(this.buttonListOfflineMods);
             this.groupBoxAdvanced.Controls.Add(this.groupBox1);
             this.groupBoxAdvanced.Controls.Add(this.checkBoxKeepModDownloads);
             this.groupBoxAdvanced.Controls.Add(this.checkBoxAutoUpdate);
@@ -358,6 +360,16 @@
             this.groupBoxAdvanced.TabIndex = 4;
             this.groupBoxAdvanced.TabStop = false;
             this.groupBoxAdvanced.Text = "Settings";
+            // 
+            // buttonListOfflineMods
+            // 
+            this.buttonListOfflineMods.Image = ((System.Drawing.Image)(resources.GetObject("buttonListOfflineMods.Image")));
+            this.buttonListOfflineMods.Location = new System.Drawing.Point(201, 21);
+            this.buttonListOfflineMods.Name = "buttonListOfflineMods";
+            this.buttonListOfflineMods.Size = new System.Drawing.Size(27, 24);
+            this.buttonListOfflineMods.TabIndex = 7;
+            this.buttonListOfflineMods.UseVisualStyleBackColor = true;
+            this.buttonListOfflineMods.Click += new System.EventHandler(this.ButtonListOfflineMods_Click);
             // 
             // groupBox1
             // 
@@ -769,6 +781,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ColumnHeader columnHeaderGameVersion;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button buttonListOfflineMods;
     }
 }
 

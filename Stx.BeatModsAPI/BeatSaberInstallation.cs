@@ -132,6 +132,7 @@ namespace Stx.BeatModsAPI
             DidBeatSaberUpdate = config.lastBeatSaberVersion != BeatSaberVersionString;
             config.lastBeatSaberVersion = BeatSaberVersionString;
 
+            FixPluginBinaries();
             SaveConfig();
         }
 
@@ -166,11 +167,11 @@ namespace Stx.BeatModsAPI
             return InstalledMods.FirstOrDefault((e) => string.Compare(name, e.Name, StringComparison.OrdinalIgnoreCase) == 0);
         }
 
-        public IEnumerable<KeyValuePair<InstalledMod, Mod>> EnumerateOutdatedMods()
+        public IEnumerable<KeyValuePair<InstalledMod, Mod>> EnumerateOutdatedMods(bool onlyCompareApproved = true)
         {
             foreach(InstalledMod mod in InstalledMods)
             {
-                Mod newestVersion = beatMods.GetMostRecentModWithName(mod.Name, BeatSaberVersion);
+                Mod newestVersion = beatMods.GetMostRecentModWithName(mod.Name, BeatSaberVersion, onlyCompareApproved);
 
                 // A new compatible version does not yet exist
                 if (newestVersion == null)
@@ -363,11 +364,25 @@ namespace Stx.BeatModsAPI
             return true;
         }
 
+        /*public Task<bool> DownloadMod(Mod mod, string archiveDestination, IProgress<ProgressReport> progress = null)
+        {
+        }*/
+
         public Task<InstalledMod> InstallMod(Mod mod, IProgress<ProgressReport> progress = null)
         {
             return Task.Run(async () =>
             {
                 progress?.Report(new ProgressReport($"Starting to install { mod } ...", 0.1f));
+
+                if (!mod.IsInformationKnown)
+                {
+                    mod = beatMods.GetModFromId(mod.Id);
+                    if (mod == null)
+                    {
+                        progress?.Report(new ProgressReport($"Install failed: mod with id { mod.Id } could not be found.", 1f));
+                        return null;
+                    }
+                }
 
                 if (IsInstalledAnyVersion(mod))
                 {
@@ -398,7 +413,7 @@ namespace Stx.BeatModsAPI
                     return null;
                 }
 
-                string zipDownloadLocation = Path.Combine(ModArchivesDownloadLocation, GetArchiveNameFor(mod));
+                string zipDownloadLocation = Path.Combine(ModArchivesDownloadLocation, mod.GetArchiveName());
                 new FileInfo(zipDownloadLocation).Directory.Create();
 
                 DownloadZip:
@@ -442,17 +457,7 @@ namespace Stx.BeatModsAPI
                 for (int d = 0; d < mod.dependencies.Count; d++)
                 {
                     Mod dependency = mod.dependencies[d];
-                    if (!dependency.IsInformationKnown)
-                    {
-                        dependency = beatMods.GetMostRecentModFromId(dependency.Id);
-
-                        if (dependency == null)
-                        {
-                            progress?.Report(new ProgressReport($"Dependency with id { dependency.Id } not found, skipping.", 0.7f + (float)(d + 1) / mod.dependencies.Count * 0.3f));
-                            continue;
-                        }
-                    }
-                    else
+                    if (dependency.IsInformationKnown) // Install the most recent that is compatible with the game's version
                     {
                         Mod mostRecentCompatible = beatMods.GetMostRecentModWithName(dependency.Name, BeatSaberVersion);
 
@@ -462,10 +467,11 @@ namespace Stx.BeatModsAPI
 
                     progress?.Report(new ProgressReport($"Installing dependencies: { dependency.ToString() } ...", 0.7f + (float)(d + 1) / mod.dependencies.Count * 0.3f));
 
-                    if (!localMod.uses.Contains(dependency.Name))
-                        localMod.uses.Add(dependency.Name);
-
                     InstalledMod installedDependency = await InstallMod(dependency);
+
+                    if (!localMod.uses.Contains(installedDependency.Name))
+                        localMod.uses.Add(installedDependency.Name);
+
                     if (installedDependency != null)
                     {
                         if (!installedDependency.usedBy.Contains(localMod.Name))
@@ -634,9 +640,26 @@ namespace Stx.BeatModsAPI
             }
         }
 
-        public static string GetArchiveNameFor(IMod mod)
+        private void FixPluginBinaries()
         {
-            return $"{ mod.Name }-{ mod.Version }.zip";
+            foreach (InstalledMod m in InstalledMods)
+            {
+                if (m.binaryFile == default)
+                    continue;
+
+                string pluginFile = m.GetPluginBinaryFile();
+
+                if (string.IsNullOrEmpty(pluginFile))
+                    continue;
+
+                Console.WriteLine($"Fixing plugin binary file for { m }: { pluginFile }");
+
+                m.binaryFile = new Mod.Download.File()
+                {
+                    file = pluginFile,
+                    hash = Hashing.CalculateMD5(Path.Combine(BeatSaberDirectory, pluginFile))
+                };
+            }
         }
 
         internal class Config

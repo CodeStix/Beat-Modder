@@ -13,5 +13,10 @@ namespace Stx.BeatModsAPI
         {
             return SemVersion.Parse(mod.GameVersion.FixOddVersion());
         }
+
+        public static string GetArchiveName(this IMod mod)
+        {
+            return $"{ mod.Name }-{ mod.Version }.zip";
+        }
     }
 }

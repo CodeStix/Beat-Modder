@@ -303,7 +303,7 @@ namespace Stx.BeatModder
         {
             if (selected.Tag is InstalledMod installedMod)
             {
-                Mod newest = beatMods.GetMostRecentModWithName(installedMod.Name);
+                Mod newest = beatMods.GetMostRecentModWithName(installedMod.Name, onlyApproved: !checkBoxAllowNonApproved.Checked);
                 if (newest != null && SemVersion.Parse(installedMod.Version) < newest.Version)
                 {
                     ProgressChange($"Updating mod { installedMod }...", 0f);
@@ -668,16 +668,29 @@ namespace Stx.BeatModder
                 FontStyle fontStyle = localMod.usedBy.Count > 0 ? FontStyle.Regular : FontStyle.Bold;
                 lvi.Font = new Font(FontFamily.GenericSansSerif, 8.5f, fontStyle);
 
-                if (mod != null && mod.Status != ModStatus.Approved)
-                {
-                    lvi.SubItems[0].Text += $" ({ mod.Status.ToString() })";
-                    lvi.ForeColor = Color.Purple;
-                }
-
                 if (!beatMods.IsOffline) // Update information is unavailable offline
                 {
-                    Mod mostRecentMod = beatMods.GetMostRecentModWithName(localMod.Name, beatSaber.BeatSaberVersion);
-                    if (mostRecentMod == null && !mod.IsCompatibleWith(beatSaber.BeatSaberVersion)) // This mod requires an update
+                    Mod mostRecentMod = beatMods.GetMostRecentModWithName(localMod.Name, beatSaber.BeatSaberVersion, mod?.Status == ModStatus.Approved);
+                    if (mostRecentMod == null) // There is no mod available that is compatible with the current BeatSaber version, awaiting update...
+                    {
+                        lvi.SubItems[0].Text += " (Waiting for update)";
+                        lvi.ForeColor = Color.DarkOrange;
+                    }
+                    else if (localMod.GetVersion() < mostRecentMod.Version)
+                    {
+                        lvi.SubItems[0].Text += " (Update available)";
+                        lvi.ForeColor = Color.DarkRed;
+                    }
+                    else if (localMod.GetVersion() > mostRecentMod.Version)
+                    {
+                        lvi.SubItems[0].Text += " (From the future)";
+                        lvi.ForeColor = Color.ForestGreen;
+                    }
+
+
+
+
+                    /*if (!mod.IsCompatibleWith(beatSaber.BeatSaberVersion)) // This mod requires an update
                     {
                         lvi.SubItems[0].Text += " (Waiting for update)";
                         lvi.ForeColor = Color.DarkOrange;
@@ -686,10 +699,14 @@ namespace Stx.BeatModder
                     {
                         lvi.SubItems[0].Text += " (Update available)";
                         lvi.ForeColor = Color.DarkRed;
-                    }
+                    }*/
                 }
 
-
+                if (mod != null && mod.Status != ModStatus.Approved)
+                {
+                    lvi.SubItems[0].Text += $" ({ mod.Status.ToString() })";
+                    lvi.ForeColor = Color.Purple;
+                }
 
                 listView.Items.Add(lvi);
             }
@@ -788,7 +805,7 @@ namespace Stx.BeatModder
             config.keepModArchives = checkBoxKeepModDownloads.Checked;
             SaveConfig();
 
-            if (config.keepModArchives && Directory.Exists(beatSaber.ModArchivesDownloadLocation))
+            if (!config.keepModArchives && Directory.Exists(beatSaber.ModArchivesDownloadLocation))
             {
                 string[] archives = Directory.GetFiles(beatSaber.ModArchivesDownloadLocation);
 
@@ -796,11 +813,12 @@ namespace Stx.BeatModder
                     "You will not be able to install/uninstall mods while offline from now on. " +
                     "You can re-enable this feature at any time.\n" +
                     "Do you wish to keep all past mod archives?",
-                    "Remove archives?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    "Remove archives?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     ProgressChange("Removing old mod archives...", 0f);
 
                     Directory.Delete(beatSaber.ModArchivesDownloadLocation, true);
+                    beatMods.SaveOfflineModCache();
 
                     ProgressChange($"Removed { archives.Length } archives.", 1f);
                 }
@@ -834,6 +852,14 @@ namespace Stx.BeatModder
             }
 
             SaveConfig();
+        }
+
+        private void ButtonListOfflineMods_Click(object sender, EventArgs e)
+        {
+            FormListSelect fls = new FormListSelect("The following mods are offline available:", "Offline mods", beatMods.OfflineMods.ToArray());
+            fls.ReadOnly = true;
+            fls.ShowDialog();
+            
         }
     }
 
