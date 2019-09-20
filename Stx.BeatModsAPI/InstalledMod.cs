@@ -18,7 +18,8 @@ namespace Stx.BeatModsAPI
         public string Name { get; set; }
         [JsonProperty("version")]
         public string Version { get; set; }
-        public string gameVersion;
+        [JsonProperty("gameVersion")]
+        public string GameVersion { get; set; }
         public List<string> affectedFiles;
         public List<string> usedBy;
         public List<string> uses;
@@ -46,7 +47,7 @@ namespace Stx.BeatModsAPI
             Id = mod.Id;
             Name = mod.Name;
             Version = mod.Version;
-            gameVersion = mod.gameVersion;
+            GameVersion = mod.GameVersion;
             binaryFile = mod.GetPluginBinaryFile(type);
             preventRemoval = mod.required;
             affectedFiles = mod.GetBestDownloadFor(type).archiveFiles.Select((e) => e.file).ToList();

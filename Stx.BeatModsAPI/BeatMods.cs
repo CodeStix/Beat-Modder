@@ -122,7 +122,7 @@ namespace Stx.BeatModsAPI
                         {
                             cache = new CacheConfig()
                             {
-                                cachedMods = AllMods.Where((e) => SemVersion.Parse(e.gameVersion.FixOddVersion()) < mostRecentGameVersion).ToList(),
+                                cachedMods = AllMods.Where((e) => e.GetGameVersion() < mostRecentGameVersion.FixOddVersion()).ToList(),
                                 cacheMaxGameVersion = mostRecentGameVersion
                             };
 

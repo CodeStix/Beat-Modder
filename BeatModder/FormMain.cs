@@ -656,7 +656,7 @@ namespace Stx.BeatModder
                     localMod.Name,
                     mod?.author.username,
                     localMod.Version,
-                    localMod.gameVersion,
+                    localMod.GameVersion,
                     mod?.description
                 });
 
@@ -706,7 +706,7 @@ namespace Stx.BeatModder
                     m.Name,
                     m.author.username,
                     m.Version,
-                    m.gameVersion,
+                    m.GameVersion,
                     m.description
                 });
                 lvi.Group = listView.GetOrCreateGroup(m.Category.ToString());
@@ -824,7 +824,7 @@ namespace Stx.BeatModder
                 if (string.IsNullOrEmpty(pluginFile))
                     continue;
 
-                Console.WriteLine($"Fixed plugin binary file for { m }: { pluginFile }");
+                Console.WriteLine($"Fixing plugin binary file for { m }: { pluginFile }");
 
                 m.binaryFile = new Mod.Download.File()
                 {
@@ -832,6 +832,8 @@ namespace Stx.BeatModder
                     hash = Hashing.CalculateMD5(Path.Combine(beatSaber.BeatSaberDirectory, pluginFile))
                 };
             }
+
+            SaveConfig();
         }
     }
 

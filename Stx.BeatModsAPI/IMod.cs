@@ -11,5 +11,6 @@ namespace Stx.BeatModsAPI
         string Id { get; }
         string Name { get; }
         string Version { get; }
+        string GameVersion { get; }
     }
 }

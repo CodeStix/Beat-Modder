@@ -34,7 +34,7 @@ namespace Stx.BeatModder
                 textBoxName.Text = mod.Name + Environment.NewLine + "\tby " + mod.author.username;
                 textBoxDescription.Text = mod.description + Environment.NewLine + Environment.NewLine + "Category: " + mod.category;
                 labelVersion.Text = mod.Version;
-                labelGameVersion.Text = "game " + mod.gameVersion;
+                labelGameVersion.Text = "game " + mod.GameVersion;
             }
 
             if (localMod != null)
@@ -48,7 +48,7 @@ namespace Stx.BeatModder
                     buttonDirectDownload.Enabled = false;
                     textBoxDescription.Text = "No description.";
                     labelVersion.Text = localMod.Version;
-                    labelGameVersion.Text = "game " + localMod.gameVersion;
+                    labelGameVersion.Text = "game " + localMod.GameVersion;
                 }
             }
 

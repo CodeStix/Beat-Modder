@@ -15,6 +15,9 @@ namespace Stx.BeatModsAPI
         public string Name { get; set; }
         [JsonProperty("version")]
         public string Version { get; set; }
+        [JsonProperty("gameVersion")]
+        public string GameVersion { get; set; }
+
         public ModAuthor author;
         public string authorId;
         public string category;
@@ -26,8 +29,7 @@ namespace Stx.BeatModsAPI
         public bool required;
         public string updatedDate;
         public string uploadDate;
-        public string gameVersion;
-
+     
         [JsonIgnore]
         public static readonly string BSIPA = "BSIPA";
 
@@ -142,14 +144,14 @@ namespace Stx.BeatModsAPI
             if (gameVersion == null)
                 return false;
 
-            SemVersion modVersion = SemVersion.Parse(this.gameVersion.FixOddVersion());
+            SemVersion modVersion = this.GetGameVersion();
             return modVersion.Major == gameVersion.Major && modVersion.Minor == gameVersion.Minor;
         }
 
         [Obsolete("Use IsCompatibleWith(SemVersion gameVersion) instead.")]
         public bool IsCompatibleWith(string gameVersion)
         {
-            SemVersion modVersion = SemVersion.Parse(this.gameVersion.FixOddVersion());
+            SemVersion modVersion = SemVersion.Parse(this.GameVersion.FixOddVersion());
             SemVersion version = SemVersion.Parse(gameVersion.FixOddVersion());
 
             return modVersion.Major == version.Major && modVersion.Minor == version.Minor;

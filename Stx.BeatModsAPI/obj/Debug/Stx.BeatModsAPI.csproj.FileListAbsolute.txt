@@ -29,4 +29,3 @@ H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Newtonsoft.Json.pdb
 H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Newtonsoft.Json.xml
 H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Semver.xml
 H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\obj\Debug\Stx.BeatModsAPI.csproj.CopyComplete
-H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\obj\Debug\Stx.BeatModsAPI.csprojAssemblyReference.cache
