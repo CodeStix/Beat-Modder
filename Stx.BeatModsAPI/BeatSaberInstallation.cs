@@ -257,12 +257,12 @@ namespace Stx.BeatModsAPI
 
                     string diskDllHash = Hashing.CalculateMD5(pluginDllPath);
 
-                    Mod installedVersion = beatMods.GetModsWithName(m.Name).FirstOrDefault((e) => 
+                    Mod installedVersion = beatMods.GetModsWithName(m.Name, onlyDetectApproved).FirstOrDefault((e) => 
                         string.Compare(e.GetPluginBinaryFile(BeatSaberType).hash, diskDllHash, StringComparison.OrdinalIgnoreCase) == 0);
 
                     if (onlyDetectApproved && m.Status != ModStatus.Approved)
                     {
-                        Console.WriteLine($"Plugin was installed from outside this application, but it was not returned because it is unapproved: { installedVersion }");
+                        Console.WriteLine($"Plugin was installed from outside this application, but it was not returned because it is unapproved: { m }");
                         continue;
                     }
 
@@ -644,7 +644,7 @@ namespace Stx.BeatModsAPI
         {
             foreach (InstalledMod m in InstalledMods)
             {
-                if (m.binaryFile == default)
+                if (!string.IsNullOrEmpty(m.binaryFile.file) && !string.IsNullOrEmpty(m.binaryFile.hash))
                     continue;
 
                 string pluginFile = m.GetPluginBinaryFile();

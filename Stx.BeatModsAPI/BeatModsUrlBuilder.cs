@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +22,16 @@ namespace Stx.BeatModsAPI
         {
             get
             {
-                return new Ping().Send(BeatModsHost).Status == IPStatus.Success;
+                try
+                {
+                    using (var client = new WebClient())
+                    using (client.OpenRead(BeatModsUrl))
+                        return true;
+                }
+                catch
+                {
+                    return false;
+                }
             }
         }
 
