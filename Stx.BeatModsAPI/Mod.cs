@@ -182,6 +182,16 @@ namespace Stx.BeatModsAPI
             return SemVersion.Parse(left.Version) <= right.Version;
         }
 
+        public static bool operator ==(Mod left, IMod right)
+        {
+            return left?.Version == right?.Version && string.Compare(left?.Name, right?.Name, StringComparison.OrdinalIgnoreCase) == 0;
+        }
+
+        public static bool operator !=(Mod left, IMod right)
+        {
+            return left?.Version != right?.Version && string.Compare(left?.Name, right?.Name, StringComparison.OrdinalIgnoreCase) == 0;
+        }
+
         [Serializable]
         public struct ModAuthor
         {
