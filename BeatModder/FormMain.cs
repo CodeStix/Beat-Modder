@@ -685,20 +685,6 @@ namespace Stx.BeatModder
                         lvi.SubItems[0].Text += " (From the future)";
                         lvi.ForeColor = Color.ForestGreen;
                     }
-
-
-
-
-                    /*if (!mod.IsCompatibleWith(beatSaber.BeatSaberVersion)) // This mod requires an update
-                    {
-                        lvi.SubItems[0].Text += " (Waiting for update)";
-                        lvi.ForeColor = Color.DarkOrange;
-                    }
-                    else if (mostRecentMod.Version != localMod.Version) // This mod is out of date
-                    {
-                        lvi.SubItems[0].Text += " (Update available)";
-                        lvi.ForeColor = Color.DarkRed;
-                    }*/
                 }
 
                 if (mod != null && mod.Status != ModStatus.Approved)
@@ -737,6 +723,9 @@ namespace Stx.BeatModder
 
                 if (m.required)
                     lvi.BackColor = Color.WhiteSmoke;
+
+                if (beatMods.OfflineMods.Any((e) => e == m))
+                    lvi.Font = new Font(FontFamily.GenericSansSerif, 8.5f, FontStyle.Italic);
 
                 listView.Items.Add(lvi);
             }
