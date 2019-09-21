@@ -184,9 +184,6 @@ namespace Stx.BeatModder
                     RemoveModArchivesAfterInstall = !config.keepModArchives
                 };
 
-                ProgressChange("Fixing stuff...", 0.32f);
-                FixBinaryFiles();
-
                 ProgressChange("Checking for manual installs/uninstalls...", 0.35f);
 
                 beatSaber.DetectManualModInstallOrUninstall(out List<Mod> wasManuallyInstalled, out List<InstalledMod> wasManuallyUninstalled);
@@ -230,7 +227,7 @@ namespace Stx.BeatModder
                 config.firstTime = false;
                 SaveConfig();
 
-                while (beatMods.IsOffline)
+                /*while (beatMods.IsOffline)
                 {
                     await Task.Delay(3000);
 
@@ -239,13 +236,15 @@ namespace Stx.BeatModder
                     {
                         Console.WriteLine("BeatMods is available, creating new session...");
 
+                        await Task.Delay(1000);
+
                         beatMods.Dispose();
                         beatMods = await BeatMods.CreateSession(true);
 
                         UpdateModList();
                         ProgressChange("BeatMods went available, list was refreshed.", 1f);
                     }
-                }
+                }*/
             }
             ));
         }
@@ -828,30 +827,6 @@ namespace Stx.BeatModder
         private void FormMain_Resize(object sender, EventArgs e)
         {
             listView.Columns[listView.Columns.Count - 1].Width = 460 + Width - 1057;
-        }
-
-        public void FixBinaryFiles()
-        {
-            foreach(InstalledMod m in beatSaber.InstalledMods)
-            {
-                if (m.binaryFile == default)
-                    continue;
-
-                string pluginFile = m.GetPluginBinaryFile();
-
-                if (string.IsNullOrEmpty(pluginFile))
-                    continue;
-
-                Console.WriteLine($"Fixing plugin binary file for { m }: { pluginFile }");
-
-                m.binaryFile = new Mod.Download.File()
-                {
-                    file = pluginFile,
-                    hash = Hashing.CalculateMD5(Path.Combine(beatSaber.BeatSaberDirectory, pluginFile))
-                };
-            }
-
-            SaveConfig();
         }
 
         private void ButtonListOfflineMods_Click(object sender, EventArgs e)
