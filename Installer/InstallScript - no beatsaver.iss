@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Beat Modder"
-#define MyAppVersion "2.0"
+#define MyAppVersion "2.1"
 #define MyAppPublisher "CodeStix; Stijn Rogiest"
 #define MyAppURL "https://github.com/CodeStix/Beat-Modder"
 #define MyAppExeName "BeatModder.exe"

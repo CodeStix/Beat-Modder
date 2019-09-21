@@ -104,7 +104,7 @@ namespace Stx.BeatModsAPI
                         AllGameVersions = JsonConvert.DeserializeObject<List<string>>(allGameVersionsJson)
                             .OrderByDescending((e) => SemVersionExtenions.AsNumber(e)).ToList();
 
-                        if (cache.allGameVersions == null || !cache.allGameVersions.SequenceEqual(AllGameVersions))
+                        if (cache != null && (cache.allGameVersions == null || !cache.allGameVersions.SequenceEqual(AllGameVersions)))
                         {
                             cache.allGameVersions = AllGameVersions;
                             File.WriteAllText(cacheFile, JsonConvert.SerializeObject(cache));
