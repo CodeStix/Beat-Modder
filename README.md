@@ -49,7 +49,7 @@ When ready, a list of mods should appear, mods in _italics_ are already installe
 #### To uninstall a mod
 Right click the mod you want to uninstall, then press uninstall. When successful, you should see a message in the bottom left corner.
 
-### To install unapproved mods
+#### To install unapproved mods
 1. Open the `BeatModder.exe.config` file.
 2. Set the value for `"AllowUnApproved"` to `true`.
 3. Save the file and restart Beat-Modder.
