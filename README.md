@@ -49,6 +49,14 @@ When ready, a list of mods should appear, mods in _italics_ are already installe
 #### To uninstall a mod
 Right click the mod you want to uninstall, then press uninstall. When successful, you should see a message in the bottom left corner.
 
+#### To install unapproved mods
+1. Open the `BeatModder.exe.config` file.
+2. Set the value for `"AllowUnApproved"` to `true`.
+3. Save the file and restart Beat-Modder.
+4. Go to the settings page and enable unapproved mods.
+5. Done, they should now be displayed in the list. 
+Note: Be carefull with them, they are unapproved for a reason.
+
 ## How to remove all mods
 Go to the settings tab, then press 'Remove All Mods' or 'Remove All Mods And Data'.
 Your mods will get removed and your Beat Saber install will be fresh.
