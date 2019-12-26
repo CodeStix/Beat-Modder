@@ -25,3 +25,30 @@ H:\Documents\GitHub\Beat-Modder\Testing\obj\Release\netcoreapp2.1\Testing.Assemb
 H:\Documents\GitHub\Beat-Modder\Testing\obj\Release\netcoreapp2.1\Testing.csproj.CopyComplete
 H:\Documents\GitHub\Beat-Modder\Testing\obj\Release\netcoreapp2.1\Testing.dll
 H:\Documents\GitHub\Beat-Modder\Testing\obj\Release\netcoreapp2.1\Testing.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\Testing.deps.json
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\Testing.runtimeconfig.json
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\Testing.runtimeconfig.dev.json
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\Testing.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\Testing.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\BeatMapInstaller.exe
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\BeatModder.exe
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\Stx.BeatModsAPI.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\Newtonsoft.Json.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\Semver.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\Flurl.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\BeatMapInstaller.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\BeatMapInstaller.exe.config
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\BeatModder.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\BeatModder.exe.config
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\Stx.BeatModsAPI.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\Newtonsoft.Json.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\Newtonsoft.Json.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\Semver.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\bin\Release\netcoreapp2.1\Flurl.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\obj\Release\netcoreapp2.1\Testing.csprojAssemblyReference.cache
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\obj\Release\netcoreapp2.1\Testing.csproj.CoreCompileInputs.cache
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\obj\Release\netcoreapp2.1\Testing.AssemblyInfoInputs.cache
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\obj\Release\netcoreapp2.1\Testing.AssemblyInfo.cs
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\obj\Release\netcoreapp2.1\Testing.csproj.CopyComplete
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\obj\Release\netcoreapp2.1\Testing.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Testing\obj\Release\netcoreapp2.1\Testing.pdb

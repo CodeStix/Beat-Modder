@@ -32,3 +32,20 @@ H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\obj\Release\BeatMapInstaller.cs
 H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\obj\Release\BeatMapInstaller.csproj.CopyComplete
 H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\obj\Release\BeatMapInstaller.exe
 H:\Documents\GitHub\Beat-Modder\BeatMapInstaller\obj\Release\BeatMapInstaller.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Release\BeatMapInstaller.exe.config
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Release\BeatMapInstaller.exe
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Release\BeatMapInstaller.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Release\Newtonsoft.Json.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Release\Stx.BeatModsAPI.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Release\Semver.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Release\Flurl.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Release\Stx.BeatModsAPI.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Release\Newtonsoft.Json.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Release\Newtonsoft.Json.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Release\Semver.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\bin\Release\Flurl.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\obj\Release\BeatMapInstaller.csprojAssemblyReference.cache
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\obj\Release\BeatMapInstaller.csproj.CoreCompileInputs.cache
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\obj\Release\BeatMapInstaller.csproj.CopyComplete
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\obj\Release\BeatMapInstaller.exe
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatMapInstaller\obj\Release\BeatMapInstaller.pdb

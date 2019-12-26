@@ -31,3 +31,36 @@ H:\Documents\GitHub\Beat-Modder\BeatModder\obj\Release\BeatModder.csproj.CoreCom
 H:\Documents\GitHub\Beat-Modder\BeatModder\obj\Release\BeatModder.csproj.CopyComplete
 H:\Documents\GitHub\Beat-Modder\BeatModder\obj\Release\BeatModder.exe
 H:\Documents\GitHub\Beat-Modder\BeatModder\obj\Release\BeatModder.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\BeatModder.exe.config
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\BeatModder.exe
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\BeatModder.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Flurl.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Flurl.Http.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\HtmlAgilityPack.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Newtonsoft.Json.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Ookii.Dialogs.WinForms.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Ookii.Dialogs.Wpf.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Semver.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Stx.BeatModsAPI.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Stx.BeatModsAPI.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Flurl.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Flurl.Http.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\HtmlAgilityPack.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\HtmlAgilityPack.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Newtonsoft.Json.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Newtonsoft.Json.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Ookii.Dialogs.WinForms.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Ookii.Dialogs.WinForms.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Ookii.Dialogs.Wpf.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\bin\Release\Semver.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\obj\Release\BeatModder.csprojAssemblyReference.cache
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\obj\Release\Stx.BeatModder.FormFindFile.resources
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\obj\Release\Stx.BeatModder.FormListSelect.resources
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\obj\Release\Stx.BeatModder.FormMain.resources
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\obj\Release\Stx.BeatModder.FormModInfo.resources
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\obj\Release\Stx.BeatModder.Properties.Resources.resources
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\obj\Release\BeatModder.csproj.GenerateResource.cache
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\obj\Release\BeatModder.csproj.CoreCompileInputs.cache
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\obj\Release\BeatModder.csproj.CopyComplete
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\obj\Release\BeatModder.exe
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\BeatModder\obj\Release\BeatModder.pdb
