@@ -41,6 +41,9 @@ namespace Stx.BeatModder
             {
                 textBoxBinaryFile.Text = $"Binary file: { localMod.binaryFile.file }";
 
+                if (localMod.preventRemoval)
+                    buttonRemovable.Visible = true;
+
                 if(mod == null)
                 {
                     textBoxName.Text = localMod.Name;
@@ -154,6 +157,12 @@ namespace Stx.BeatModder
         private void buttonDirectDownload_Click(object sender, EventArgs e)
         {
             Process.Start(mod.GetBestDownloadFor(BeatSaberInstalledType.Steam).DownloadUrl);
+        }
+
+        private void ButtonRemovable_Click(object sender, EventArgs e)
+        {
+            localMod.preventRemoval = false;
+            buttonRemovable.Enabled = false;
         }
     }
 }

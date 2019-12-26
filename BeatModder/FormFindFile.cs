@@ -133,7 +133,8 @@ namespace Stx.BeatModder
 
             if (fbd.ShowDialog() == DialogResult.OK)
             {
-                if (!File.Exists(Path.Combine(fbd.SelectedPath, fileToFind)))
+                string file = Path.Combine(fbd.SelectedPath, fileToFind);
+                if (!File.Exists(file))
                 {
                     DialogResult result = MessageBox.Show($"The required file '{ fileToFind }' was not found in the selected folder.\n\n" +
                         $"Press Retry to specify the folder containing '{ fileToFind }'.\n" +
@@ -145,7 +146,7 @@ namespace Stx.BeatModder
                     return;
                 }
 
-                SelectedFile = fbd.SelectedPath;
+                SelectedFile = file;
 
                 cancellationTokenSource.Cancel();
                 DialogResult = DialogResult.OK;

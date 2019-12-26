@@ -30,6 +30,7 @@ namespace Stx.BeatModder
 
         private ListViewItem selected = null;
         private Config config;
+        private SemVersion currentListVersion;
 
         private GitHubBasedUpdateCheck updateCheck = new GitHubBasedUpdateCheck("CodeStix", "Beat-Modder", "Installer/latestVersion.txt");
 
@@ -190,6 +191,7 @@ namespace Stx.BeatModder
                 await beatSaber.InstallMultipleMods(wasManuallyInstalled, ProgressReport.Partial(progress, 0.35f, 0.1f));
                 await beatSaber.UninstallMultipleMods(wasManuallyUninstalled, true, ProgressReport.Partial(progress, 0.45f, 0.1f));
 
+                currentListVersion = beatSaber.BeatSaberVersion;
                 UpdateModList();
 
                 ProgressChange("List of mods has been refreshed.", 0.55f);
@@ -205,6 +207,13 @@ namespace Stx.BeatModder
                     ProgressChange("Patching Beat Saber...", 0.55f);
 
                     await beatSaber.RunIPA(revert: false, wait: config.showConsole, shown: config.showConsole);
+
+                    // API moves old plugins to a folder, we don't do that here.
+                    string movedDirectory = Path.Combine(beatSaber.BeatSaberDirectory, $"Old { beatSaber.PreviousBeatSaberVersionString } Plugins");
+                    if (Directory.Exists(movedDirectory))
+                    {
+                        MessageBox.Show("Files where moved by API");
+                    }
 
                     ProgressChange("Patched Beat Saber!", 0.6f);
                 }
@@ -222,6 +231,16 @@ namespace Stx.BeatModder
                     textBoxBeatSaberLocation.Text = config.beatSaberLocation;
                     labelBeatSaberVersion.ForeColor = Color.Green;
                     labelBeatSaberVersion.Text = $"Beat Saber version: { beatSaber.BeatSaberVersionString }";
+                    foreach (string version in beatMods.AllGameVersions)
+                    {
+                        var tti = buttonSwitchListVersion.DropDownItems.Add(version);
+                        tti.Click += (sender2, e2) =>
+                        {
+                            currentListVersion = SemVersion.Parse(tti.Text.FixOddVersion());
+                            UpdateModList();
+                        };
+                    }
+
                 }));
 
                 config.firstTime = false;
@@ -326,8 +345,8 @@ namespace Stx.BeatModder
 
             if (mod.preventRemoval)
             {
-                MessageBox.Show($"Removal of '{ mod.ToString() }' was canceled because " +
-                    $"this plugin is required for all mods to work.\nIf you want to remove all mods, please go to the settings tab.", "Uninstall canceled.",
+                MessageBox.Show($"Removal of '{ mod.ToString() }' was cancelled because " +
+                    $"this plugin is required for all mods to work.\nIf you want to remove all mods, please go to the settings tab.", "Uninstall cancelled.",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
@@ -336,7 +355,7 @@ namespace Stx.BeatModder
             {
                 MessageBox.Show($"You are willing to remove '{ mod.ToString() }', please not that this mod is currently being used by { mod.usedBy.Count } other mods:\n\n" +
                     string.Join("\n", mod.usedBy) +
-                    $"\n\nYou must first uninstall the mods above to succeed uninstalling this mod!", "Uninstall canceled.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    $"\n\nYou must first uninstall the mods above to succeed uninstalling this mod!", "Uninstall cancelled.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
@@ -700,7 +719,7 @@ namespace Stx.BeatModder
                 .GetModsSortedBy(BeatModsSort.None)
                 .OnlyKeepStatus(checkBoxAllowNonApproved.Checked ? ModStatus.All : ModStatus.Approved)
                 .OnlyKeepMostRecentMods()
-                .OnlyKeepCompatibleWith(beatSaber.BeatSaberVersion)
+                .OnlyKeepCompatibleWith(currentListVersion)
                 .Where((e) => !beatSaber.IsInstalledExactVersion(e)))
             {
                 ListViewItem lvi = new ListViewItem(new string[] 
@@ -824,6 +843,11 @@ namespace Stx.BeatModder
             fls.ReadOnly = true;
             fls.ShowDialog();
             
+        }
+
+        private void ButtonSwitchListVersion_ButtonClick(object sender, EventArgs e)
+        {
+            buttonSwitchListVersion.ShowDropDown();
         }
     }
 

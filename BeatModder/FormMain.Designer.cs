@@ -35,6 +35,7 @@
             this.buttonCheckForUpdatesNow = new System.Windows.Forms.ToolStripDropDownButton();
             this.labelBeatSaberVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.buttonSwitchListVersion = new System.Windows.Forms.ToolStripSplitButton();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageMods = new System.Windows.Forms.TabPage();
@@ -105,6 +106,7 @@
             this.buttonCheckForUpdatesNow,
             this.labelBeatSaberVersion,
             this.progressBar,
+            this.buttonSwitchListVersion,
             this.statusLabel});
             this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.statusStrip.Location = new System.Drawing.Point(0, 635);
@@ -151,6 +153,16 @@
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(150, 16);
             this.progressBar.Visible = false;
+            // 
+            // buttonSwitchListVersion
+            // 
+            this.buttonSwitchListVersion.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buttonSwitchListVersion.Image = global::Stx.BeatModder.Properties.Resources.Libraries;
+            this.buttonSwitchListVersion.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonSwitchListVersion.Name = "buttonSwitchListVersion";
+            this.buttonSwitchListVersion.Size = new System.Drawing.Size(133, 20);
+            this.buttonSwitchListVersion.Text = "Switch list version";
+            this.buttonSwitchListVersion.ButtonClick += new System.EventHandler(this.ButtonSwitchListVersion_ButtonClick);
             // 
             // statusLabel
             // 
@@ -782,6 +794,7 @@
         private System.Windows.Forms.ColumnHeader columnHeaderGameVersion;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button buttonListOfflineMods;
+        private System.Windows.Forms.ToolStripSplitButton buttonSwitchListVersion;
     }
 }
 

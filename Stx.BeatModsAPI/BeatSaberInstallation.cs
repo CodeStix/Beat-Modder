@@ -42,7 +42,23 @@ namespace Stx.BeatModsAPI
         public string BeatSaberDotExe { get; }
         public string BeatSaberPluginDir { get; }
         public string BeatSaberVersionString { get; }
-        public SemVersion BeatSaberVersion { get; }
+        public SemVersion BeatSaberVersion
+        {
+            get
+            {
+                // Convert unsupported versions like: 1.1.0p1 -> 1.1.0
+                return SemVersion.Parse(BeatSaberVersionString.FixOddVersion());
+            }
+        }
+        public string PreviousBeatSaberVersionString { get; }
+        public SemVersion PreviousBeatSaberVersion
+        {
+            get
+            {
+                // Convert unsupported versions like: 1.1.0p1 -> 1.1.0
+                return SemVersion.Parse(PreviousBeatSaberVersionString.FixOddVersion()); 
+            }
+        }
         public bool DidBeatSaberUpdate { get; } = false;
         public bool IsIPAInstalled
         {
@@ -92,7 +108,7 @@ namespace Stx.BeatModsAPI
                     byte[] asciiByteVersion = new byte[12];
                     streamReader.Read(asciiByteVersion, 0, asciiByteVersion.Length);
                     BeatSaberVersionString = Encoding.ASCII.GetString(asciiByteVersion).Trim('\0');
-                    BeatSaberVersion = SemVersion.Parse(BeatSaberVersionString.FixOddVersion()); // Convert unsupported versions like: 1.1.0p1 -> 1.1.0
+                    //BeatSaberVersion = SemVersion.Parse(BeatSaberVersionString.FixOddVersion());
                 }
             }
             catch(Exception e)
@@ -129,6 +145,7 @@ namespace Stx.BeatModsAPI
             }
 
             //DidBeatSaberUpdate = BeatSaberVersion > (config.lastBeatSaberVersion?.FixOddVersion() ?? "0.0");
+            PreviousBeatSaberVersionString = config.lastBeatSaberVersion;
             DidBeatSaberUpdate = config.lastBeatSaberVersion != BeatSaberVersionString;
             config.lastBeatSaberVersion = BeatSaberVersionString;
 

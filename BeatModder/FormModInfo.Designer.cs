@@ -41,6 +41,7 @@
             this.groupBox = new System.Windows.Forms.GroupBox();
             this.textBoxBinaryFile = new System.Windows.Forms.TextBox();
             this.labelGameVersion = new System.Windows.Forms.Label();
+            this.buttonRemovable = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonOk
@@ -139,9 +140,9 @@
             // 
             // buttonDirectDownload
             // 
-            this.buttonDirectDownload.Location = new System.Drawing.Point(231, 229);
+            this.buttonDirectDownload.Location = new System.Drawing.Point(258, 229);
             this.buttonDirectDownload.Name = "buttonDirectDownload";
-            this.buttonDirectDownload.Size = new System.Drawing.Size(151, 23);
+            this.buttonDirectDownload.Size = new System.Drawing.Size(124, 23);
             this.buttonDirectDownload.TabIndex = 11;
             this.buttonDirectDownload.Text = "Direct mod download...";
             this.buttonDirectDownload.UseVisualStyleBackColor = true;
@@ -177,11 +178,23 @@
             this.labelGameVersion.Text = "game v1.0 ";
             this.labelGameVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // buttonRemovable
+            // 
+            this.buttonRemovable.Location = new System.Drawing.Point(154, 229);
+            this.buttonRemovable.Name = "buttonRemovable";
+            this.buttonRemovable.Size = new System.Drawing.Size(98, 23);
+            this.buttonRemovable.TabIndex = 15;
+            this.buttonRemovable.Text = "Mark removable";
+            this.buttonRemovable.UseVisualStyleBackColor = true;
+            this.buttonRemovable.Visible = false;
+            this.buttonRemovable.Click += new System.EventHandler(this.ButtonRemovable_Click);
+            // 
             // FormModInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(394, 522);
+            this.Controls.Add(this.buttonRemovable);
             this.Controls.Add(this.labelGameVersion);
             this.Controls.Add(this.textBoxBinaryFile);
             this.Controls.Add(this.groupBox);
@@ -218,5 +231,6 @@
         private System.Windows.Forms.GroupBox groupBox;
         private System.Windows.Forms.TextBox textBoxBinaryFile;
         private System.Windows.Forms.Label labelGameVersion;
+        private System.Windows.Forms.Button buttonRemovable;
     }
 }

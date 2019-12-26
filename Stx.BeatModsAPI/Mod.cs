@@ -184,12 +184,33 @@ namespace Stx.BeatModsAPI
 
         public static bool operator ==(Mod left, IMod right)
         {
+            if (ReferenceEquals(left, null))
+            {
+                if (ReferenceEquals(right, null))
+                    return true;
+
+                return false;
+            }
+
             return left?.Version == right?.Version && string.Compare(left?.Name, right?.Name, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         public static bool operator !=(Mod left, IMod right)
         {
-            return left?.Version != right?.Version && string.Compare(left?.Name, right?.Name, StringComparison.OrdinalIgnoreCase) == 0;
+            return !(left == right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Mod m)
+                return m == this;
+            else
+                return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
         [Serializable]

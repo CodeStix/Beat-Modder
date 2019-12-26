@@ -29,3 +29,19 @@ H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Newtonsoft.Json.pdb
 H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Newtonsoft.Json.xml
 H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Semver.xml
 H:\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\obj\Debug\Stx.BeatModsAPI.csproj.CopyComplete
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Stx.BeatModsAPI.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Stx.BeatModsAPI.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Dynamitey.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Flurl.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\ImpromptuInterface.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Semver.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Flurl.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\bin\Debug\Semver.xml
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\obj\Debug\Stx.BeatModsAPI.csprojAssemblyReference.cache
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\obj\Debug\Stx.BeatModsAPI.csproj.CoreCompileInputs.cache
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\obj\Debug\Stx.BeatModsAPI.csproj.CopyComplete
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\obj\Debug\Stx.BeatModsAPI.dll
+C:\Users\Stijn Rogiest\Documents\GitHub\Beat-Modder\Stx.BeatModsAPI\obj\Debug\Stx.BeatModsAPI.pdb
